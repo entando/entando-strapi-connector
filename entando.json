@@ -1,0 +1,9 @@
+{
+    "microservices": [],
+    "microfrontends": [],
+    "svc": [],
+    "name": "entando-strapi-connector",
+    "version": "0.0.1",
+    "description": "entando-strapi-connector description",
+    "type": "bundle"
+}
