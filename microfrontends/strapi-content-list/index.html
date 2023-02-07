@@ -7,7 +7,26 @@
     <title>Vite + React + TS</title>
   </head>
   <body>
-    <div id="root"></div>
+    <strapi-content-list></strapi-content-list>
     <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      function injectConfigIntoMfe() {
+        /**
+         * uncomment when api claim is ready
+         * 
+         * fetch('%PUBLIC_URL%/mfe-config.json').then(async response => {
+         *   const config = await response.text();
+         *   const rootComponet = document.querySelector('react-widget');
+         *   rootComponet.setAttribute('config', config);
+         * })
+        **/
+       
+        const rootComponet = document.querySelector('strapi-content-list');
+        rootComponet.setAttribute('config', "{}");
+      }
+
+      injectConfigIntoMfe()
+      
+    </script>
   </body>
 </html>

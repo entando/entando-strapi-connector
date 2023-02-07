@@ -1,5 +1,5 @@
 import * as path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
@@ -13,5 +13,9 @@ export default defineConfig({
       fileName: format => `strapi-content-list.${format}.js`
     },
     outDir: path.resolve(__dirname, './build')
+  },
+  test: {
+    environment: "jsdom",
+    setupFiles: "./config/testSetup.ts",
   }
 })

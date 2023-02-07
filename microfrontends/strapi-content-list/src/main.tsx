@@ -1,10 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import { StrapiContentList } from "./custom-elements/StrapiContentList";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+customElements.define('strapi-content-list', StrapiContentList)
