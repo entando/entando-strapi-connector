@@ -12,6 +12,18 @@
         "en": "strapi-content-list",
         "it": "strapi-content-list"
       }
+    },
+    {
+      "name": "strapi-content-list-config",
+      "customElement": "strapi-content-list-config",
+      "stack": "react",
+      "type": "widget",
+      "group": "free",
+      "publicFolder": "public",
+      "titles": {
+        "en": "strapi-content-list-config",
+        "it": "strapi-content-list-config"
+      }
     }
   ],
   "svc": [],
