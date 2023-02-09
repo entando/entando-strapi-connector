@@ -1,3 +1,5 @@
-import { StrapiContentListConfig } from "./custom-elements/StrapiContentListConfig";
+import "./types/globals"
 
-customElements.define('strapi-content-list-config', StrapiContentListConfig)
+import { StrapiContentListConfig } from "./custom-elements/StrapiContentListConfig"
+
+customElements.define("strapi-content-list-config", StrapiContentListConfig)

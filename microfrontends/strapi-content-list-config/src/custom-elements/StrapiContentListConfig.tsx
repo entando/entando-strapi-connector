@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 
 import { App } from "../App"
+import { KeycloakProvider } from "../context/Keycloak"
 import styles from "../index.css?inline"
 
 export class StrapiContentListConfig extends HTMLElement {
@@ -54,7 +55,9 @@ export class StrapiContentListConfig extends HTMLElement {
 
     this.#appInstance.render(
       <React.StrictMode>
-        <App />
+        <KeycloakProvider>
+          <App />
+        </KeycloakProvider>
       </React.StrictMode>
     )
 
