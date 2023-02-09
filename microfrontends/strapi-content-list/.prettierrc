@@ -1,0 +1,9 @@
+{
+  "singleQuote": false,
+  "useTabs": false,
+  "semi": false,
+  "tabWidth": 2,
+  "arrowParens": "always",
+  "editorconfig": true,
+  "trailingComma": "none"
+}

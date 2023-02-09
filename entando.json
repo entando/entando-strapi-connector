@@ -1,9 +1,22 @@
 {
-    "microservices": [],
-    "microfrontends": [],
-    "svc": [],
-    "name": "entando-strapi-connector",
-    "version": "0.0.1",
-    "description": "entando-strapi-connector description",
-    "type": "bundle"
+  "microservices": [],
+  "microfrontends": [
+    {
+      "name": "strapi-content-list",
+      "customElement": "strapi-content-list",
+      "stack": "react",
+      "type": "widget",
+      "group": "free",
+      "publicFolder": "public",
+      "titles": {
+        "en": "strapi-content-list",
+        "it": "strapi-content-list"
+      }
+    }
+  ],
+  "svc": [],
+  "name": "entando-strapi-connector",
+  "version": "0.0.1",
+  "description": "entando-strapi-connector description",
+  "type": "bundle"
 }
