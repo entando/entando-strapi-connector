@@ -17,14 +17,12 @@ export function ExampleTable() {
             <td>Quality Control Specialist</td>
             <td>Blue</td>
           </tr>
-
           <tr className="active">
             <th>2</th>
             <td>Hart Hagerty</td>
             <td>Desktop Support Technician</td>
             <td>Purple</td>
           </tr>
-
           <tr>
             <th>3</th>
             <td>Brice Swyre</td>

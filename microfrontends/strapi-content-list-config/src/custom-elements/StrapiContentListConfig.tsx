@@ -1,21 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react"
+import ReactDOM from "react-dom/client"
 
-import { App } from '../App';
-import styles from '../index.css?inline'
+import { App } from "../App"
+import styles from "../index.css?inline"
 
 export class StrapiContentListConfig extends HTMLElement {
-  #rootID = 'app-element'
+  #rootID = "app-element"
   #appInstance: ReactDOM.Root | null = null
 
   constructor() {
-    super();
+    super()
 
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" })
   }
 
   static get observedAttributes() {
-    return ['config'];
+    return ["config"]
   }
 
   connectedCallback() {
@@ -24,45 +24,40 @@ export class StrapiContentListConfig extends HTMLElement {
 
   attributeChangedCallback(_: any, oldValue: any, newValue: any) {
     if (newValue !== oldValue) {
-      this.render();
+      this.render()
     }
   }
 
   cleanTree() {
-    const currentElement = this.shadowRoot?.getElementById(this.#rootID);
+    const currentElement = this.shadowRoot?.getElementById(this.#rootID)
 
     if (currentElement) {
-      this.shadowRoot?.removeChild(currentElement);
+      this.shadowRoot?.removeChild(currentElement)
     }
 
-    this.#appInstance?.unmount();
+    this.#appInstance?.unmount()
   }
 
   render() {
-    const attrConf = this.getAttribute('config');
-    const config = attrConf && JSON.parse(attrConf);
+    const shadowRootElement = document.createElement("div")
+    const styleElement = document.createElement("style")
 
-    if (config) {
-      const shadowRootElement = document.createElement('div');
-      const styleElement = document.createElement('style');
+    shadowRootElement.id = this.#rootID
 
-      shadowRootElement.id = this.#rootID;
+    this.cleanTree()
 
-      this.cleanTree();
+    styleElement.innerHTML = styles
 
-      styleElement.innerHTML = styles;
+    this.shadowRoot?.appendChild(styleElement)
 
-      this.shadowRoot?.appendChild(styleElement);
+    this.#appInstance = ReactDOM.createRoot(shadowRootElement)
 
-      this.#appInstance = ReactDOM.createRoot(shadowRootElement);
+    this.#appInstance.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    )
 
-      this.#appInstance.render(
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      );
-
-      this.shadowRoot?.appendChild(shadowRootElement);
-    }
+    this.shadowRoot?.appendChild(shadowRootElement)
   }
 }

@@ -9,24 +9,5 @@
   <body>
     <strapi-content-list-config></strapi-content-list-config>
     <script type="module" src="/src/main.tsx"></script>
-    <script type="module">
-      function injectConfigIntoMfe() {
-        /**
-         * uncomment when api claim is ready
-         * 
-         * fetch('%PUBLIC_URL%/mfe-config.json').then(async response => {
-         *   const config = await response.text();
-         *   const rootComponet = document.querySelector('react-widget');
-         *   rootComponet.setAttribute('config', config);
-         * })
-        **/
-       
-        const rootComponet = document.querySelector('strapi-content-list-config');
-        rootComponet.setAttribute('config', "{}");
-      }
-
-      injectConfigIntoMfe()
-      
-    </script>
   </body>
 </html>
