@@ -31,6 +31,18 @@
         "build": "npm run build",
         "pack": "npm run build"
       }
+    },
+    {
+      "name": "strapi-content",
+      "customElement": "strapi-content",
+      "stack": "react",
+      "type": "widget",
+      "group": "free",
+      "publicFolder": "public",
+      "titles": {
+        "en": "strapi-content",
+        "it": "strapi-content"
+      }
     }
   ],
   "svc": ["keycloak"],
