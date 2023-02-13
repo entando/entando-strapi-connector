@@ -43,6 +43,34 @@
         "en": "strapi-content",
         "it": "strapi-content"
       }
+    },
+    {
+      "name": "strapi-config",
+      "customElement": "strapi-config",
+      "stack": "react",
+      "type": "app-builder",
+      "slot": "content",
+      "group": "free",
+      "publicFolder": "public",
+      "paths": ["/settings", "/content-template"],
+      "nav": [
+        {
+          "label": {
+            "it": "Settings",
+            "en": "Settings"
+          },
+          "target": "internal",
+          "url": "/settings"
+        },
+        {
+          "label": {
+            "it": "Content Template",
+            "en": "Content Template"
+          },
+          "target": "internal",
+          "url": "/content-template"
+        }
+      ]
     }
   ],
   "svc": ["keycloak"],
