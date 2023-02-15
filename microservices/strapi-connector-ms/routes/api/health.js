@@ -23,7 +23,6 @@ const getHealthHandler = (request, reply) => {
     }
   }
   if (status.db == "DOWN") reply.code(503).send(status)
-  console.log(status)
   reply.send({status})
 }
 
