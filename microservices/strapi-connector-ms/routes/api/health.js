@@ -50,6 +50,6 @@ module.exports = async function (fastify, opts, done) {
   }
 
   fastify.get('/api/health', getHealthOpts)
-  done();
+  done()
 }
 

@@ -7,4 +7,5 @@ module.exports = fastifyPlugin(async function (fastify, opts, done) {
     fastify.register(require('@fastify/postgres'), {
         connectionString: connectionString
     })
+    done()
 })
