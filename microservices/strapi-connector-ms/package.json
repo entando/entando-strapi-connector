@@ -21,7 +21,8 @@
     "@fastify/sensible": "^5.0.0",
     "fastify": "^4.0.0",
     "fastify-plugin": "^4.0.0",
-    "pg": "^8.9.0"
+    "pg": "^8.9.0",
+    "fastify-keycloak-adapter": "^2.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20",
