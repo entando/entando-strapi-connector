@@ -25,7 +25,8 @@
         }
     ],
     "svc": [
-        "postgresql"
+        "postgresql",
+        "keycloak"
     ],
     "name": "entando-strapi-connector",
     "version": "0.0.2",
