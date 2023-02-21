@@ -20,6 +20,16 @@ export interface MfeConfig {
 declare global {
   interface Window {
     entando: {
+      router: {
+        action: "POP" | "PUSH" | "REPLACE",
+        location: {
+          pathname: string;
+          search: string;
+          hash: string;
+          state: any;
+          key: string;
+        }
+      };
       globals: EntandoGlobals;
       keycloak: {
         token: string;
