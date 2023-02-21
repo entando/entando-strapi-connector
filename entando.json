@@ -62,6 +62,39 @@
         "build": "npm run build",
         "pack": "npm run build"
       }
+    },
+    {
+      "name": "strapi-config",
+      "customElement": "strapi-config",
+      "stack": "react",
+      "type": "app-builder",
+      "slot": "content",
+      "group": "free",
+      "publicFolder": "public",
+      "paths": ["/settings", "/content-template"],
+      "commands": {
+        "run": "npm run dev",
+        "build": "npm run build",
+        "pack": "npm run build"
+      },
+      "nav": [
+        {
+          "label": {
+            "it": "Settings",
+            "en": "Settings"
+          },
+          "target": "internal",
+          "url": "/settings"
+        },
+        {
+          "label": {
+            "it": "Content Template",
+            "en": "Content Template"
+          },
+          "target": "internal",
+          "url": "/content-template"
+        }
+      ]
     }
   ],
   "svc": ["keycloak"],
