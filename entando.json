@@ -7,7 +7,15 @@
             "dbms": "postgresql",
             "commands": {
                 "run": "npm run dev"
-            }
+            },
+            "env": [{
+                "name": "APP_ORIGIN",
+                "value": "http://giovanni.k8s-entando.org"
+            },
+            {
+                "name": "LOG_LEVEL",
+                "value": "debug"
+            }]
         }
     ],
     "microfrontends": [
@@ -29,7 +37,7 @@
         "keycloak"
     ],
     "name": "entando-strapi-connector",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "entando-strapi-connector description",
     "type": "bundle"
 }
