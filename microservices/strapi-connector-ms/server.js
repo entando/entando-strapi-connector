@@ -2,7 +2,7 @@
 
 const server = require('./app')({
     logger: {
-        level: 'info'
+        level: process.env.LOG_LEVEL || 'info'
     }
 })
 
