@@ -1,6 +1,6 @@
 'use strict'
 
-const getHealthHandler = (request, reply) => {
+const getHealthHandler = (request, reply, opts) => {
 
   var status = {
     server: "UP",
@@ -14,16 +14,22 @@ const getHealthHandler = (request, reply) => {
       status.db = "DOWN"
     } else {
       client.query(
-        'SELECT 1',
+        "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE,
         function onResult(err, result) {
           release()
-          if (err) status.db = "DOWN"
+          if (err) {
+            status.db = "DOWN"
+          }
+          if (status.db == "DOWN") {
+            status.error = err
+            reply.code(503).send({ status })
+          } else {
+            reply.send({ status })
+          }
         }
       )
     }
   }
-  if (status.db == "DOWN") reply.code(503).send(status)
-  reply.send({status})
 }
 
 const healthSchema = {
@@ -48,7 +54,6 @@ module.exports = async function (fastify, opts, done) {
     schema: healthSchema,
     handler: getHealthHandler
   }
-
   fastify.get('/api/health', getHealthOpts)
   done()
 }
