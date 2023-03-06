@@ -14,23 +14,19 @@ const envSchema = {
     properties: {
         SERVER_SERVLET_CONTEXT_PATH: {
             type: 'string',
-            // default: '/'
-            default: '/entando-strapi-connector-3a731f89/strapi-connector-ms'
+            default: '/'
         },
         SPRING_DATASOURCE_USERNAME: {
             type: 'string',
-            // default: 'entando-strapi-connector-user'
-            default: 'pn_3a731f89_10a82d39_gpent_strapi_connector_ms'
+            default: 'entando-strapi-connector-user'
         },
         SPRING_DATASOURCE_PASSWORD: {
             type: 'string',
-            // default: 'entando-strapi-connector-password'
-            default: '490eba868aeb4279'
+            default: 'entando-strapi-connector-password'
         },
         SPRING_DATASOURCE_URL: {
             type: 'string',
-            // default: 'jdbc:postgresql://localhost:5432/entando-strapi-connector'
-            default: 'jdbc:postgresql://localhost:5432/default_postgresql_dbms_in_namespace_db'
+            default: 'jdbc:postgresql://localhost:5432/entando-strapi-connector'
         },
         STRAPI_CONFIG_TABLE: {
             type: 'string',
@@ -39,27 +35,22 @@ const envSchema = {
         APP_ORIGIN: {
             type: 'string',
             default: 'http://localhost:3000'
-            // default: 'http://giovanni.k8s-entando.org'
         },
         KEYCLOAK_REALM: {
             type: 'string',
-            // default: 'entando-dev'
-            default: 'entando'
+            default: 'entando-dev'
         },
         KEYCLOAK_AUTH_URL: {
             type: 'string',
-            // default: 'http://localhost:9080/auth'
-            default: 'http://giovanni.k8s-entando.org/auth'
+            default: 'http://localhost:9080/auth'
         },
         KEYCLOAK_CLIENT_SECRET: {
             type: 'string',
-            // default: 'CFXd3zdoDgnSvLfovOvjFzpFkfnWfFar'
-            default: 'HbVEF3xGu8IXHXvNkEJq4Sgco7FbVuAk'
+            default: 'CFXd3zdoDgnSvLfovOvjFzpFkfnWfFar'
         },
         KEYCLOAK_CLIENT_ID: {
             type: 'string',
-            // default: 'entando-strapi-connector-ms-client'
-            default: 'pn-3a731f89-10a82d39-gpent-strapi-connector-ms-server'
+            default: 'entando-strapi-connector-ms-client'
         },
         JWT_PUB_KEY :{
             type: 'string',
