@@ -5,7 +5,6 @@ import { envOptions } from './config/envConfig.js'
 
 import postgres from './plugins/postgres.js'
 import health from './routes/api/health.js'
-import test from './routes/api/test.js'
 import strapiConfig from './routes/api/strapiConfig.js'
 
 function buildApp(opts = {}) {

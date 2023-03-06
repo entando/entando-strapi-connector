@@ -5,6 +5,6 @@ async function dbConnector(fastify, opts) {
     const dbUrl = opts.SPRING_DATASOURCE_URL.slice(18)
     const connectionString = 'postgres://' + opts.SPRING_DATASOURCE_USERNAME + ":" + opts.SPRING_DATASOURCE_PASSWORD + "@" + dbUrl
     fastify.register(fastifyPostgres, { connectionString: connectionString })
-    TOKEN_ERROR_CODES}
+}
 
 export default fastifyPlugin(dbConnector)
