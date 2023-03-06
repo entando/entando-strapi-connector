@@ -1,5 +1,3 @@
-'use strict'
-
 const envSchema = {
     type: 'object',
     required: ['SERVER_SERVLET_CONTEXT_PATH',
@@ -10,7 +8,8 @@ const envSchema = {
         'KEYCLOAK_REALM',
         'KEYCLOAK_AUTH_URL',
         'KEYCLOAK_CLIENT_SECRET',
-        'KEYCLOAK_CLIENT_ID'
+        'KEYCLOAK_CLIENT_ID',
+        'JWT_PUB_KEY'
     ],
     properties: {
         SERVER_SERVLET_CONTEXT_PATH: {
@@ -61,13 +60,15 @@ const envSchema = {
             type: 'string',
             // default: 'entando-strapi-connector-ms-client'
             default: 'pn-3a731f89-10a82d39-gpent-strapi-connector-ms-server'
+        },
+        JWT_PUB_KEY :{
+            type: 'string',
+            default: ''
         }
     }
 }
 
-const envOptions = {
+export const envOptions = {
     confKey: 'config', // optional, default: 'config'
     schema: envSchema,
 }
-
-module.exports = envOptions

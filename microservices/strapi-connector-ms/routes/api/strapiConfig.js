@@ -1,4 +1,4 @@
-'use strict'
+import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
 
 const getStrapiConfigsHandler = (request, reply) => {
     const fastify = request.server
@@ -9,8 +9,8 @@ const getStrapiConfigsHandler = (request, reply) => {
             "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE,
             function onResult(err, result) {
                 release()
-                if (err) reply.code(500).send(err)
-                reply.code(200).send(result.rows)
+                if (err) return reply.code(500).send(err)
+                return reply.code(200).send(result.rows)
             }
         )
     }
@@ -26,9 +26,9 @@ const getStrapiConfigHandler = (request, reply) => {
             [request.params.id],
             function onResult(err, result) {
                 release()
-                if (err) reply.code(500).send(err)
-                if (result.rows.length == 0) reply.code(404)
-                reply.code(200).send(result.rows[0])
+                if (err) return reply.code(500).send(err)
+                if (result.rows.length == 0) return reply.code(404)
+                return reply.code(200).send(result.rows[0])
             }
         )
     }
@@ -45,8 +45,8 @@ const postStrapiConfigHandler = (request, reply) => {
             [request.body.url],
             function onResult(err, result) {
                 release()
-                if (err) reply.code(500).send(err)
-                reply.code(201).send(result.rows[0])
+                if (err) return reply.code(500).send(err)
+                return reply.code(201).send(result.rows[0])
             }
         )
     }
@@ -62,8 +62,8 @@ const putStrapiConfigHandler = (request, reply) => {
             [request.body.url, request.params.id],
             function onResult(err, result) {
                 release()
-                if (err) reply.code(500).send(err)
-                reply.code(200).send(result.rows[0])
+                if (err) return reply.code(500).send(err)
+                return reply.code(200).send(result.rows[0])
             }
         )
     }
@@ -79,16 +79,22 @@ const deleteStrapiConfigHandler = (request, reply) => {
             [request.params.id],
             function onResult(err, result) {
                 release()
-                if (err) reply.code(500).send(err)
-                reply.code(204).send()
+                if (err) return reply.code(500).send(err)
+                return reply.code(204).send()
             }
         )
     }
 }
 
-module.exports = async function (fastify, opts, done) {
-    fastify.register(require('../../plugins/keycloak'), fastify.config)
-    fastify.get('/api/strapi-config', { handler: getStrapiConfigsHandler })
+async function strapiConfigRoutes (fastify, opts, done) {
+    fastify.decorate('asyncVerifyJWT', asyncVerifyJWT)
+    fastify.decorate('pubKeyVerifyJWT', pubKeyVerifyJWT)
+    let authStrategy = fastify.asyncVerifyJWT
+    if (fastify.config.JWT_PUB_KEY && fastify.config.JWT_PUB_KEY != '/') {
+        authStrategy = fastify.pubKeyVerifyJWT
+        console.log(authStrategy)
+    }
+    fastify.get('/api/strapi-config', { handler: getStrapiConfigsHandler, onRequest: authStrategy })
     fastify.get('/api/strapi-config/:id', {handler: getStrapiConfigHandler})
     fastify.post('/api/strapi-config', {handler: postStrapiConfigHandler})
     fastify.put('/api/strapi-config/:id', {handler: putStrapiConfigHandler})
@@ -96,3 +102,4 @@ module.exports = async function (fastify, opts, done) {
     done()
 }
 
+export default strapiConfigRoutes

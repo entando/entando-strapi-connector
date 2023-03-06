@@ -1,6 +1,5 @@
-'use strict'
-
-const server = require('./app')({
+import buildApp from './app.js'
+const server = buildApp({
     logger: {
         level: process.env.LOG_LEVEL || 'info'
     }

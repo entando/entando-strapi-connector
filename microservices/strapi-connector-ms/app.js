@@ -1,13 +1,16 @@
-'use strict'
-
 // Require the framework and instantiate it
-const fastify = require('fastify')
-const fastifyEnv = require('@fastify/env')
+import Fastify from 'fastify'
+import fastifyEnv from '@fastify/env'
+import { envOptions } from './config/envConfig.js'
 
-const envOptions = require('./config/envConfig')
+import postgres from './plugins/postgres.js'
+import health from './routes/api/health.js'
+import test from './routes/api/test.js'
+import strapiConfig from './routes/api/strapiConfig.js'
 
-function build(opts = {}) {
-    const app = fastify(opts)
+function buildApp(opts = {}) {
+    const app = Fastify(opts)
+
     var healthOpts = { logLevel: 'warn' }
     var strapiConfigOpts = {}
 
@@ -22,13 +25,19 @@ function build(opts = {}) {
                 strapiConfigOpts.prefix = app.config.SERVER_SERVLET_CONTEXT_PATH
                 app.log.info('Set prefix to ' + app.config.SERVER_SERVLET_CONTEXT_PATH)
             }
-            app.register(require('./plugins/postgres'), app.config)
-            app.register(require('./routes/api/health'), healthOpts)
-            app.register(require('./routes/api/strapiConfig'), strapiConfigOpts)
+            if (app.config.JWT_PUB_KEY && app.config.JWT_PUB_KEY != '/') {
+                app.log.info('Using public key for JWT verifaction: ' + app.config.JWT_PUB_KEY)
+            } else {
+                app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
+                app.log.info('Using introspection endpoint for JWT verifaction: ' + app.config.USER_ENDPOINT)
+            }
+            app.register(postgres, app.config)
+            app.register(health, healthOpts)
+            app.register(strapiConfig, strapiConfigOpts)
         }
     )
 
     return app
 }
 
-module.exports = build
+export default buildApp

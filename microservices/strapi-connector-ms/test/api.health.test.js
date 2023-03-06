@@ -1,10 +1,8 @@
-'use strict'
-
-const { test } = require('tap')
-const build = require('../app')
+import test from 'tap'
+import buildApp from '../app.js'
 
 test('requests the "/api/health" route', async t => {
-  const app = build()
+  const app = buildApp()
 
   const response = await app.inject({
     method: 'GET',

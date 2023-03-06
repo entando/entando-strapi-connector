@@ -1,5 +1,3 @@
-'use strict'
-
 const getHealthHandler = (request, reply, opts) => {
 
   var status = {
@@ -8,27 +6,26 @@ const getHealthHandler = (request, reply, opts) => {
   }
 
   const fastify = request.server
-  fastify.pg.connect(onConnect)
-  function onConnect(err, client, release) {
-    if (err) {
-      status.db = "DOWN"
-    } else {
-      client.query(
-        "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE,
-        function onResult(err, result) {
-          release()
-          if (err) {
-            status.db = "DOWN"
-          }
-          if (status.db == "DOWN") {
-            status.error = err
-            reply.code(503).send({ status })
-          } else {
-            reply.send({ status })
-          }
+
+  try {
+    fastify.pg.query(
+      "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE,
+      function onResult(err, result) {
+        if (err) {
+          fastify.log.error(err)
+          status.db = "DOWN"
+          status.error = err
+          reply.code(503).send({ status })
+        } else {
+          reply.send({ status })
         }
-      )
-    }
+      }
+    )
+  } catch (err) {
+    fastify.log.error(err)
+    status.db = "DOWN"
+    status.error = err
+    reply.code(503).send({ status })
   }
 }
 
@@ -40,7 +37,7 @@ const healthSchema = {
         status: {
           type: 'object',
           properties: {
-            server: { type: 'string'},
+            server: { type: 'string' },
             db: { type: 'string' }
           }
         }
@@ -49,7 +46,7 @@ const healthSchema = {
   }
 }
 
-module.exports = async function (fastify, opts, done) {
+async function getHealth(fastify, opts, done) {
   const getHealthOpts = {
     schema: healthSchema,
     handler: getHealthHandler
@@ -57,4 +54,6 @@ module.exports = async function (fastify, opts, done) {
   fastify.get('/api/health', getHealthOpts)
   done()
 }
+
+export default getHealth
 
