@@ -11,9 +11,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, './src/main.tsx'),
-      name: 'strapi-content-list',
+      name: 'strapi-content',
       formats: ['umd'],
-      fileName: format => `strapi-content-list.${format}.js`
+      fileName: format => `strapi-content.${format}.js`
     },
     outDir: path.resolve(__dirname, './build')
   },
