@@ -32,3 +32,6 @@
 ######################
 
 !.gitkeep
+
+# Node
+.nyc_output
