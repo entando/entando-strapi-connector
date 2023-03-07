@@ -32,7 +32,7 @@ export function pubKeyVerifyJWT(request, reply, done) {
 
     const pubKey = pemHeader.concat(pubKeyString, pemFooter)
     const authHeader = request.headers.authorization
-    if (authHeader && authHeader.split(' ')[0] == 'Bearer') {
+    if (authHeader && authHeader.split(' ')[0].toLowerCase() == 'bearer') {
         const token = authHeader.split(' ')[1]
         request.log.debug({ token: token }, { pubKey: pubKey }, "pubKeyVerifyJWT")
         try {
