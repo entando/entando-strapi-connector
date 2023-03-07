@@ -90,7 +90,7 @@ async function strapiConfigRoutes (fastify, opts, done) {
     fastify.decorate('asyncVerifyJWT', asyncVerifyJWT)
     fastify.decorate('pubKeyVerifyJWT', pubKeyVerifyJWT)
     let authStrategy = fastify.asyncVerifyJWT
-    if (fastify.config.JWT_PUB_KEY && fastify.config.JWT_PUB_KEY != '/') {
+    if (fastify.config.JWT_PUB_KEY) {
         authStrategy = fastify.pubKeyVerifyJWT
         console.log(authStrategy)
     }

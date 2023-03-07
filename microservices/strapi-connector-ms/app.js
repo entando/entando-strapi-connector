@@ -24,7 +24,7 @@ function buildApp(opts = {}) {
                 strapiConfigOpts.prefix = app.config.SERVER_SERVLET_CONTEXT_PATH
                 app.log.info('Set prefix to ' + app.config.SERVER_SERVLET_CONTEXT_PATH)
             }
-            if (app.config.JWT_PUB_KEY && app.config.JWT_PUB_KEY != '/') {
+            if (app.config.JWT_PUB_KEY) {
                 app.log.info('Using public key for JWT verification: ' + app.config.JWT_PUB_KEY)
             } else {
                 app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
