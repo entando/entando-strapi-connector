@@ -25,10 +25,10 @@ function buildApp(opts = {}) {
                 app.log.info('Set prefix to ' + app.config.SERVER_SERVLET_CONTEXT_PATH)
             }
             if (app.config.JWT_PUB_KEY && app.config.JWT_PUB_KEY != '/') {
-                app.log.info('Using public key for JWT verifaction: ' + app.config.JWT_PUB_KEY)
+                app.log.info('Using public key for JWT verification: ' + app.config.JWT_PUB_KEY)
             } else {
                 app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
-                app.log.info('Using introspection endpoint for JWT verifaction: ' + app.config.USER_ENDPOINT)
+                app.log.info('Using introspection endpoint for JWT verification: ' + app.config.USER_ENDPOINT)
             }
             app.register(postgres, app.config)
             app.register(health, healthOpts)
