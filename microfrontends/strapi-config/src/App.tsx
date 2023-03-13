@@ -1,3 +1,4 @@
+import UrlForm from "./components/form/UrlForm"
 import { useEPCRouter } from "./hooks/useEntandoRouter"
 
 export function App() {
@@ -5,16 +6,9 @@ export function App() {
 
   return (
     <div data-theme="light">
-      {matchPath('settings') && (
-        <div>
-          Hello from settings
-        </div>
-      )}
-      {matchPath('content-template') && (
-        <div>
-          Hello from content template
-        </div>
-      )}
+      <UrlForm />
+      {matchPath("settings") && <div>Hello from settings</div>}
+      {matchPath("content-template") && <div>Hello from content template</div>}
     </div>
   )
 }
