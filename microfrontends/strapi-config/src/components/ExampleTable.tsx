@@ -1,7 +1,7 @@
 export function ExampleTable() {
   return (
     <div className="overflow-x-auto">
-      <table className="table w-full">
+      <table className="table w-full test">
         <thead>
           <tr>
             <th></th>
