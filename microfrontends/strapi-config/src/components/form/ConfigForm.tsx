@@ -1,7 +1,7 @@
 import { withFormik } from "formik"
 import React, { useEffect, useState } from "react"
 import TextField from "./TextField"
-import { urlFormValidationSchema } from "./validation/urlFormValidationSchema.js"
+import { configFormValidationSchema } from "./validation/configFormValidationSchema.js"
 
 interface FormData {
   configUrl: string
@@ -11,17 +11,15 @@ interface FormData {
 // chiedere ad irakli come tipizzare le props che arrivano da formik e come risolvere l'errore dell'import dello schema di yup
 // cablare i textfield con formik
 
-const UrlForm: React.FC = (props) => {
-  const {
-    setFieldValue,
-    values,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-    handleBlur
-  } = props
-
+const ConfigForm: React.FC = ({
+  setFieldValue,
+  values,
+  handleChange,
+  handleSubmit,
+  errors,
+  touched,
+  handleBlur
+}) => {
   const [connectionData, setConnectionData] = useState<FormData>({
     configUrl: "",
     token: ""
@@ -49,11 +47,17 @@ const UrlForm: React.FC = (props) => {
         label={"Connection URL"}
         placeholder={"Insert URL"}
         name={"connectionUrl"}
+        value={values.connectionUrl}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
       />
       <TextField
         label={"Connection Token"}
         placeholder={"Insert Token"}
         name={"connectionToken"}
+        value={values.connectionToken}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
       />
       <button className="btn" type="submit">
         Invia
@@ -67,11 +71,11 @@ export default withFormik({
     connectionUrl: "",
     connectionToken: ""
   }),
-  validationSchema: urlFormValidationSchema,
+  validationSchema: configFormValidationSchema,
   handleSubmit: (values, { setSubmitting }) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2))
       setSubmitting(false)
     }, 1000)
   }
-})(UrlForm)
+})(ConfigForm)

@@ -4,9 +4,19 @@ interface TextFieldProps {
   label: string
   placeholder: string
   name: string
+  value: string
+  handleChange: () => void
+  handleBlur: () => void
 }
 
-const TextField: React.FC<TextFieldProps> = ({ label, placeholder, name }) => {
+const TextField: React.FC<TextFieldProps> = ({
+  label,
+  placeholder,
+  name,
+  value,
+  handleChange,
+  handleBlur
+}) => {
   return (
     <>
       <label className="label">
@@ -18,6 +28,9 @@ const TextField: React.FC<TextFieldProps> = ({ label, placeholder, name }) => {
         className="input input-bordered w-full max-w-xs"
         name={name}
         id={name}
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
       />
     </>
   )
