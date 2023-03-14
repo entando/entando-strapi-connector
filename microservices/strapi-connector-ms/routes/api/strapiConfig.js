@@ -94,11 +94,11 @@ async function strapiConfigRoutes (fastify, opts, done) {
         authStrategy = fastify.pubKeyVerifyJWT
         console.log(authStrategy)
     }
-    fastify.get('/api/strapi-config', { handler: getStrapiConfigsHandler })
-    fastify.get('/api/strapi-config/:id', {handler: getStrapiConfigHandler})
-    fastify.post('/api/strapi-config', {handler: postStrapiConfigHandler})
-    fastify.put('/api/strapi-config/:id', {handler: putStrapiConfigHandler})
-    fastify.delete('/api/strapi-config/:id', {handler: deleteStrapiConfigHandler})
+    fastify.get('/api/strapi/config', { handler: getStrapiConfigsHandler })
+    fastify.get('/api/strapi/config/:id', {handler: getStrapiConfigHandler})
+    fastify.post('/api/strapi/config', {handler: postStrapiConfigHandler})
+    fastify.put('/api/strapi/config/:id', {handler: putStrapiConfigHandler})
+    fastify.delete('/api/strapi/config/:id', {handler: deleteStrapiConfigHandler})
     done()
 }
 
