@@ -17,6 +17,9 @@
             <column name="base_url" type="VARCHAR(100)">
                 <constraints nullable="false" />
             </column>
+            <column name="token" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
             <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE" />
             <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE" />
         </createTable>
