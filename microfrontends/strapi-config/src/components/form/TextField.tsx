@@ -35,7 +35,11 @@ const TextField: React.FC<TextFieldProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      {error && <p>{error}</p>}
+      {error && (
+        <label className="label">
+          <span className="label-text-alt">{error}</span>
+        </label>
+      )}
     </>
   )
 }
