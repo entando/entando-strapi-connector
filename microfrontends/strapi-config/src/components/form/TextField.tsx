@@ -1,4 +1,4 @@
-import { Field } from "formik"
+import { Field, FormikProps } from "formik"
 import React from "react"
 
 interface TextFieldProps {
@@ -8,6 +8,7 @@ interface TextFieldProps {
   value: string
   handleChange: () => void
   handleBlur: () => void
+  error: string | undefined
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -16,7 +17,8 @@ const TextField: React.FC<TextFieldProps> = ({
   name,
   value,
   handleChange,
-  handleBlur
+  handleBlur,
+  error
 }) => {
   return (
     <>
@@ -33,6 +35,7 @@ const TextField: React.FC<TextFieldProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
       />
+      {error && <p>{error}</p>}
     </>
   )
 }

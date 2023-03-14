@@ -1,4 +1,4 @@
-import { FormikProps, Formik, Form } from "formik"
+import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
@@ -48,6 +48,7 @@ const ConfigForm: React.FC = () => {
             handleChange={props.handleChange}
             handleBlur={props.handleBlur}
             value={props.values.connectionUrl}
+            error={props.errors.connectionUrl}
           />
           <TextField
             label={"Connection Token"}
@@ -56,6 +57,7 @@ const ConfigForm: React.FC = () => {
             handleChange={props.handleChange}
             handleBlur={props.handleBlur}
             value={props.values.connectionToken}
+            error={props.errors.connectionToken}
           />
           <button className="btn" type="submit">
             Send
