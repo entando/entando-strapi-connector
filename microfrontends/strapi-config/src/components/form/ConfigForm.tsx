@@ -1,28 +1,17 @@
-import { withFormik } from "formik"
+import { FormikProps, Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
 import TextField from "./TextField"
-import { configFormValidationSchema } from "./validation/configFormValidationSchema.js"
+import { configFormValidationSchema } from "./validation/configFormValidationSchema"
 
 interface FormData {
-  configUrl: string
-  token: string
+  connectionUrl: string
+  connectionToken: string
 }
 
-// chiedere ad irakli come tipizzare le props che arrivano da formik e come risolvere l'errore dell'import dello schema di yup
-// cablare i textfield con formik
-
-const ConfigForm: React.FC = ({
-  setFieldValue,
-  values,
-  handleChange,
-  handleSubmit,
-  errors,
-  touched,
-  handleBlur
-}) => {
+const ConfigForm: React.FC = () => {
   const [connectionData, setConnectionData] = useState<FormData>({
-    configUrl: "",
-    token: ""
+    connectionUrl: "",
+    connectionToken: ""
   })
 
   useEffect(() => {
@@ -30,52 +19,51 @@ const ConfigForm: React.FC = ({
       const fetchedData = await fetch("./mock/urlFormResponseOK.json")
         .then((res) => res.json())
         .then((data) => data)
-      setConnectionData(fetchedData)
+      setConnectionData({
+        connectionUrl: fetchedData.configUrl,
+        connectionToken: fetchedData.token
+      })
     }
 
     fetchData()
   }, [])
 
-  useEffect(() => {
-    setFieldValue("connectionUrl", connectionData.configUrl)
-    setFieldValue("connectionToken", connectionData.token)
-  }, [connectionData, setFieldValue])
+  const formSubmitHandler = (values: FormData) => {
+    console.log(values)
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        label={"Connection URL"}
-        placeholder={"Insert URL"}
-        name={"connectionUrl"}
-        value={values.connectionUrl}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-      />
-      <TextField
-        label={"Connection Token"}
-        placeholder={"Insert Token"}
-        name={"connectionToken"}
-        value={values.connectionToken}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-      />
-      <button className="btn" type="submit">
-        Invia
-      </button>
-    </form>
+    <Formik
+      initialValues={connectionData}
+      validationSchema={configFormValidationSchema}
+      enableReinitialize={true}
+      onSubmit={formSubmitHandler}
+    >
+      {(props) => (
+        <Form>
+          <TextField
+            label={"Connection URL"}
+            placeholder={"Insert URL"}
+            name={"connectionUrl"}
+            handleChange={props.handleChange}
+            handleBlur={props.handleBlur}
+            value={props.values.connectionUrl}
+          />
+          <TextField
+            label={"Connection Token"}
+            placeholder={"Insert Token"}
+            name={"connectionToken"}
+            handleChange={props.handleChange}
+            handleBlur={props.handleBlur}
+            value={props.values.connectionToken}
+          />
+          <button className="btn" type="submit">
+            Send
+          </button>
+        </Form>
+      )}
+    </Formik>
   )
 }
 
-export default withFormik({
-  mapPropsToValues: () => ({
-    connectionUrl: "",
-    connectionToken: ""
-  }),
-  validationSchema: configFormValidationSchema,
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2))
-      setSubmitting(false)
-    }, 1000)
-  }
-})(ConfigForm)
+export default ConfigForm
