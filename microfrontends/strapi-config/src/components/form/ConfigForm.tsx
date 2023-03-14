@@ -45,6 +45,7 @@ const ConfigForm: React.FC = () => {
             label={"Connection URL"}
             placeholder={"Insert URL"}
             name={"connectionUrl"}
+            type={"text"}
             handleChange={props.handleChange}
             handleBlur={props.handleBlur}
             value={props.values.connectionUrl}
@@ -54,6 +55,7 @@ const ConfigForm: React.FC = () => {
             label={"Connection Token"}
             placeholder={"Insert Token"}
             name={"connectionToken"}
+            type={"password"}
             handleChange={props.handleChange}
             handleBlur={props.handleBlur}
             value={props.values.connectionToken}

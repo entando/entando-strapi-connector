@@ -1,4 +1,4 @@
-import { Field, FormikProps } from "formik"
+import { Field } from "formik"
 import React, { ChangeEvent } from "react"
 
 interface TextFieldProps {
@@ -9,6 +9,7 @@ interface TextFieldProps {
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleBlur: (event: ChangeEvent<HTMLInputElement>) => void
   error: string | undefined
+  type: string
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -18,7 +19,8 @@ const TextField: React.FC<TextFieldProps> = ({
   value,
   handleChange,
   handleBlur,
-  error
+  error,
+  type
 }) => {
   return (
     <>
@@ -26,7 +28,7 @@ const TextField: React.FC<TextFieldProps> = ({
         <span className="label-text">{label}</span>
       </label>
       <Field
-        type="text"
+        type={type}
         placeholder={placeholder}
         className="input input-bordered w-full max-w-xs"
         name={name}
