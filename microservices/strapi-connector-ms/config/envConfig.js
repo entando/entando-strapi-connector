@@ -30,7 +30,7 @@ const envSchema = {
         },
         STRAPI_CONFIG_TABLE: {
             type: 'string',
-            default: 'strapi_url'
+            default: 'api_config'
         },
         APP_ORIGIN: {
             type: 'string',
