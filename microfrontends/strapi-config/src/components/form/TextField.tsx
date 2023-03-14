@@ -1,13 +1,13 @@
 import { Field, FormikProps } from "formik"
-import React from "react"
+import React, { ChangeEvent } from "react"
 
 interface TextFieldProps {
   label: string
   placeholder: string
   name: string
   value: string
-  handleChange: () => void
-  handleBlur: () => void
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void
+  handleBlur: (event: ChangeEvent<HTMLInputElement>) => void
   error: string | undefined
 }
 

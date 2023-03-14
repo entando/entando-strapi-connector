@@ -59,7 +59,7 @@ const ConfigForm: React.FC = () => {
             value={props.values.connectionToken}
             error={props.errors.connectionToken}
           />
-          <button className="btn" type="submit">
+          <button className="btn" type="submit" disabled={!props.isValid}>
             Send
           </button>
         </Form>
