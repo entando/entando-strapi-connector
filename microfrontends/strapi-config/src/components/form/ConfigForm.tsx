@@ -1,5 +1,6 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
+import { FormattedMessage } from "react-intl"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
 
@@ -33,40 +34,43 @@ const ConfigForm: React.FC = () => {
   }
 
   return (
-    <Formik
-      initialValues={connectionData}
-      validationSchema={configFormValidationSchema}
-      enableReinitialize={true}
-      onSubmit={formSubmitHandler}
-    >
-      {(props) => (
-        <Form>
-          <TextField
-            label={"Connection URL"}
-            placeholder={"Insert URL"}
-            name={"connectionUrl"}
-            type={"text"}
-            handleChange={props.handleChange}
-            handleBlur={props.handleBlur}
-            value={props.values.connectionUrl}
-            error={props.errors.connectionUrl}
-          />
-          <TextField
-            label={"Connection Token"}
-            placeholder={"Insert Token"}
-            name={"connectionToken"}
-            type={"password"}
-            handleChange={props.handleChange}
-            handleBlur={props.handleBlur}
-            value={props.values.connectionToken}
-            error={props.errors.connectionToken}
-          />
-          <button className="btn" type="submit" disabled={!props.isValid}>
-            Send
-          </button>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <FormattedMessage id="app.helloWorld" />
+      <Formik
+        initialValues={connectionData}
+        validationSchema={configFormValidationSchema}
+        enableReinitialize={true}
+        onSubmit={formSubmitHandler}
+      >
+        {(props) => (
+          <Form>
+            <TextField
+              label={<FormattedMessage id="app.helloWorld" />}
+              placeholder={"Insert URL"}
+              name={"connectionUrl"}
+              type={"text"}
+              handleChange={props.handleChange}
+              handleBlur={props.handleBlur}
+              value={props.values.connectionUrl}
+              error={props.errors.connectionUrl}
+            />
+            <TextField
+              label={"Connection Token"}
+              placeholder={"Insert Token"}
+              name={"connectionToken"}
+              type={"password"}
+              handleChange={props.handleChange}
+              handleBlur={props.handleBlur}
+              value={props.values.connectionToken}
+              error={props.errors.connectionToken}
+            />
+            <button className="btn" type="submit" disabled={!props.isValid}>
+              Send
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 
