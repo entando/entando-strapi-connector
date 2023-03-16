@@ -23,8 +23,18 @@ async function strapiConfigDao(fastify, opts) {
         return result.rows[0]
     }
 
+    async function resetStrapiConfig() {
+        const queryString = "DELETE FROM " + tableName + whereCondition
+        const client = await pool.connect()
+        const result = await client.query(queryString, [applicationName])
+        client.release()
+        if (result.rowCount == 0) return false
+        return true
+    }
+
     fastify.decorate('readConf', getStrapiConfig)
     fastify.decorate('saveConf', postStrapiConfig)
+    fastify.decorate('resetConf', resetStrapiConfig)
 }
 
 export default strapiConfigDao

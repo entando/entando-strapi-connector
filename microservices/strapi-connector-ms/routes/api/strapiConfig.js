@@ -55,6 +55,19 @@ const postStrapiConfigHandler = async (request, reply) => {
     }
 }
 
+const deleteStrapiConfigHandler = async (request, reply) => {
+    const fastify = request.server
+
+    try {
+        const result = await fastify.resetConf()
+        if (!result) return reply.code(404).send()
+        return reply.code(204).send()
+    } catch (err) {
+        fastify.log.error(err)
+        return reply.code(500).send(err)
+    }
+}
+
 async function strapiConfigRoutes (fastify, opts, done) {
     fastify.decorate('asyncVerifyJWT', asyncVerifyJWT)
     fastify.decorate('pubKeyVerifyJWT', pubKeyVerifyJWT)
@@ -64,8 +77,9 @@ async function strapiConfigRoutes (fastify, opts, done) {
     if (fastify.config.JWT_PUB_KEY) {
         authStrategy = fastify.pubKeyVerifyJWT
     }
-    fastify.get('/api/strapi/config', { handler: getStrapiConfigHandler })
-    fastify.post('/api/strapi/config', {handler: postStrapiConfigHandler})
+    fastify.get('/api/strapi/config', { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
+    fastify.post('/api/strapi/config', { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
+    fastify.delete('/api/strapi/config', { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
     done()
 }
 
