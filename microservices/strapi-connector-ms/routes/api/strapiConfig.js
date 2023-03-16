@@ -1,82 +1,71 @@
+import fastifyPlugin from 'fastify-plugin'
 import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
 import { appConstants } from '../../config/appConstants.js'
+import strapiConfigDao from '../../db/dao.js'
 
 
-const getStrapiConfigHandler = (request, reply) => {
-    const queryString = "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " WHERE application_name = $1"
+const getStrapiConfigHandler = async (request, reply) => {
     const fastify = request.server
-    fastify.pg.connect(onConnect)
-    function onConnect(err, client, release) {
-        if (err) return reply.send(err)
-        client.query(
-            queryString,
-            [appConstants.APPLICATION_NAME],
-            function onResult(err, result) {
-                release()
-                if (err) return reply.code(500).send(err)
-                if (result.rows.length == 0) return reply.code(404).send({ configUrl: null, token: false })
-                return reply.code(200).send({ configUrl: result.rows[0].base_url, token: true })
-            }
-        )
+
+    try {
+        const result = await fastify.readConf()
+        if (!result) return reply.code(404).send({ configUrl: null, token: false })
+        return reply.code(200).send({ configUrl: result.base_url, token: true })
+    } catch (err) {
+        fastify.log.error(err)
+        return reply.code(500).send(err)
     }
 }
 
-const postStrapiConfigHandler = (request, reply) => {
+const postStrapiConfigHandler = async (request, reply) => {
+    const fastify = request.server
     let errors = []
-    if (!request.body.configUrl) {
+    let configUrl = request.body.configUrl
+    const token = request.body.token
+
+    if (!configUrl) {
         errors.push({ field: "configUrl", errorCode: appConstants.ERR_MANDATORY})
     }
-    if (!request.body.token) {
+    if (!token) {
         errors.push({ field: "token", errorCode: appConstants.ERR_MANDATORY })
     }
-    if (errors.length > 0) {
-        return reply.code(400).send({status: 400, errors: errors})
-    }
-    const queryString = "INSERT INTO " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + "(application_name, base_url, token) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT api_config_appname DO UPDATE SET base_url = EXCLUDED.base_url, token = EXCLUDED.token RETURNING base_url, token"
-    const fastify = request.server
-    fastify.pg.connect(onConnect)
-    function onConnect(err, client, release) {
-        if (err) return reply.send(err)
-        client.query(
-            queryString,
-            [appConstants.APPLICATION_NAME, request.body.configUrl, request.body.token],
-            function onResult(err, result) {
-                release()
-                if (err) return reply.code(500).send(err)
-                return reply.code(201).send({ status: 201, configUrl: result.rows[0].base_url, token: result.rows[0].token, errors: null })
-            }
-        )
-    }
-}
 
-const deleteStrapiConfigHandler = (request, reply) => {
-    const fastify = request.server
-    const queryString = "DELETE FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " WHERE application_name = $1"
-    fastify.pg.connect(onConnect)
-    function onConnect(err, client, release) {
-        if (err) return reply.send(err)
-        client.query(
-            queryString,
-            [appConstants.APPLICATION_NAME],
-            function onResult(err, result) {
-                release()
-                if (err) return reply.code(500).send(err)
-                return reply.code(204).send()
-            }
-        )
+    try {
+        configUrl = new URL(configUrl)
+    } catch (err) {
+        fastify.log.warn(err)
+        errors.push({ field: "configUrl", errorCode: appConstants.ERR_INVALID_URL })
+    }
+
+    const regex = /^\S+$/gm
+    if (!regex.test(token)) {
+        errors.push({ field: "token", errorCode: appConstants.ERR_INVALID_TOKEN })
+    }
+
+    if (errors.length > 0) {
+        return reply.code(400).send({ status: 400, errors: errors })
+    }
+
+    try {
+        const result = await fastify.saveConf(configUrl, token)
+        return reply.code(201).send({ status: 201, configUrl: result.base_url, token: result.token, errors: null })
+    } catch (err) {
+        fastify.log.error(err)
+        return reply.code(500).send(err)
     }
 }
 
 async function strapiConfigRoutes (fastify, opts, done) {
     fastify.decorate('asyncVerifyJWT', asyncVerifyJWT)
     fastify.decorate('pubKeyVerifyJWT', pubKeyVerifyJWT)
+    fastify.register(fastifyPlugin(strapiConfigDao))
+
     let authStrategy = fastify.asyncVerifyJWT
     if (fastify.config.JWT_PUB_KEY) {
         authStrategy = fastify.pubKeyVerifyJWT
     }
     fastify.get('/api/strapi/config', { handler: getStrapiConfigHandler })
     fastify.post('/api/strapi/config', {handler: postStrapiConfigHandler})
-    fastify.delete('/api/strapi/config', {handler: deleteStrapiConfigHandler})
     done()
 }
 
