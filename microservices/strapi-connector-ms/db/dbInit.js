@@ -1,22 +1,32 @@
-// import fastifyPlugin from 'fastify-plugin'
-import { Liquibase, LiquibaseLogLevels, POSTGRESQL_DEFAULT_CONFIG } from 'liquibase';
+import Postgrator from 'postgrator'
 
+async function dbInit() {
+    const fastify = this
 
-async function dbInit(opts) {
-    const initConfig = {
-        ...POSTGRESQL_DEFAULT_CONFIG,
-        changeLogFile: './db/db-init.xml',
-        url: opts.SPRING_DATASOURCE_URL,
-        username: opts.SPRING_DATASOURCE_USERNAME,
-        password: opts.SPRING_DATASOURCE_PASSWORD,
-        liquibaseSchemaName: opts.SPRING_DATASOURCE_USERNAME,
-        logLevel: LiquibaseLogLevels.Warning,
+    const client = fastify.pg
+    const opts = fastify.config
+    const db = opts.SPRING_DATASOURCE_URL.split("/").at(-1)
+    const schema = opts.SPRING_DATASOURCE_USERNAME
+    try {
+        const postgrator = new Postgrator({
+            migrationPattern: './db/*',
+            driver: 'pg',
+            database: db,
+            schemaTable: 'migrations',
+            currentSchema: schema,
+            execQuery: (query) => client.query(query),
+        });
+
+        const result = await postgrator.migrate()
+
+        if (result.length === 0) {
+            fastify.log.debug("No DB migration necessary")
+        } else {
+            fastify.log.info("DB migration done")
+        }
+    } catch (error) {
+        fastify.log.error(error)
     }
-
-    const instance = new Liquibase(initConfig);
-
-    await instance.status()
-    await instance.update()
 }
 
 export default dbInit

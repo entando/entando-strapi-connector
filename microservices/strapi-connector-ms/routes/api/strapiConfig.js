@@ -3,7 +3,7 @@ import { appConstants } from '../../config/appConstants.js'
 
 
 const getStrapiConfigHandler = (request, reply) => {
-    const queryString = "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + " WHERE application_name = $1"
+    const queryString = "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " WHERE application_name = $1"
     const fastify = request.server
     fastify.pg.connect(onConnect)
     function onConnect(err, client, release) {
@@ -32,7 +32,7 @@ const postStrapiConfigHandler = (request, reply) => {
     if (errors.length > 0) {
         return reply.code(400).send({status: 400, errors: errors})
     }
-    const queryString = "INSERT INTO " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + "(application_name, base_url, token) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT api_config_appname DO UPDATE SET base_url = EXCLUDED.base_url, token = EXCLUDED.token RETURNING base_url, token"
+    const queryString = "INSERT INTO " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + "(application_name, base_url, token) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT api_config_appname DO UPDATE SET base_url = EXCLUDED.base_url, token = EXCLUDED.token RETURNING base_url, token"
     const fastify = request.server
     fastify.pg.connect(onConnect)
     function onConnect(err, client, release) {
@@ -51,7 +51,7 @@ const postStrapiConfigHandler = (request, reply) => {
 
 const deleteStrapiConfigHandler = (request, reply) => {
     const fastify = request.server
-    const queryString = "DELETE FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + " WHERE application_name = $1"
+    const queryString = "DELETE FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " WHERE application_name = $1"
     fastify.pg.connect(onConnect)
     function onConnect(err, client, release) {
         if (err) return reply.send(err)

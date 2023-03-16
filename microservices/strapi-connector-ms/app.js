@@ -31,7 +31,9 @@ function buildApp(opts = {}) {
                 app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
                 app.log.info('Using introspection endpoint for JWT verification: ' + app.config.USER_ENDPOINT)
             }
-            // dbInit(app.config)
+
+            app.addHook('onReady', dbInit)
+
             app.register(postgres, app.config)
             app.register(health, healthOpts)
             app.register(strapiConfig, strapiConfigOpts)

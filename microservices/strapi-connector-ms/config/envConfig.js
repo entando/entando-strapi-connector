@@ -28,7 +28,7 @@ const envSchema = {
             type: 'string',
             default: 'jdbc:postgresql://localhost:5432/entando-strapi-connector'
         },
-        STRAPI_CONFIG_TABLE: {
+        API_CONFIG_TABLE: {
             type: 'string',
             default: 'api_config'
         },

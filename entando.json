@@ -18,8 +18,8 @@
                     "value": "info"
                 },
                 {
-                    "name": "STRAPI_CONFIG_TABLE",
-                    "value": "strapi_url"
+                    "name": "API_CONFIG_TABLE",
+                    "value": "api_config"
                 }
             ]
         }
