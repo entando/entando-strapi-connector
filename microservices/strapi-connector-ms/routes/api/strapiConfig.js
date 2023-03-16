@@ -6,7 +6,7 @@ const getStrapiConfigsHandler = (request, reply) => {
     function onConnect(err, client, release) {
         if (err) return reply.send(err)
         client.query(
-            "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE,
+            "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE,
             function onResult(err, result) {
                 release()
                 if (err) return reply.code(500).send(err)
@@ -22,7 +22,7 @@ const getStrapiConfigHandler = (request, reply) => {
     function onConnect(err, client, release) {
         if (err) return reply.send(err)
         client.query(
-            "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + " WHERE id = $1",
+            "SELECT * FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " WHERE id = $1",
             [request.params.id],
             function onResult(err, result) {
                 release()
@@ -41,7 +41,7 @@ const postStrapiConfigHandler = (request, reply) => {
         if (err) return reply.send(err)
         console.log(request.body.url)
         client.query(
-            "INSERT INTO " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + "(url) VALUES($1) RETURNING id, url",
+            "INSERT INTO " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + "(url) VALUES($1) RETURNING id, url",
             [request.body.url],
             function onResult(err, result) {
                 release()
@@ -58,7 +58,7 @@ const putStrapiConfigHandler = (request, reply) => {
     function onConnect(err, client, release) {
         if (err) return reply.send(err)
         client.query(
-            "UPDATE " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + " SET url = $1 WHERE id = $2 RETURNING id, url",
+            "UPDATE " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " SET url = $1 WHERE id = $2 RETURNING id, url",
             [request.body.url, request.params.id],
             function onResult(err, result) {
                 release()
@@ -75,7 +75,7 @@ const deleteStrapiConfigHandler = (request, reply) => {
     function onConnect(err, client, release) {
         if (err) return reply.send(err)
         client.query(
-            "DELETE FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE + " WHERE id = $1",
+            "DELETE FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE + " WHERE id = $1",
             [request.params.id],
             function onResult(err, result) {
                 release()

@@ -4,6 +4,7 @@ import fastifyEnv from '@fastify/env'
 import { envOptions } from './config/envConfig.js'
 
 import postgres from './plugins/postgres.js'
+import dbInit from './db/dbInit.js'
 import health from './routes/api/health.js'
 import strapiConfig from './routes/api/strapiConfig.js'
 
@@ -30,6 +31,9 @@ function buildApp(opts = {}) {
                 app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
                 app.log.info('Using introspection endpoint for JWT verification: ' + app.config.USER_ENDPOINT)
             }
+
+            app.addHook('onReady', dbInit)
+
             app.register(postgres, app.config)
             app.register(health, healthOpts)
             app.register(strapiConfig, strapiConfigOpts)
