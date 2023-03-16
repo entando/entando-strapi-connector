@@ -1,7 +1,7 @@
 {
   "name": "strapi-connector-ms",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Strapi Connector Microservice",
   "main": "server.js",
   "directories": {
