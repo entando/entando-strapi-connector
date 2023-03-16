@@ -1,31 +1,16 @@
-const getHealthHandler = (request, reply, opts) => {
-
-  var status = {
-    server: "UP",
-    db: "UP"
-  }
-
+const getHealthHandler = async (request, reply, opts) => {
   const fastify = request.server
+  const queryString = "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE
+  const pool = fastify.pg
 
   try {
-    fastify.pg.query(
-      "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE,
-      function onResult(err, result) {
-        if (err) {
-          fastify.log.error(err)
-          status.db = "DOWN"
-          status.error = err
-          reply.code(503).send({ status })
-        } else {
-          reply.send({ status })
-        }
-      }
-    )
+    const client = await pool.connect()
+    await client.query(queryString)
+    client.release()
+    reply.code(200).send({ status: { server: "UP", db: "UP" }, error: null })
   } catch (err) {
     fastify.log.error(err)
-    status.db = "DOWN"
-    status.error = err
-    reply.code(503).send({ status })
+    reply.code(503).send({ status: { server: "UP", db: "DOWN" }, error: err })
   }
 }
 
@@ -40,6 +25,11 @@ const healthSchema = {
             server: { type: 'string' },
             db: { type: 'string' }
           }
+        },
+        error: {
+          type: 'array',
+          nullable: true,
+          items: { type: 'string' }
         }
       }
     }
