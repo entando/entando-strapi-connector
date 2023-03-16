@@ -18,7 +18,7 @@ async function strapiConfigDao(fastify, opts) {
     async function postStrapiConfig(url, token) {
         const queryString = "INSERT INTO " + tableName + "(application_name, base_url, token) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT api_config_appname DO UPDATE SET base_url = EXCLUDED.base_url, token = EXCLUDED.token RETURNING base_url, token"
         const client = await pool.connect()
-        const result = await client.query(queryString, [applicationName, url.toString(), token])
+        const result = await client.query(queryString, [applicationName, url, token])
         client.release()
         return result.rows[0]
     }

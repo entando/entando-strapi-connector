@@ -47,7 +47,7 @@ const postStrapiConfigHandler = async (request, reply) => {
     }
 
     try {
-        const result = await fastify.saveConf(configUrl, token)
+        const result = await fastify.saveConf(configUrl.toString(), token)
         return reply.code(201).send({ status: 201, configUrl: result.base_url, token: result.token, errors: null })
     } catch (err) {
         fastify.log.error(err)
