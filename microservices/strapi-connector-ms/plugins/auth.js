@@ -12,7 +12,6 @@ export async function asyncVerifyJWT (request, reply, done) {
                 fastify.config.USER_ENDPOINT,
                 { headers: { "Authorization": authHeader }}
             )
-            // done()
         } catch (err) {
             request.log.warn(err.response.body)
             return reply.code(err.response.statusCode).send(err.response.body)
