@@ -45,7 +45,7 @@ const ConfigForm: React.FC = () => {
         {(props) => (
           <Form>
             <TextField
-              label={<FormattedMessage id="app.helloWorld" />}
+              label={"Connection URL"}
               placeholder={"Insert URL"}
               name={"connectionUrl"}
               type={"text"}
