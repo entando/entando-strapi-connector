@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
-import { FormattedMessage } from "react-intl"
+import { useIntl } from "react-intl"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
 
@@ -10,6 +10,7 @@ interface FormData {
 }
 
 const ConfigForm: React.FC = () => {
+  const intl = useIntl()
   const [connectionData, setConnectionData] = useState<FormData>({
     connectionUrl: "",
     connectionToken: ""
@@ -35,7 +36,6 @@ const ConfigForm: React.FC = () => {
 
   return (
     <>
-      <FormattedMessage id="app.helloWorld" />
       <Formik
         initialValues={connectionData}
         validationSchema={configFormValidationSchema}
@@ -45,8 +45,10 @@ const ConfigForm: React.FC = () => {
         {(props) => (
           <Form>
             <TextField
-              label={"Connection URL"}
-              placeholder={"Insert URL"}
+              label={intl.formatMessage({ id: "app.connectionUrlLabel" })}
+              placeholder={intl.formatMessage({
+                id: "app.connectionUrlPlaceholder"
+              })}
               name={"connectionUrl"}
               type={"text"}
               handleChange={props.handleChange}
@@ -55,8 +57,10 @@ const ConfigForm: React.FC = () => {
               error={props.errors.connectionUrl}
             />
             <TextField
-              label={"Connection Token"}
-              placeholder={"Insert Token"}
+              label={intl.formatMessage({ id: "app.connectionTokenLabel" })}
+              placeholder={intl.formatMessage({
+                id: "app.connectionTokenPlaceholder"
+              })}
               name={"connectionToken"}
               type={"password"}
               handleChange={props.handleChange}
@@ -65,7 +69,7 @@ const ConfigForm: React.FC = () => {
               error={props.errors.connectionToken}
             />
             <button className="btn" type="submit" disabled={!props.isValid}>
-              Send
+              {intl.formatMessage({ id: "app.sendButton" })}
             </button>
           </Form>
         )}

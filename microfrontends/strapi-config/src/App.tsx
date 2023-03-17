@@ -5,13 +5,10 @@ import messagesEn from "./i18n/en.json"
 import messagesIt from "./i18n/it.json"
 import { useState } from "react"
 
-interface Caption {
-  [key: string]: string
-}
-
 interface Message {
-  en: Caption
-  it: Caption
+  [key: string]: {
+    [key: string]: string
+  }
 }
 
 const messages: Message = {
@@ -22,7 +19,7 @@ const messages: Message = {
 export function App() {
   const { matchPath } = useEPCRouter()
 
-  const [locale, setLocale] = useState<string>("it")
+  const [locale, setLocale] = useState<string>("en")
 
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
