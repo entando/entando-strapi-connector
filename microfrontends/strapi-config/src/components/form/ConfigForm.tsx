@@ -1,6 +1,8 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
 import { useIntl } from "react-intl"
+import { setTimeout } from "timers/promises"
+import Toast from "../Toast"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
 
@@ -11,10 +13,12 @@ interface FormData {
 
 const ConfigForm: React.FC = () => {
   const intl = useIntl()
+
   const [connectionData, setConnectionData] = useState<FormData>({
     connectionUrl: "",
     connectionToken: ""
   })
+  const [dataIsSent, setDataIsSent] = useState<Boolean>(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +36,10 @@ const ConfigForm: React.FC = () => {
 
   const formSubmitHandler = (values: FormData) => {
     console.log(values)
+    setDataIsSent(true)
+    window.setTimeout(() => {
+      setDataIsSent(false)
+    }, 5000)
   }
 
   return (
@@ -74,6 +82,7 @@ const ConfigForm: React.FC = () => {
           </Form>
         )}
       </Formik>
+      {dataIsSent && <Toast toastMessage="Data is sent" toastStyle="success" />}
     </>
   )
 }
