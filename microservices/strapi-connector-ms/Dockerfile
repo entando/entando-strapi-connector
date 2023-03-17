@@ -1,5 +1,8 @@
 FROM node:lts-alpine
 
+ENV NPM_CONFIG_CACHE=/app/.npm
+ENV PORT=8081
+
 # node-canvas
 RUN apk add --no-cache \
     build-base \
@@ -11,12 +14,14 @@ RUN apk add --no-cache \
 
 # Use latest version of npm
 RUN npm install npm@latest -g
+
+WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install --no-optional && npm cache clean --force
-WORKDIR /usr
 COPY . .
+RUN chmod -R g=u /app
 
-ENV PORT=8081
 EXPOSE 8081
+
 
 CMD [ "npm", "run", "start" ]

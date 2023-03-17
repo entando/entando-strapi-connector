@@ -9,7 +9,7 @@ const getHealthHandler = (request, reply, opts) => {
 
   try {
     fastify.pg.query(
-      "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.STRAPI_CONFIG_TABLE,
+      "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE,
       function onResult(err, result) {
         if (err) {
           fastify.log.error(err)
