@@ -1,6 +1,5 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
-import { useIntl } from "react-intl"
 import { useTranslation } from "../../i18n/use-translation"
 import Toast from "../Toast"
 import TextField from "./TextField"
@@ -12,7 +11,6 @@ interface FormData {
 }
 
 const ConfigForm: React.FC = () => {
-  const intl = useIntl()
   const translate = useTranslation()
   const [connectionData, setConnectionData] = useState<FormData>({
     connectionUrl: "",
