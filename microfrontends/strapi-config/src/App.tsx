@@ -24,8 +24,11 @@ export function App() {
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
-        <ConfigForm />
-        {matchPath("settings") && <div>Hello from settings</div>}
+        {matchPath("settings") && (
+          <div>
+            <ConfigForm />
+          </div>
+        )}
         {matchPath("content-template") && (
           <div>Hello from content template</div>
         )}

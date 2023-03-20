@@ -52,19 +52,6 @@ const ConfigForm: React.FC = () => {
       >
         {(props) => (
           <Form>
-            {/* <TextField
-              label={intl.formatMessage({ id: "app.connectionUrlLabel" })}
-              placeholder={intl.formatMessage({
-                id: "app.connectionUrlPlaceholder"
-              })}
-              name={"connectionUrl"}
-              type={"text"}
-              handleChange={props.handleChange}
-              handleBlur={props.handleBlur}
-              value={props.values.connectionUrl}
-              error={props.errors.connectionUrl}
-            /> */}
-
             <TextField
               label={translate("connectionUrlLabel")}
               placeholder={translate("connectionUrlPlaceholder")}
