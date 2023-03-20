@@ -33,9 +33,7 @@
             "group": "free",
             "publicFolder": "public",
             "commands": {
-                "run": "npm run dev",
-                "build": "npm run build",
-                "pack": "npm run build"
+                "run": "npm run dev"
             },
             "titles": {
                 "en": "strapi-content-list",
@@ -51,9 +49,7 @@
             "group": "free",
             "publicFolder": "public",
             "commands": {
-                "run": "npm run dev",
-                "build": "npm run build",
-                "pack": "npm run build"
+                "run": "npm run dev"
             }
         },
         {
@@ -64,9 +60,7 @@
             "group": "free",
             "publicFolder": "public",
             "commands": {
-                "run": "npm run dev",
-                "build": "npm run build",
-                "pack": "npm run build"
+                "run": "npm run dev"
             },
             "titles": {
                 "en": "strapi-content",
@@ -82,9 +76,7 @@
             "group": "free",
             "publicFolder": "public",
             "commands": {
-                "run": "npm run dev",
-                "build": "npm run build",
-                "pack": "npm run build"
+                "run": "npm run dev"
             }
         },
         {
@@ -100,9 +92,7 @@
                 "/content-template"
             ],
             "commands": {
-                "run": "npm run dev",
-                "build": "npm run build",
-                "pack": "npm run build"
+                "run": "npm run dev"
             },
             "nav": [
                 {
