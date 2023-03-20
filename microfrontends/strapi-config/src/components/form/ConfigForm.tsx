@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
 import { useIntl } from "react-intl"
-import { setTimeout } from "timers/promises"
+import { useTranslation } from "../../i18n/use-translation"
 import Toast from "../Toast"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
@@ -13,7 +13,7 @@ interface FormData {
 
 const ConfigForm: React.FC = () => {
   const intl = useIntl()
-
+  const translate = useTranslation()
   const [connectionData, setConnectionData] = useState<FormData>({
     connectionUrl: "",
     connectionToken: ""
@@ -52,7 +52,7 @@ const ConfigForm: React.FC = () => {
       >
         {(props) => (
           <Form>
-            <TextField
+            {/* <TextField
               label={intl.formatMessage({ id: "app.connectionUrlLabel" })}
               placeholder={intl.formatMessage({
                 id: "app.connectionUrlPlaceholder"
@@ -63,12 +63,22 @@ const ConfigForm: React.FC = () => {
               handleBlur={props.handleBlur}
               value={props.values.connectionUrl}
               error={props.errors.connectionUrl}
-            />
+            /> */}
+
             <TextField
-              label={intl.formatMessage({ id: "app.connectionTokenLabel" })}
-              placeholder={intl.formatMessage({
-                id: "app.connectionTokenPlaceholder"
-              })}
+              label={translate("connectionUrlLabel")}
+              placeholder={translate("connectionUrlPlaceholder")}
+              name={"connectionUrl"}
+              type={"text"}
+              handleChange={props.handleChange}
+              handleBlur={props.handleBlur}
+              value={props.values.connectionUrl}
+              error={props.errors.connectionUrl}
+            />
+
+            <TextField
+              label={translate("connectionTokenLabel")}
+              placeholder={translate("connectionTokenPlaceholder")}
               name={"connectionToken"}
               type={"password"}
               handleChange={props.handleChange}
@@ -77,7 +87,7 @@ const ConfigForm: React.FC = () => {
               error={props.errors.connectionToken}
             />
             <button className="btn" type="submit" disabled={!props.isValid}>
-              {intl.formatMessage({ id: "app.sendButton" })}
+              {translate("connectButton")}
             </button>
           </Form>
         )}

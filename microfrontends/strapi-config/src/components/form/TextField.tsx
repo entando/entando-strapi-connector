@@ -1,10 +1,11 @@
 import { Field } from "formik"
 import React, { ChangeEvent } from "react"
 import { useIntl } from "react-intl"
+import { useTranslation } from "../../i18n/use-translation"
 
 interface TextFieldProps {
-  label: string
-  placeholder: string
+  label: string | undefined
+  placeholder: string | undefined
   name: string
   value: string
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -23,11 +24,7 @@ const TextField: React.FC<TextFieldProps> = ({
   error,
   type
 }) => {
-  const intl = useIntl()
-
-  const getTranslation = (key: string) => {
-    return intl.formatMessage({ id: key })
-  }
+  const translate = useTranslation()
 
   return (
     <>
@@ -46,7 +43,7 @@ const TextField: React.FC<TextFieldProps> = ({
       />
       {error && (
         <label className="label">
-          <span className="label-text-alt">{getTranslation(error)}</span>
+          <span className="label-text-alt">{translate(error)}</span>
         </label>
       )}
     </>

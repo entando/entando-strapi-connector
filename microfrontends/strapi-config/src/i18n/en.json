@@ -3,7 +3,7 @@
   "app.connectionUrlPlaceholder": "Insert Strapi URL",
   "app.connectionTokenLabel": "Connection Token",
   "app.connectionTokenPlaceholder": "Insert Connection Token",
-  "app.sendButton": "Connect",
+  "app.connectButton": "Connect",
   "app.enterAValidUrl": "Enter a valid URL",
   "app.urlIsRequired": "URL field is required",
   "app.tokenIsRequired": "Token field is required"
