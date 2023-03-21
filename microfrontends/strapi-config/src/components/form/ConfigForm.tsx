@@ -17,10 +17,21 @@ const ConfigForm: React.FC = () => {
     connectionToken: ""
   })
   const [dataIsSent, setDataIsSent] = useState<Boolean>(false)
+  const queryString = window.location.hostname
+  const protocol = window.location.protocol
+
+  //dminnai.k8s-entando.org/app-builder/entando-strapi-connector-b26b60ed/dminnai.k8s-entando.org/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config
+
+  console.log("qs", protocol + queryString)
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedData = await fetch("./mock/urlFormResponseOK.json")
+      const fetchedData = await fetch(
+        protocol +
+          "//" +
+          queryString +
+          "/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config"
+      )
         .then((res) => res.json())
         .then((data) => data)
       setConnectionData({
