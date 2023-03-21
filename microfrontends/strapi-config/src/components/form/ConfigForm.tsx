@@ -17,29 +17,30 @@ const ConfigForm: React.FC = () => {
     connectionToken: ""
   })
   const [dataIsSent, setDataIsSent] = useState<Boolean>(false)
-  const queryString = window.location.hostname
-  const protocol = window.location.protocol
+  const [error, setError] = useState<Boolean>(false)
 
-  //dminnai.k8s-entando.org/app-builder/entando-strapi-connector-b26b60ed/dminnai.k8s-entando.org/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config
-
-  console.log("qs", protocol + queryString)
+  // const queryString = window.location.hostname
+  // const protocol = window.location.protocol
+  // "https://dminnai.k8s-entando.org/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config"
 
   useEffect(() => {
     const fetchData = async () => {
       const fetchedData = await fetch(
-        protocol +
-          "//" +
-          queryString +
-          "/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config"
+        `${window.location.origin}/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config`
       )
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            return res.json()
+          }
+          throw new Error("Errore")
+        })
         .then((data) => data)
+        .catch((error) => setError(true))
       setConnectionData({
         connectionUrl: fetchedData.configUrl,
         connectionToken: fetchedData.token
       })
     }
-
     fetchData()
   }, [])
 
@@ -88,7 +89,12 @@ const ConfigForm: React.FC = () => {
           </Form>
         )}
       </Formik>
-      {dataIsSent && <Toast toastMessage="Data is sent" toastStyle="success" />}
+      {error && (
+        <Toast
+          toastMessage="Cannot retrieve data from server, Connection URL & Token "
+          toastStyle="error"
+        />
+      )}
     </>
   )
 }
