@@ -20,7 +20,6 @@ function buildApp(opts = {}) {
                 app.log.error(err)
                 process.exit(1)
             }
-            app.log.debug(app.config)
             if (app.config.SERVER_SERVLET_CONTEXT_PATH && app.config.SERVER_SERVLET_CONTEXT_PATH != '/') {
                 healthOpts.prefix = app.config.SERVER_SERVLET_CONTEXT_PATH
                 strapiConfigOpts.prefix = app.config.SERVER_SERVLET_CONTEXT_PATH
