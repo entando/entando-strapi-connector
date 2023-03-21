@@ -1,7 +1,9 @@
 import fastifyPlugin from 'fastify-plugin'
+import got from 'got'
 import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
 import { appConstants } from '../../config/appConstants.js'
 import strapiConfigDao from '../../db/dao.js'
+import { hasErrors, isDefined, checkUrl, checkToken, checkConfig } from '../../utils/strapiConfigUtils.js'
 
 
 const getStrapiConfigHandler = async (request, reply) => {
@@ -23,31 +25,50 @@ const postStrapiConfigHandler = async (request, reply) => {
     let configUrl = request.body.configUrl
     const token = request.body.token
 
-    if (!configUrl) {
-        errors.push({ field: "configUrl", errorCode: appConstants.ERR_MANDATORY})
+    if (!isDefined(configUrl)) {
+        const payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
+        fastify.log.warn(payload)
+        errors.push(payload)
     }
-    if (!token) {
-        errors.push({ field: "token", errorCode: appConstants.ERR_MANDATORY })
-    }
-
-    try {
-        configUrl = new URL(configUrl)
-    } catch (err) {
-        fastify.log.warn(err)
-        errors.push({ field: "configUrl", errorCode: appConstants.ERR_MALFORMED_URL })
+    if (!isDefined(token)) {
+        const payload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
+        fastify.log.warn(payload)
+        errors.push(payload)
     }
 
-    const regex = /^\S+$/gm
-    if (!regex.test(token)) {
-        errors.push({ field: "token", errorCode: appConstants.ERR_MALFORMED_TOKEN })
+    if (!hasErrors(errors)) {
+        try {
+            checkUrl(configUrl)
+        } catch (err) {
+            fastify.log.warn(err.payload, err.message)
+            errors.push(err.payload)
+        }
+
+        try {
+            checkToken(token)
+        } catch (err) {
+            fastify.log.warn(err.payload, err.message)
+            errors.push(err.payload)
+        }
     }
 
-    if (errors.length > 0) {
+    if (!hasErrors(errors)) {
+        try {
+            await checkConfig(configUrl + appConstants.STRAPI_COMPONENTS_ENDPOINT, token)
+            await checkConfig(configUrl + appConstants.STRAPI_CONTENT_TYPES_ENDPOINT, token)
+            fastify.log.info(appConstants.TOKEN_VERIFY_SUCCESS)
+        } catch (err) {
+            fastify.log.warn(err.payload, err.message)
+            errors.push(err.payload)
+        }
+    }
+
+    if (hasErrors(errors)) {
         return reply.code(400).send({ status: 400, errors: errors })
     }
 
     try {
-        const result = await fastify.saveConf(configUrl.toString(), token)
+        const result = await fastify.saveConf(configUrl, token)
         return reply.code(201).send({ status: 201, configUrl: result.base_url, token: result.token, errors: null })
     } catch (err) {
         fastify.log.error(err)
