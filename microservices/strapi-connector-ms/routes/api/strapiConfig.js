@@ -34,12 +34,12 @@ const postStrapiConfigHandler = async (request, reply) => {
         configUrl = new URL(configUrl)
     } catch (err) {
         fastify.log.warn(err)
-        errors.push({ field: "configUrl", errorCode: appConstants.ERR_INVALID_URL })
+        errors.push({ field: "configUrl", errorCode: appConstants.ERR_MALFORMED_URL })
     }
 
     const regex = /^\S+$/gm
     if (!regex.test(token)) {
-        errors.push({ field: "token", errorCode: appConstants.ERR_INVALID_TOKEN })
+        errors.push({ field: "token", errorCode: appConstants.ERR_MALFORMED_TOKEN })
     }
 
     if (errors.length > 0) {
