@@ -103,6 +103,92 @@
       },
       "nav": [
         {
+            "name": "strapi-content-list",
+            "customElement": "strapi-content-list",
+            "stack": "react",
+            "type": "widget",
+            "group": "free",
+            "publicFolder": "public",
+            "commands": {
+                "run": "npm run dev"
+            },
+            "titles": {
+                "en": "strapi-content-list",
+                "it": "strapi-content-list"
+            },
+            "configMfe": "strapi-content-list-config"
+        },
+        {
+            "name": "strapi-content-list-config",
+            "customElement": "strapi-content-list-config",
+            "stack": "react",
+            "type": "widget-config",
+            "group": "free",
+            "publicFolder": "public",
+            "commands": {
+                "run": "npm run dev"
+            }
+        },
+        {
+            "name": "strapi-content",
+            "customElement": "strapi-content",
+            "stack": "react",
+            "type": "widget",
+            "group": "free",
+            "publicFolder": "public",
+            "commands": {
+                "run": "npm run dev"
+            },
+            "titles": {
+                "en": "strapi-content",
+                "it": "strapi-content"
+            },
+            "configMfe": "strapi-content-config"
+        },
+        {
+            "name": "strapi-content-config",
+            "customElement": "strapi-content-config",
+            "stack": "react",
+            "type": "widget-config",
+            "group": "free",
+            "publicFolder": "public",
+            "commands": {
+                "run": "npm run dev"
+            }
+        },
+        {
+            "name": "strapi-config",
+            "customElement": "strapi-config",
+            "stack": "react",
+            "type": "app-builder",
+            "slot": "content",
+            "group": "free",
+            "publicFolder": "public",
+            "paths": [
+                "/settings",
+                "/content-template"
+            ],
+            "commands": {
+                "run": "npm run dev"
+            },
+            "nav": [
+                {
+                    "label": {
+                        "it": "Settings",
+                        "en": "Settings"
+                    },
+                    "target": "internal",
+                    "url": "/settings"
+                },
+                {
+                    "label": {
+                        "it": "Content Template",
+                        "en": "Content Template"
+                    },
+                    "target": "internal",
+                    "url": "/content-template"
+                }
+            ],
           "label": {
             "it": "Impostazioni",
             "en": "Settings"
