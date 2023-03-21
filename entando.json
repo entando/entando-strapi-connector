@@ -1,107 +1,30 @@
 {
-  "microservices": [
-    {
-      "name": "strapi-connector-ms",
-      "stack": "node",
-      "healthCheckPath": "/api/health",
-      "dbms": "postgresql",
-      "commands": {
-        "run": "npm run dev"
-      },
-      "env": [
+    "microservices": [
         {
-          "name": "APP_ORIGIN",
-          "value": "http://my-portal.entando.org"
-        },
-        {
-          "name": "LOG_LEVEL",
-          "value": "info"
-        },
-        {
-          "name": "API_CONFIG_TABLE",
-          "value": "api_config"
+            "name": "strapi-connector-ms",
+            "stack": "node",
+            "healthCheckPath": "/api/health",
+            "dbms": "postgresql",
+            "commands": {
+                "run": "npm run dev"
+            },
+            "env": [
+                {
+                    "name": "APP_ORIGIN",
+                    "value": "http://my-portal.entando.org"
+                },
+                {
+                    "name": "LOG_LEVEL",
+                    "value": "info"
+                },
+                {
+                    "name": "API_CONFIG_TABLE",
+                    "value": "api_config"
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "microfrontends": [
-    {
-      "name": "strapi-content-list",
-      "customElement": "strapi-content-list",
-      "stack": "react",
-      "type": "widget",
-      "group": "free",
-      "publicFolder": "public",
-      "commands": {
-        "run": "npm run dev",
-        "build": "npm install && npm run build",
-        "pack": "npm install && npm run build"
-      },
-      "titles": {
-        "en": "strapi-content-list",
-        "it": "strapi-content-list"
-      },
-      "configMfe": "strapi-content-list-config"
-    },
-    {
-      "name": "strapi-content-list-config",
-      "customElement": "strapi-content-list-config",
-      "stack": "react",
-      "type": "widget-config",
-      "group": "free",
-      "publicFolder": "public",
-      "commands": {
-        "run": "npm run dev",
-        "build": "npm install && npm run build",
-        "pack": "npm install && npm run build"
-      }
-    },
-    {
-      "name": "strapi-content",
-      "customElement": "strapi-content",
-      "stack": "react",
-      "type": "widget",
-      "group": "free",
-      "publicFolder": "public",
-      "commands": {
-        "run": "npm run dev",
-        "build": "npm install && npm run build",
-        "pack": "npm install && npm run build"
-      },
-      "titles": {
-        "en": "strapi-content",
-        "it": "strapi-content"
-      },
-      "configMfe": "strapi-content-config"
-    },
-    {
-      "name": "strapi-content-config",
-      "customElement": "strapi-content-config",
-      "stack": "react",
-      "type": "widget-config",
-      "group": "free",
-      "publicFolder": "public",
-      "commands": {
-        "run": "npm run dev",
-        "build": "npm install && npm run build",
-        "pack": "npm install && npm run build"
-      }
-    },
-    {
-      "name": "strapi-config",
-      "customElement": "strapi-config",
-      "stack": "react",
-      "type": "app-builder",
-      "slot": "content",
-      "group": "free",
-      "publicFolder": "public",
-      "paths": ["/settings", "/content-template"],
-      "commands": {
-        "run": "npm run dev",
-        "build": "npm install && npm run build",
-        "pack": "npm install && npm run build"
-      },
-      "nav": [
+    ],
+    "microfrontends": [
         {
             "name": "strapi-content-list",
             "customElement": "strapi-content-list",
@@ -174,7 +97,7 @@
             "nav": [
                 {
                     "label": {
-                        "it": "Settings",
+                        "it": "Impostazioni",
                         "en": "Settings"
                     },
                     "target": "internal",
@@ -182,34 +105,21 @@
                 },
                 {
                     "label": {
-                        "it": "Content Template",
+                        "it": "Template contenuti",
                         "en": "Content Template"
                     },
                     "target": "internal",
                     "url": "/content-template"
                 }
-            ],
-          "label": {
-            "it": "Impostazioni",
-            "en": "Settings"
-          },
-          "target": "internal",
-          "url": "/settings"
-        },
-        {
-          "label": {
-            "it": "Template contenuti",
-            "en": "Content Template"
-          },
-          "target": "internal",
-          "url": "/content-template"
+            ]
         }
-      ]
-    }
-  ],
-  "svc": ["postgresql", "keycloak"],
-  "name": "entando-strapi-connector",
-  "version": "0.0.3",
-  "description": "entando-strapi-connector description",
-  "type": "bundle"
+    ],
+    "svc": [
+        "postgresql",
+        "keycloak"
+    ],
+    "name": "entando-strapi-connector",
+    "version": "0.0.3",
+    "description": "entando-strapi-connector description",
+    "type": "bundle"
 }
