@@ -4,7 +4,6 @@ const envSchema = {
         'SPRING_DATASOURCE_USERNAME',
         'SPRING_DATASOURCE_PASSWORD',
         'SPRING_DATASOURCE_URL',
-        'APP_ORIGIN',
         'KEYCLOAK_REALM',
         'KEYCLOAK_AUTH_URL',
         'KEYCLOAK_CLIENT_SECRET',
@@ -32,10 +31,6 @@ const envSchema = {
             type: 'string',
             default: 'api_config'
         },
-        APP_ORIGIN: {
-            type: 'string',
-            default: 'http://localhost:3000'
-        },
         KEYCLOAK_REALM: {
             type: 'string',
             default: 'entando-dev'
@@ -62,4 +57,5 @@ const envSchema = {
 export const envOptions = {
     confKey: 'config', // optional, default: 'config'
     schema: envSchema,
+    dotenv: true
 }

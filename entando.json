@@ -10,10 +10,6 @@
             },
             "env": [
                 {
-                    "name": "APP_ORIGIN",
-                    "value": "http://my-portal.entando.org"
-                },
-                {
                     "name": "LOG_LEVEL",
                     "value": "info"
                 },
