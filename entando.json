@@ -34,8 +34,8 @@
       "publicFolder": "public",
       "commands": {
         "run": "npm run dev",
-        "build": "npm run build",
-        "pack": "npm run build"
+        "build": "npm install && npm run build",
+        "pack": "npm install && npm run build"
       },
       "titles": {
         "en": "strapi-content-list",
@@ -52,8 +52,8 @@
       "publicFolder": "public",
       "commands": {
         "run": "npm run dev",
-        "build": "npm run build",
-        "pack": "npm run build"
+        "build": "npm install && npm run build",
+        "pack": "npm install && npm run build"
       }
     },
     {
@@ -65,8 +65,8 @@
       "publicFolder": "public",
       "commands": {
         "run": "npm run dev",
-        "build": "npm run build",
-        "pack": "npm run build"
+        "build": "npm install && npm run build",
+        "pack": "npm install && npm run build"
       },
       "titles": {
         "en": "strapi-content",
@@ -83,8 +83,8 @@
       "publicFolder": "public",
       "commands": {
         "run": "npm run dev",
-        "build": "npm run build",
-        "pack": "npm run build"
+        "build": "npm install && npm run build",
+        "pack": "npm install && npm run build"
       }
     },
     {
@@ -98,13 +98,13 @@
       "paths": ["/settings", "/content-template"],
       "commands": {
         "run": "npm run dev",
-        "build": "npm run build",
-        "pack": "npm run build"
+        "build": "npm install && npm run build",
+        "pack": "npm install && npm run build"
       },
       "nav": [
         {
           "label": {
-            "it": "Settings",
+            "it": "Impostazioni",
             "en": "Settings"
           },
           "target": "internal",
@@ -112,7 +112,7 @@
         },
         {
           "label": {
-            "it": "Content Template",
+            "it": "Template contenuti",
             "en": "Content Template"
           },
           "target": "internal",

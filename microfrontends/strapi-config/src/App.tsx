@@ -19,7 +19,7 @@ const messages: Message = {
 export function App() {
   const { matchPath } = useEPCRouter()
 
-  const [locale, setLocale] = useState<string>("")
+  const [locale, setLocale] = useState<string>("en")
 
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
