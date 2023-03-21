@@ -8,26 +8,20 @@ async function strapiConfigDao(fastify, opts) {
 
     async function getStrapiConfig() {
         const queryString = "SELECT * FROM " + tableName + whereCondition
-        const client = await pool.connect()
-        const result = await client.query(queryString, [applicationName])
-        client.release()
+        const result = await pool.query(queryString, [applicationName])
         if (result.rows.length == 0) return null
         return result.rows[0]
     }
 
     async function postStrapiConfig(url, token) {
         const queryString = "INSERT INTO " + tableName + "(application_name, base_url, token) VALUES($1, $2, $3) ON CONFLICT ON CONSTRAINT api_config_appname DO UPDATE SET base_url = EXCLUDED.base_url, token = EXCLUDED.token RETURNING base_url, token"
-        const client = await pool.connect()
-        const result = await client.query(queryString, [applicationName, url, token])
-        client.release()
+        const result = await pool.query(queryString, [applicationName, url, token])
         return result.rows[0]
     }
 
     async function resetStrapiConfig() {
         const queryString = "DELETE FROM " + tableName + whereCondition
-        const client = await pool.connect()
-        const result = await client.query(queryString, [applicationName])
-        client.release()
+        const result = await pool.query(queryString, [applicationName])
         if (result.rowCount == 0) return false
         return true
     }
