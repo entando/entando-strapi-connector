@@ -26,6 +26,60 @@
   ],
   "microfrontends": [
     {
+      "name": "strapi-content-list",
+      "customElement": "strapi-content-list",
+      "stack": "react",
+      "type": "widget",
+      "group": "free",
+      "publicFolder": "public",
+      "commands": {
+        "run": "npm run dev"
+      },
+      "titles": {
+        "en": "strapi-content-list",
+        "it": "strapi-content-list"
+      },
+      "configMfe": "strapi-content-list-config"
+    },
+    {
+      "name": "strapi-content-list-config",
+      "customElement": "strapi-content-list-config",
+      "stack": "react",
+      "type": "widget-config",
+      "group": "free",
+      "publicFolder": "public",
+      "commands": {
+        "run": "npm run dev"
+      }
+    },
+    {
+      "name": "strapi-content",
+      "customElement": "strapi-content",
+      "stack": "react",
+      "type": "widget",
+      "group": "free",
+      "publicFolder": "public",
+      "commands": {
+        "run": "npm run dev"
+      },
+      "titles": {
+        "en": "strapi-content",
+        "it": "strapi-content"
+      },
+      "configMfe": "strapi-content-config"
+    },
+    {
+      "name": "strapi-content-config",
+      "customElement": "strapi-content-config",
+      "stack": "react",
+      "type": "widget-config",
+      "group": "free",
+      "publicFolder": "public",
+      "commands": {
+        "run": "npm run dev"
+      }
+    },
+    {
       "name": "strapi-config",
       "customElement": "strapi-config",
       "stack": "react",
@@ -59,7 +113,7 @@
   ],
   "svc": ["postgresql", "keycloak"],
   "name": "entando-strapi-connector",
-  "version": "0.0.6",
+  "version": "0.0.3",
   "description": "entando-strapi-connector description",
   "type": "bundle"
 }

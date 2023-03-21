@@ -25,7 +25,7 @@ export function App() {
     if (window?.entando?.globals?.lang) {
       setLocale(window.entando.globals.lang)
     }
-  }, [setLocale])
+  }, [])
 
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
