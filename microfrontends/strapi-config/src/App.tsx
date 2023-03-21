@@ -3,7 +3,7 @@ import { useEPCRouter } from "./hooks/useEntandoRouter"
 import { IntlProvider } from "react-intl"
 import messagesEn from "./i18n/en.json"
 import messagesIt from "./i18n/it.json"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface Message {
   [key: string]: {
@@ -21,14 +21,17 @@ export function App() {
 
   const [locale, setLocale] = useState<string>("en")
 
+  useEffect(() => {
+    if (window?.entando?.globals?.lang) {
+      setLocale(window.entando.globals.lang)
+    }
+  }, [setLocale])
+
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
-        {matchPath("settings") && (
-          <div>
-            <ConfigForm />
-          </div>
-        )}
+        <ConfigForm />
+        {matchPath("settings") && <div></div>}
         {matchPath("content-template") && (
           <div>Hello from content template</div>
         )}
