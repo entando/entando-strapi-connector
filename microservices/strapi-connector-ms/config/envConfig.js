@@ -57,5 +57,7 @@ const envSchema = {
 export const envOptions = {
     confKey: 'config', // optional, default: 'config'
     schema: envSchema,
-    dotenv: true
+    dotenv: {
+        path: process.env.DOT_ENV || './.env'
+    }
 }

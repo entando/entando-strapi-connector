@@ -6,7 +6,8 @@
             "healthCheckPath": "/api/health",
             "dbms": "postgresql",
             "commands": {
-                "run": "npm run dev"
+                "run": "npm run start",
+                "dev": "npm run dev"
             },
             "env": [
                 {
