@@ -2,7 +2,7 @@ import { appConstants } from '../config/appConstants.js'
 
 async function strapiConfigDao(fastify, opts) {
     const whereCondition = " WHERE application_name = $1"
-    const applicationName = appConstants.APPLICATION_NAME
+    const applicationName = appConstants.STRAPI_APPLICATION_NAME
     const tableName = fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE
     const pool = fastify.pg
 

@@ -1,10 +1,12 @@
 import got from 'got'
 import { appConstants } from '../config/appConstants.js'
 
-function VerifyException(payload, message) {
-    this.name = "VerifyException"
-    this.payload = payload
-    this.message = message
+class VerifyException {
+    constructor(payload, message) {
+        this.name = "VerifyException"
+        this.payload = payload
+        this.message = message
+    }
 }
 
 export function hasErrors(list) {
@@ -34,7 +36,7 @@ export function checkToken(token) {
     if (!regex.test(token.trim())) {
         throw new VerifyException(
             { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_MALFORMED_TOKEN },
-            appConstants.TOKEN_HAS_SPACES
+            appConstants.MSG_TOKEN_HAS_SPACES
         )
     }
 }
@@ -47,7 +49,12 @@ export async function checkConfig(url, token) {
         retry: { limit: 1 }
     }
     try {
-        await got.get(url, verifyOpts)
+        const body = await got.get(url, verifyOpts).json()
+        console.log(typeof body)
+        if (!(body['data'] || Array.isArray(body['data']))) {
+            let payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_INVALID_URL }
+            throw new VerifyException(payload, appConstants.MSG_STRAPI_BAD_PAYLOAD)
+        }
     } catch (err) {
         let payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_INVALID_URL }
         if (err.code == appConstants.GOT_ERR_NON_2XX_3XX_RESPONSE) {

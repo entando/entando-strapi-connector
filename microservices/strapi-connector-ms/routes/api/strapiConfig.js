@@ -1,5 +1,4 @@
 import fastifyPlugin from 'fastify-plugin'
-import got from 'got'
 import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
 import { appConstants } from '../../config/appConstants.js'
 import strapiConfigDao from '../../db/dao.js'
@@ -56,7 +55,7 @@ const postStrapiConfigHandler = async (request, reply) => {
         try {
             await checkConfig(configUrl + appConstants.STRAPI_COMPONENTS_ENDPOINT, token)
             await checkConfig(configUrl + appConstants.STRAPI_CONTENT_TYPES_ENDPOINT, token)
-            fastify.log.info(appConstants.TOKEN_VERIFY_SUCCESS)
+            fastify.log.info(appConstants.MSG_TOKEN_VERIFY_SUCCESS)
         } catch (err) {
             fastify.log.warn(err.payload, err.message)
             errors.push(err.payload)
@@ -98,9 +97,9 @@ async function strapiConfigRoutes (fastify, opts, done) {
     if (fastify.config.JWT_PUB_KEY) {
         authStrategy = fastify.pubKeyVerifyJWT
     }
-    fastify.get('/api/strapi/config', { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
-    fastify.post('/api/strapi/config', { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
-    fastify.delete('/api/strapi/config', { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
+    fastify.get(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
+    fastify.post(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
+    fastify.delete(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
     done()
 }
 
