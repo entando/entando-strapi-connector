@@ -10,8 +10,9 @@
   "scripts": {
     "test": "tap \"test/**/*.test.js\"",
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "echo nothing to do here"
+    "dev": "export LOG_LEVEL=debug && export DOT_ENV=.env.local && nodemon server.js",
+    "prebuild": "npm install",
+    "build": "echo nothing to build here"
   },
   "author": "",
   "license": "ISC",
