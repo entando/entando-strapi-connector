@@ -6,28 +6,17 @@
       "healthCheckPath": "/api/health",
       "dbms": "postgresql",
       "commands": {
-        "run": "npm run dev"
+        "run": "npm run dev",
+        "dev": "npm run dev"
       },
       "env": [
         {
-          "name": "strapi-connector-ms",
-          "stack": "node",
-          "healthCheckPath": "/api/health",
-          "dbms": "postgresql",
-          "commands": {
-            "run": "npm run start",
-            "dev": "npm run dev"
-          },
-          "env": [
-            {
-              "name": "LOG_LEVEL",
-              "value": "info"
-            },
-            {
-              "name": "API_CONFIG_TABLE",
-              "value": "api_config"
-            }
-          ]
+          "name": "LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "name": "API_CONFIG_TABLE",
+          "value": "api_config"
         }
       ]
     }
