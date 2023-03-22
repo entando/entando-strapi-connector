@@ -2,6 +2,7 @@ import fastifyPlugin from 'fastify-plugin'
 import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
 import { appConstants } from '../../config/appConstants.js'
 import strapiConfigDao from '../../db/dao.js'
+import { hasErrors, isDefined, checkUrl, checkToken, checkConfig } from '../../utils/strapiConfigUtils.js'
 
 
 const getStrapiConfigHandler = async (request, reply) => {
@@ -23,31 +24,53 @@ const postStrapiConfigHandler = async (request, reply) => {
     let configUrl = request.body.configUrl
     const token = request.body.token
 
-    if (!configUrl) {
-        errors.push({ field: "configUrl", errorCode: appConstants.ERR_MANDATORY})
+    // check if configUrl and token are defined
+    if (!isDefined(configUrl)) {
+        const payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
+        fastify.log.warn(payload)
+        errors.push(payload)
     }
-    if (!token) {
-        errors.push({ field: "token", errorCode: appConstants.ERR_MANDATORY })
-    }
-
-    try {
-        configUrl = new URL(configUrl)
-    } catch (err) {
-        fastify.log.warn(err)
-        errors.push({ field: "configUrl", errorCode: appConstants.ERR_INVALID_URL })
+    if (!isDefined(token)) {
+        const payload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
+        fastify.log.warn(payload)
+        errors.push(payload)
     }
 
-    const regex = /^\S+$/gm
-    if (!regex.test(token)) {
-        errors.push({ field: "token", errorCode: appConstants.ERR_INVALID_TOKEN })
+    // check if configUrl and token are syntactically correct
+    if (!hasErrors(errors)) {
+        try {
+            checkUrl(configUrl)
+        } catch (err) {
+            fastify.log.warn(err.payload, err.message)
+            errors.push(err.payload)
+        }
+
+        try {
+            checkToken(token)
+        } catch (err) {
+            fastify.log.warn(err.payload, err.message)
+            errors.push(err.payload)
+        }
     }
 
-    if (errors.length > 0) {
+    // check if configUrl and token can access a strapi API
+    if (!hasErrors(errors)) {
+        try {
+            await checkConfig(configUrl + appConstants.STRAPI_COMPONENTS_ENDPOINT, token)
+            await checkConfig(configUrl + appConstants.STRAPI_CONTENT_TYPES_ENDPOINT, token)
+            fastify.log.info(appConstants.MSG_TOKEN_VERIFY_SUCCESS)
+        } catch (err) {
+            fastify.log.warn(err.payload, err.message)
+            errors.push(err.payload)
+        }
+    }
+
+    if (hasErrors(errors)) {
         return reply.code(400).send({ status: 400, errors: errors })
     }
 
     try {
-        const result = await fastify.saveConf(configUrl.toString(), token)
+        const result = await fastify.saveConf(configUrl, token)
         return reply.code(201).send({ status: 201, configUrl: result.base_url, token: result.token, errors: null })
     } catch (err) {
         fastify.log.error(err)
@@ -77,9 +100,9 @@ async function strapiConfigRoutes (fastify, opts, done) {
     if (fastify.config.JWT_PUB_KEY) {
         authStrategy = fastify.pubKeyVerifyJWT
     }
-    fastify.get('/api/strapi/config', { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
-    fastify.post('/api/strapi/config', { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
-    fastify.delete('/api/strapi/config', { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
+    fastify.get(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
+    fastify.post(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
+    fastify.delete(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
     done()
 }
 

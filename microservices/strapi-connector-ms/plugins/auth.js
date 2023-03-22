@@ -1,5 +1,6 @@
 import got from 'got'
 import { createVerifier, TOKEN_ERROR_CODES } from 'fast-jwt'
+import { appConstants } from '../config/appConstants.js'
 
 export async function asyncVerifyJWT (request, reply, done) {
     const fastify = request.server
@@ -25,13 +26,11 @@ export async function asyncVerifyJWT (request, reply, done) {
 export function pubKeyVerifyJWT(request, reply, done) {
     const fastify = request.server
 
-    const pemHeader = "-----BEGIN CERTIFICATE-----\n"
-    const pemFooter = "\n-----END CERTIFICATE-----"
     const pubKeyString = fastify.config.JWT_PUB_KEY
 
-    const pubKey = pemHeader.concat(pubKeyString, pemFooter)
+    const pubKey = appConstants.PEM_HEADER.concat(pubKeyString, appConstants.PEM_FOOTER)
     const authHeader = request.headers.authorization
-    if (authHeader && authHeader.split(' ')[0].toLowerCase() == 'bearer') {
+    if (authHeader && authHeader.split(' ')[0].trim().toLowerCase() == appConstants.BEARER.trim().toLowerCase()) {
         const token = authHeader.split(' ')[1]
         request.log.debug({ token: token }, { pubKey: pubKey }, "pubKeyVerifyJWT")
         try {

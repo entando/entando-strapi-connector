@@ -4,9 +4,7 @@ const getHealthHandler = async (request, reply, opts) => {
   const pool = fastify.pg
 
   try {
-    const client = await pool.connect()
-    await client.query(queryString)
-    client.release()
+    await pool.query(queryString)
     reply.code(200).send({ status: { server: "UP", db: "UP" }, error: null })
   } catch (err) {
     fastify.log.error(err)
