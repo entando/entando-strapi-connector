@@ -6,5 +6,6 @@
   "app.connectButton": "Collegati",
   "app.enterAValidUrl": "Inserisci un URL valido",
   "app.urlIsRequired": "Il campo URL è obbligatorio",
-  "app.tokenIsRequired": "Il campo token è obbligatorio"
+  "app.tokenIsRequired": "Il campo token è obbligatorio",
+  "app.errorFetchingData": "Errore nel recupero dei dati"
 }

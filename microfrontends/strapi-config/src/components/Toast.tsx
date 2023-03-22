@@ -2,7 +2,7 @@ import React from "react"
 
 interface ToastProps {
   toastStyle: string
-  toastMessage: string
+  toastMessage?: string
 }
 
 const Toast: React.FC<ToastProps> = ({ toastStyle, toastMessage }) => {

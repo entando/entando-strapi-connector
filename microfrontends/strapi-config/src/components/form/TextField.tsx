@@ -4,13 +4,13 @@ import { useIntl } from "react-intl"
 import { useTranslation } from "../../i18n/use-translation"
 
 interface TextFieldProps {
-  label: string | undefined
-  placeholder: string | undefined
+  label?: string
+  placeholder?: string
   name: string
   value: string
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleBlur: (event: ChangeEvent<HTMLInputElement>) => void
-  error: string | undefined
+  error?: string
   type: string
 }
 

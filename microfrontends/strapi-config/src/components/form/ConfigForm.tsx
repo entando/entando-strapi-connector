@@ -1,6 +1,7 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "../../i18n/use-translation"
+import { fetchData } from "../../integration/integration"
 import Toast from "../Toast"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
@@ -10,46 +11,53 @@ interface FormData {
   connectionToken: string
 }
 
+interface ToastData {
+  message?: string
+  type: string
+}
+
 const ConfigForm: React.FC = () => {
   const translate = useTranslation()
-  const [connectionData, setConnectionData] = useState<FormData>({
+  const [connectionData, setConnectionData] = useState({
     connectionUrl: "",
     connectionToken: ""
   })
-  const [dataIsSent, setDataIsSent] = useState<Boolean>(false)
-  const [error, setError] = useState<Boolean>(false)
-
-  // const queryString = window.location.hostname
-  // const protocol = window.location.protocol
-  // "https://dminnai.k8s-entando.org/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config"
+  const [toast, setToast] = useState<ToastData>({
+    message: "",
+    type: ""
+  })
+  const [showToast, setShowToast] = useState(false)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchedData = await fetch(
-        `${window.location.origin}/entando-strapi-connector-b26b60ed/strapi-connector-ms/api/strapi/config`
+    const fetchConnectionData = async () => {
+      const fetchedData = await fetchData(
+        `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`
       )
-        .then((res) => {
-          if (res.ok) {
-            return res.json()
-          }
-          throw new Error("Errore")
+      if (fetchedData.hasOwnProperty("message")) {
+        setToast({
+          message: translate(fetchedData.message),
+          type: "error"
         })
-        .then((data) => data)
-        .catch((error) => setError(true))
-      setConnectionData({
-        connectionUrl: fetchedData.configUrl,
-        connectionToken: fetchedData.token
-      })
+        toastTimeout()
+      } else {
+        setConnectionData({
+          connectionUrl: fetchedData.configUrl,
+          connectionToken: fetchedData.token
+        })
+      }
     }
-    fetchData()
-  }, [])
+    fetchConnectionData()
+  }, [translate])
+
+  const toastTimeout = () => {
+    setShowToast(true)
+    window.setTimeout(() => {
+      setShowToast(false)
+    }, 5000)
+  }
 
   const formSubmitHandler = (values: FormData) => {
     console.log(values)
-    setDataIsSent(true)
-    window.setTimeout(() => {
-      setDataIsSent(false)
-    }, 5000)
   }
 
   return (
@@ -89,11 +97,8 @@ const ConfigForm: React.FC = () => {
           </Form>
         )}
       </Formik>
-      {error && (
-        <Toast
-          toastMessage="Cannot retrieve data from server, Connection URL & Token "
-          toastStyle="error"
-        />
+      {showToast && (
+        <Toast toastMessage={toast.message} toastStyle={toast.type} />
       )}
     </>
   )
