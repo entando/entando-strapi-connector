@@ -24,6 +24,7 @@ const postStrapiConfigHandler = async (request, reply) => {
     let configUrl = request.body.configUrl
     const token = request.body.token
 
+    // check if configUrl and token are defined
     if (!isDefined(configUrl)) {
         const payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
         fastify.log.warn(payload)
@@ -35,6 +36,7 @@ const postStrapiConfigHandler = async (request, reply) => {
         errors.push(payload)
     }
 
+    // check if configUrl and token are syntactically correct
     if (!hasErrors(errors)) {
         try {
             checkUrl(configUrl)
@@ -51,6 +53,7 @@ const postStrapiConfigHandler = async (request, reply) => {
         }
     }
 
+    // check if configUrl and token can access a strapi API
     if (!hasErrors(errors)) {
         try {
             await checkConfig(configUrl + appConstants.STRAPI_COMPONENTS_ENDPOINT, token)
