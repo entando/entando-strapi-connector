@@ -52,6 +52,11 @@ export const useTranslation = () => {
             id: "app.errorFetchingData",
             defaultMessage: "Error while fetching data"
           })
+        case "tokenIsPresent":
+          return intl.formatMessage({
+            id: "app.tokenIsPresent",
+            defaultMessage: "A token is already present"
+          })
       }
     },
     [intl]

@@ -12,6 +12,7 @@ interface TextFieldProps {
   handleBlur: (event: ChangeEvent<HTMLInputElement>) => void
   error?: string
   type: string
+  caption?: string
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -22,7 +23,8 @@ const TextField: React.FC<TextFieldProps> = ({
   handleChange,
   handleBlur,
   error,
-  type
+  type,
+  caption
 }) => {
   const translate = useTranslation()
 
@@ -41,11 +43,12 @@ const TextField: React.FC<TextFieldProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      {error && (
-        <label className="label">
-          <span className="label-text-alt">{translate(error)}</span>
-        </label>
-      )}
+      <label className="label">
+        {error && <span className="label-text-alt">{translate(error)}</span>}
+        {caption && (
+          <span className="label-text-alt">{translate(caption)}</span>
+        )}
+      </label>
     </>
   )
 }

@@ -1,14 +1,15 @@
 import { Formik, Form } from "formik"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "../../i18n/use-translation"
-import { fetchData } from "../../integration/integration"
+import { getData, postData } from "../../integration/integration"
 import Toast from "../Toast"
 import TextField from "./TextField"
 import { configFormValidationSchema } from "./validation/configFormValidationSchema"
 
-interface FormData {
+export interface FormData {
   connectionUrl: string
   connectionToken: string
+  isTokenSet?: Boolean
 }
 
 interface ToastData {
@@ -20,7 +21,8 @@ const ConfigForm: React.FC = () => {
   const translate = useTranslation()
   const [connectionData, setConnectionData] = useState({
     connectionUrl: "",
-    connectionToken: ""
+    connectionToken: "",
+    isTokenSet: false
   })
   const [toast, setToast] = useState<ToastData>({
     message: "",
@@ -29,35 +31,47 @@ const ConfigForm: React.FC = () => {
   const [showToast, setShowToast] = useState(false)
 
   useEffect(() => {
-    const fetchConnectionData = async () => {
-      const fetchedData = await fetchData(
+    const getConnectionData = async () => {
+      const response = await getData(
         `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`
       )
-      if (fetchedData.hasOwnProperty("message")) {
+      if (response.hasOwnProperty("message")) {
         setToast({
-          message: translate(fetchedData.message),
+          message: translate(response.message),
           type: "error"
         })
         toastTimeout()
       } else {
         setConnectionData({
-          connectionUrl: fetchedData.configUrl,
-          connectionToken: fetchedData.token
+          connectionUrl: response.configUrl,
+          connectionToken: "",
+          isTokenSet: response.token
         })
       }
     }
-    fetchConnectionData()
+
+    getConnectionData()
   }, [translate])
+
+  const formSubmitHandler = async (values: FormData) => {
+    const dataToSend = {
+      configUrl: values.connectionUrl,
+      token: values.connectionToken
+    }
+
+    const response = await postData(
+      `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`,
+      dataToSend
+    )
+
+    console.log("RESPONSE", response)
+  }
 
   const toastTimeout = () => {
     setShowToast(true)
     window.setTimeout(() => {
       setShowToast(false)
     }, 5000)
-  }
-
-  const formSubmitHandler = (values: FormData) => {
-    console.log(values)
   }
 
   return (
@@ -67,6 +81,8 @@ const ConfigForm: React.FC = () => {
         validationSchema={configFormValidationSchema}
         enableReinitialize={true}
         onSubmit={formSubmitHandler}
+        // validateOnMount={true}
+        validateOnBlur={true}
       >
         {(props) => (
           <Form>
@@ -90,8 +106,13 @@ const ConfigForm: React.FC = () => {
               handleBlur={props.handleBlur}
               value={props.values.connectionToken}
               error={props.errors.connectionToken}
+              caption={connectionData.isTokenSet ? "tokenIsPresent" : ""}
             />
-            <button className="btn" type="submit" disabled={!props.isValid}>
+            <button
+              className="btn"
+              type="submit"
+              disabled={!(props.isValid && props.dirty)}
+            >
               {translate("connectButton")}
             </button>
           </Form>

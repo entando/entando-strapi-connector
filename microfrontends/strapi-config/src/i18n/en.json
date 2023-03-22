@@ -7,5 +7,6 @@
   "app.enterAValidUrl": "Enter a valid URL",
   "app.urlIsRequired": "URL field is required",
   "app.tokenIsRequired": "Token field is required",
-  "app.errorFetchingData": "Error while fetching data"
+  "app.errorFetchingData": "Error while fetching data",
+  "app.tokenIsPresent": "A token is already present"
 }
