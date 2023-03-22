@@ -1,6 +1,7 @@
 // Require the framework and instantiate it
 import Fastify from 'fastify'
 import fastifyEnv from '@fastify/env'
+import cors from '@fastify/cors'
 import { envOptions } from './config/envConfig.js'
 
 import dbInit from './db/dbInit.js'
@@ -33,6 +34,11 @@ function buildApp(opts = {}) {
             }
 
             app.addHook('onReady', dbInit)
+
+            // TODO: verify if this is safe in production
+            app.register(cors, {
+                origin: [/^http:\/\/localhost:\d*$/, /^http:\/\/127.0.0.1:\d*$/, /^http:\/\/0.0.0.0:\d*$/]
+            })
 
             app.register(postgres, app.config)
             app.register(health, healthOpts)
