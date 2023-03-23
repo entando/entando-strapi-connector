@@ -33,7 +33,7 @@ const ConfigForm: React.FC = () => {
   useEffect(() => {
     const getConnectionData = async () => {
       const response = await getData(
-        `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`
+        `${import.meta.env.STRAPI_CONNECTOR_CONFIG_URL}`
       )
       if (response.hasOwnProperty("message")) {
         setToast({
@@ -76,7 +76,7 @@ const ConfigForm: React.FC = () => {
     }
 
     const response = await postData(
-      `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`,
+      `${import.meta.env.STRAPI_CONNECTOR_CONFIG_URL}`,
       dataToSend
     )
 
