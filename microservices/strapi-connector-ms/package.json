@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "tap \"test/**/*.test.js\"",
-    "start": "node server.js",
-    "dev": "export LOG_LEVEL=debug && export DOT_ENV=.env.local && nodemon server.js",
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development nodemon --delay 3 server.js",
     "prebuild": "npm install",
     "build": "echo nothing to build here"
   },
