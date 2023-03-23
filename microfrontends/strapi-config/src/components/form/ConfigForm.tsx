@@ -33,7 +33,7 @@ const ConfigForm: React.FC = () => {
   useEffect(() => {
     const getConnectionData = async () => {
       const response = await getData(
-        `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config0`
+        `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`
       )
       if (response.hasOwnProperty("message")) {
         setToast({
@@ -57,6 +57,10 @@ const ConfigForm: React.FC = () => {
       setShowToast(true)
       const timeoutID = setTimeout(() => {
         setShowToast(false)
+        setToast({
+          message: "",
+          type: ""
+        })
       }, 5000)
 
       return () => {
@@ -77,13 +81,11 @@ const ConfigForm: React.FC = () => {
     )
 
     if (response.errors) {
-      console.log("KO")
       setToast({
         message: translate("somethingWentWrong"),
         type: "error"
       })
     } else {
-      console.log("OK")
       setToast({
         message: translate("connectionSuccessfullyEstablished"),
         type: "success"
@@ -92,8 +94,7 @@ const ConfigForm: React.FC = () => {
   }
 
   return (
-    <>
-      0.0.18
+    <div className="config-form">
       <Formik
         initialValues={connectionData}
         validationSchema={configFormValidationSchema}
@@ -139,7 +140,7 @@ const ConfigForm: React.FC = () => {
       {showToast && (
         <Toast toastMessage={toast.message} toastStyle={toast.type} />
       )}
-    </>
+    </div>
   )
 }
 

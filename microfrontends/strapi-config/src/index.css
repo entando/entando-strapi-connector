@@ -10,8 +10,18 @@
   -webkit-text-size-adjust: 100%;
   -moz-tab-size: 4;
   tab-size: 4;
-  font-family: theme('fontFamily.sans');
-  font-feature-settings: 'normal';
+  font-family: theme("fontFamily.sans");
+  font-feature-settings: "normal";
   margin: 0;
   line-height: inherit;
+}
+
+.config-form {
+  position: relative;
+  width: 100%;
+  padding: 2rem 3rem;
+}
+
+.toast:where(.toast-top) {
+  top: 6rem;
 }
