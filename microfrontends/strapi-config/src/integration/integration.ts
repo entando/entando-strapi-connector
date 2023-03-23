@@ -9,13 +9,10 @@ export const getData = async (url: string) => {
       if (res.ok) {
         return res.json()
       }
-      throw new Error("errorFetchingData")
+      throw new Error("Error while fetching data")
     })
     .then((data) => data)
-    .catch((error) => {
-      console.log("ERROR", error)
-      return error
-    })
+    .catch((error) => error)
 
   return response
 }
@@ -28,7 +25,12 @@ export const postData = async (url: string, payload: PayloadData) => {
     },
     body: JSON.stringify(payload)
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      throw new Error("Error while posting data")
+    })
     .then((data) => data)
     .catch((error) => error)
 
