@@ -80,7 +80,7 @@ const ConfigForm: React.FC = () => {
       dataToSend
     )
 
-    if (response.errors) {
+    if (response.hasOwnProperty("message")) {
       setToast({
         message: translate("somethingWentWrong"),
         type: "error"
