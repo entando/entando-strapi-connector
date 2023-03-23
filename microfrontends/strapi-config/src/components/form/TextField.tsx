@@ -1,6 +1,5 @@
 import { Field } from "formik"
 import React, { ChangeEvent } from "react"
-import { useIntl } from "react-intl"
 import { useTranslation } from "../../i18n/use-translation"
 
 interface TextFieldProps {

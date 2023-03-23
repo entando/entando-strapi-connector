@@ -57,6 +57,16 @@ export const useTranslation = () => {
             id: "app.tokenIsPresent",
             defaultMessage: "A token is already present"
           })
+        case "somethingWentWrong":
+          return intl.formatMessage({
+            id: "app.somethingWentWrong",
+            defaultMessage: "Error: something went wrong"
+          })
+        case "connectionSuccessfullyEstablished":
+          return intl.formatMessage({
+            id: "app.connectionSuccessfullyEstablished",
+            defaultMessage: "Connection successfully established!"
+          })
       }
     },
     [intl]

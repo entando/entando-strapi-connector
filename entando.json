@@ -84,10 +84,7 @@
       "slot": "content",
       "group": "free",
       "publicFolder": "public",
-      "paths": [
-        "/settings",
-        "/content-template"
-      ],
+      "paths": ["/settings", "/content-template"],
       "commands": {
         "run": "npm run dev"
       },
@@ -111,12 +108,9 @@
       ]
     }
   ],
-  "svc": [
-    "postgresql",
-    "keycloak"
-  ],
+  "svc": ["postgresql", "keycloak"],
   "name": "entando-strapi-connector",
-  "version": "0.0.12",
+  "version": "0.0.18",
   "description": "entando-strapi-connector description",
   "type": "bundle"
 }

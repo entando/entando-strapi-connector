@@ -8,5 +8,7 @@
   "app.urlIsRequired": "Il campo URL è obbligatorio",
   "app.tokenIsRequired": "Il campo token è obbligatorio",
   "app.errorFetchingData": "Errore nel recupero dei dati",
-  "app.tokenIsPresent": "Un token è già presente"
+  "app.tokenIsPresent": "Un token è già presente",
+  "app.somethingWentWrong": "Errore: qualcosa è andato storto",
+  "app.connectionSuccessfullyEstablished": "Connessione stabilita!"
 }

@@ -33,14 +33,13 @@ const ConfigForm: React.FC = () => {
   useEffect(() => {
     const getConnectionData = async () => {
       const response = await getData(
-        `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config`
+        `https://davdet.k8s-entando.org/entando-strapi-connector-ce296fd7/strapi-connector-ms/api/strapi/config0`
       )
       if (response.hasOwnProperty("message")) {
         setToast({
           message: translate(response.message),
           type: "error"
         })
-        toastTimeout()
       } else {
         setConnectionData({
           connectionUrl: response.configUrl,
@@ -53,6 +52,19 @@ const ConfigForm: React.FC = () => {
     getConnectionData()
   }, [translate])
 
+  useEffect(() => {
+    if (toast.message !== "") {
+      setShowToast(true)
+      const timeoutID = setTimeout(() => {
+        setShowToast(false)
+      }, 5000)
+
+      return () => {
+        clearTimeout(timeoutID)
+      }
+    }
+  }, [toast.message])
+
   const formSubmitHandler = async (values: FormData) => {
     const dataToSend = {
       configUrl: values.connectionUrl,
@@ -64,18 +76,24 @@ const ConfigForm: React.FC = () => {
       dataToSend
     )
 
-    console.log("RESPONSE", response)
-  }
-
-  const toastTimeout = () => {
-    setShowToast(true)
-    window.setTimeout(() => {
-      setShowToast(false)
-    }, 5000)
+    if (response.errors) {
+      console.log("KO")
+      setToast({
+        message: translate("somethingWentWrong"),
+        type: "error"
+      })
+    } else {
+      console.log("OK")
+      setToast({
+        message: translate("connectionSuccessfullyEstablished"),
+        type: "success"
+      })
+    }
   }
 
   return (
     <>
+      0.0.18
       <Formik
         initialValues={connectionData}
         validationSchema={configFormValidationSchema}
