@@ -37,7 +37,7 @@ const ConfigForm: React.FC = () => {
       )
       if (response.hasOwnProperty("message")) {
         setToast({
-          message: translate(response.message),
+          message: translate("errorFetchingData"),
           type: "error"
         })
       } else {

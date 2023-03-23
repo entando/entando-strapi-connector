@@ -12,7 +12,10 @@ export const getData = async (url: string) => {
       throw new Error("errorFetchingData")
     })
     .then((data) => data)
-    .catch((error) => error)
+    .catch((error) => {
+      console.log("ERROR", error)
+      return error
+    })
 
   return response
 }
