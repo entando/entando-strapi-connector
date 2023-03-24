@@ -1,39 +1,39 @@
 export interface EntandoGlobals {
-  userPermissions: string[];
-  lang: string;
+  userPermissions: string[]
+  lang: string
   systemReport: {
-    contentSchedulerPluginInstalled: boolean;
-  };
-  adminConsoleUrl: string;
+    contentSchedulerPluginInstalled: boolean
+  }
+  adminConsoleUrl: string
 }
 
 export interface MfeConfig {
   systemParams: {
     api: {
-      navigation: {
-        url: string;
-      };
-    };
-  };
+      "strapi-config-microservice": {
+        url: string
+      }
+    }
+  }
 }
 
 declare global {
   interface Window {
     entando: {
       router: {
-        action: "POP" | "PUSH" | "REPLACE",
+        action: "POP" | "PUSH" | "REPLACE"
         location: {
-          pathname: string;
-          search: string;
-          hash: string;
-          state: any;
-          key: string;
+          pathname: string
+          search: string
+          hash: string
+          state: any
+          key: string
         }
-      };
-      globals: EntandoGlobals;
+      }
+      globals: EntandoGlobals
       keycloak: {
-        token: string;
-      };
-    };
+        token: string
+      }
+    }
   }
 }

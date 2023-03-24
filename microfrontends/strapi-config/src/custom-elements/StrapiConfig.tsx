@@ -11,6 +11,8 @@ const ATTRIBUTES = {
 export class StrapiConfig extends HTMLElement {
   #rootID = "app-element"
   #appInstance: ReactDOM.Root | null = null
+  mountPoint: HTMLDivElement | null = null
+  root: ReactDOM.Root | null = null
 
   constructor() {
     super()

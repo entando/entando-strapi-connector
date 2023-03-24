@@ -4,6 +4,8 @@ import { IntlProvider } from "react-intl"
 import messagesEn from "./i18n/en.json"
 import messagesIt from "./i18n/it.json"
 import { useEffect, useState } from "react"
+import { MfeConfig } from "./types/globals"
+import { getAPIEndpoint } from "./utils/getAPIEndpoints"
 
 interface Message {
   [key: string]: {
@@ -16,13 +18,14 @@ const messages: Message = {
   it: messagesIt
 }
 
-export function App({ config }) {
+export function App({ config }: { config: MfeConfig }) {
   const { matchPath } = useEPCRouter()
 
-  const [locale, setLocale] = useState<string>("en")
+  const apiUrl = getAPIEndpoint("strapi-config-microservice", config)
+  console.log("config", config)
+  console.log("APIUrl", apiUrl)
 
-  const { params } = config || {}
-  const { name } = params || {}
+  const [locale, setLocale] = useState<string>("en")
 
   useEffect(() => {
     if (window?.entando?.globals?.lang) {
@@ -33,8 +36,7 @@ export function App({ config }) {
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
-        test {name} test
-        <ConfigForm />
+        <ConfigForm apiUrl={apiUrl} />
         {matchPath("settings") && <div></div>}
         {matchPath("content-template") && (
           <div>Hello from content template</div>

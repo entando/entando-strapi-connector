@@ -88,9 +88,13 @@
       "commands": {
         "run": "npm run dev"
       },
-      "contextParams": {
-        "systemParam_applicationBaseURL": "https://test.org"
-      },
+      "apiClaims": [
+        {
+          "name": "strapi-config-microservice",
+          "type": "internal",
+          "serviceName": "strapi-connector-ms"
+        }
+      ],
       "nav": [
         {
           "label": {
@@ -113,7 +117,7 @@
   ],
   "svc": ["postgresql", "keycloak"],
   "name": "entando-strapi-connector",
-  "version": "0.0.24",
+  "version": "0.0.26",
   "description": "entando-strapi-connector description",
   "type": "bundle"
 }

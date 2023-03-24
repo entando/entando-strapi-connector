@@ -17,7 +17,11 @@ interface ToastData {
   type: string
 }
 
-const ConfigForm: React.FC = () => {
+interface ConfigFormProps {
+  apiUrl: string
+}
+
+const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
   const translate = useTranslation()
   const [connectionData, setConnectionData] = useState({
     connectionUrl: "",
@@ -32,9 +36,7 @@ const ConfigForm: React.FC = () => {
 
   useEffect(() => {
     const getConnectionData = async () => {
-      const response = await getData(
-        `${import.meta.env.STRAPI_CONNECTOR_CONFIG_URL}`
-      )
+      const response = await getData(`${apiUrl}/api/strapi/config`)
       if (response.hasOwnProperty("message")) {
         setToast({
           message: translate("errorFetchingData"),
@@ -50,7 +52,7 @@ const ConfigForm: React.FC = () => {
     }
 
     getConnectionData()
-  }, [translate])
+  }, [translate, apiUrl])
 
   useEffect(() => {
     if (toast.message !== "") {
@@ -75,10 +77,7 @@ const ConfigForm: React.FC = () => {
       token: values.connectionToken
     }
 
-    const response = await postData(
-      `${import.meta.env.STRAPI_CONNECTOR_CONFIG_URL}`,
-      dataToSend
-    )
+    const response = await postData(`${apiUrl}/api/strapi/config`, dataToSend)
 
     if (response.hasOwnProperty("message")) {
       setToast({

@@ -8,12 +8,13 @@
   </head>
   <body>
     <strapi-config></strapi-config>
+    <!-- local test -->
     <script>
       function injectConfigIntoMfe() {
-        fetch('./mfe-config.json').then(async response => {
+        fetch("./mfe-config.json").then(async (response) => {
           const config = await response.text()
-          const mfeEl = document.getElementsByTagName('strapi-config')[0]
-          mfeEl.setAttribute('config', config)
+          const mfeEl = document.getElementsByTagName("strapi-config")[0]
+          mfeEl.setAttribute("config", config)
         })
       }
 
