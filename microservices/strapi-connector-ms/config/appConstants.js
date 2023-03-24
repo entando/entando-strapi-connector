@@ -9,6 +9,7 @@ export const appConstants = {
     STRAPI_CONFIG_ENDPOINT: "/api/strapi/config",
     STRAPI_CONTENT_TYPES_ENDPOINT: "/content-type-builder/content-types",
     STRAPI_COMPONENTS_ENDPOINT: "/content-type-builder/components",
+    KEYCLOAK_USERINFO_ENDPOINT: "/protocol/openid-connect/userinfo",
     GOT_ERR_NON_2XX_3XX_RESPONSE: "ERR_NON_2XX_3XX_RESPONSE",
     HTTP_CODE_FORBIDDEN: "403",
     HTTP_CODE_UNAUTHORIZED: "401",

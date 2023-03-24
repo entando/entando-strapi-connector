@@ -7,6 +7,7 @@ import dbInit from './db/dbInit.js'
 import postgres from './plugins/postgres.js'
 import health from './routes/api/health.js'
 import strapiConfig from './routes/api/strapiConfig.js'
+import { appConstants } from './config/appConstants.js'
 
 function buildApp(opts = {}) {
     const app = Fastify(opts)
@@ -28,7 +29,7 @@ function buildApp(opts = {}) {
             if (app.config.JWT_PUB_KEY) {
                 app.log.info('Using public key for JWT verification: ' + app.config.JWT_PUB_KEY)
             } else {
-                app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
+                app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + appConstants.KEYCLOAK_USERINFO_ENDPOINT
                 app.log.info('Using introspection endpoint for JWT verification: ' + app.config.USER_ENDPOINT)
             }
 
