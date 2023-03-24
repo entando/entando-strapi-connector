@@ -22,8 +22,6 @@ export function App({ config }: { config: MfeConfig }) {
   const { matchPath } = useEPCRouter()
 
   const apiUrl = getAPIEndpoint("strapi-config-microservice", config)
-  console.log("config", config)
-  console.log("APIUrl", apiUrl)
 
   const [locale, setLocale] = useState<string>("en")
 
@@ -36,11 +34,12 @@ export function App({ config }: { config: MfeConfig }) {
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
-        <ConfigForm apiUrl={apiUrl} />
-        {matchPath("settings") && <div></div>}
-        {matchPath("content-template") && (
-          <div>Hello from content template</div>
+        {matchPath("settings") && (
+          <div>
+            <ConfigForm apiUrl={apiUrl} />
+          </div>
         )}
+        {matchPath("content-template") && <div>Content template</div>}
       </div>
     </IntlProvider>
   )
