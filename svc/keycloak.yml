@@ -3,7 +3,7 @@ version: '3.7'
 services:
   keycloak:
     image: entando/entando-keycloak:7.1.1
-    restart: always
+    restart: unless-stopped
     command: [
         '-b',
         '0.0.0.0',
