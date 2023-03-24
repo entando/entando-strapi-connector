@@ -54,10 +54,25 @@ const envSchema = {
     }
 }
 
+function selectEnvFile(nodeEnv) {
+    let envFile
+    switch (nodeEnv) {
+        case "development":
+            envFile = "./.env.local"
+            break
+        case "test":
+            envFile = "./test/.env.test"
+            break
+        default:
+            envFile = "./.env"
+    }
+    return envFile
+}
+
 export const envOptions = {
     confKey: 'config', // optional, default: 'config'
     schema: envSchema,
     dotenv: {
-        path: process.env.NODE_ENV == "development" ? './.env.local' : './.env'
+        path: selectEnvFile(process.env.NODE_ENV)
     }
 }
