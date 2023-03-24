@@ -88,6 +88,9 @@
       "commands": {
         "run": "npm run dev"
       },
+      "contextParams": {
+        "systemParam_applicationBaseURL": "https://test.org"
+      },
       "nav": [
         {
           "label": {

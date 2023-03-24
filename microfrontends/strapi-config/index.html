@@ -8,6 +8,17 @@
   </head>
   <body>
     <strapi-config></strapi-config>
+    <script>
+      function injectConfigIntoMfe() {
+        fetch('./mfe-config.json').then(async response => {
+          const config = await response.text()
+          const mfeEl = document.getElementsByTagName('strapi-config')[0]
+          mfeEl.setAttribute('config', config)
+        })
+      }
+
+      injectConfigIntoMfe()
+    </script>
     <script type="module" src="/dev-shell.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

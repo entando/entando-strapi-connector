@@ -16,10 +16,13 @@ const messages: Message = {
   it: messagesIt
 }
 
-export function App() {
+export function App({ config }) {
   const { matchPath } = useEPCRouter()
 
   const [locale, setLocale] = useState<string>("en")
+
+  const { params } = config || {}
+  const { name } = params || {}
 
   useEffect(() => {
     if (window?.entando?.globals?.lang) {
@@ -30,6 +33,7 @@ export function App() {
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
+        test {name} test
         <ConfigForm />
         {matchPath("settings") && <div></div>}
         {matchPath("content-template") && (

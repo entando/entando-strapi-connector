@@ -100,7 +100,6 @@ const ConfigForm: React.FC = () => {
         validationSchema={configFormValidationSchema}
         enableReinitialize={true}
         onSubmit={formSubmitHandler}
-        // validateOnMount={true}
         validateOnBlur={true}
       >
         {(props) => (
