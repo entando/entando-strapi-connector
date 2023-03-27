@@ -8,8 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "NODE_ENV=test vitest test/",
-    "coverage": "NODE_ENV=test vitest --coverage test/",
+    "test": "NODE_ENV=test vitest run ./test/",
+    "coverage": "NODE_ENV=test vitest run --coverage ./test/",
     "start": "NODE_ENV=production node server.js",
     "dev": "NODE_ENV=development nodemon --delay 3 server.js",
     "prebuild": "npm install",

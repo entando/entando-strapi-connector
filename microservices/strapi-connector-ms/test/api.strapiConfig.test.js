@@ -1,6 +1,7 @@
-import { vi, test, expect, afterEach, afterAll, beforeAll } from 'vitest'
+import { vi, test, expect, beforeEach, afterAll, beforeAll } from 'vitest'
 import buildApp from '../app.js'
 import { appConstants } from '../config/appConstants.js'
+import got from 'got'
 import * as strapiConfigUtils from '../utils/strapiConfigUtils.js'
 
 const validToken = "91686a19b414db8f3af24429"
@@ -14,6 +15,10 @@ beforeAll(async () => {
     console.log("**************************************************")
     app = buildApp()
     await app.ready()
+})
+
+beforeEach(async () => {
+    vi.clearAllMocks()
 })
 
 afterAll(async () => {
@@ -93,11 +98,11 @@ test('POST /api/strapi/config should return 400 if fields contain invalid values
         errors: [
             {
                 field: appConstants.CONFIGURL_FIELD_NAME,
-                errorCode: appConstants.ERR_MALFORMED_URL
+                errorCode: appConstants.ERR_INVALID_URL
             },
             {
                 field: appConstants.TOKEN_FIELD_NAME,
-                errorCode: appConstants.ERR_MALFORMED_TOKEN
+                errorCode: appConstants.ERR_INVALID_TOKEN
             }
         ],
         configUrl: "not a valid url",
@@ -132,10 +137,9 @@ test('POST /api/strapi/config should return 400 if Strapi instance returns unexp
         token: validToken
     }
 
-    const spy = vi.spyOn(strapiConfigUtils, 'checkConfig')
+    const spy = vi.spyOn(got, 'get')
     spy.mockImplementation(() => {
-        const payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_INVALID_URL }
-        throw new strapiConfigUtils.VerifyException(payload, appConstants.MSG_STRAPI_BAD_PAYLOAD)
+        return { body: {} }
     })
 
     const response = await app.inject({
@@ -167,10 +171,14 @@ test('POST /api/strapi/config should return 400 if Strapi instance returns 403 e
         token: validToken
     }
 
-    const spy = vi.spyOn(strapiConfigUtils, 'checkConfig')
+    const spy = vi.spyOn(got, 'get')
     spy.mockImplementation(() => {
-        const payload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_TOKEN_PERMISSIONS }
-        throw new strapiConfigUtils.VerifyException(payload, "Bad token grants")
+        let err = new Error()
+        err.code = appConstants.GOT_ERR_NON_2XX_3XX_RESPONSE
+        err.response = {
+            statusCode: appConstants.HTTP_CODE_FORBIDDEN
+        }
+        throw err
     })
 
     const response = await app.inject({
@@ -202,10 +210,14 @@ test('POST /api/strapi/config should return 400 if Strapi instance returns 401 e
         token: validToken
     }
 
-    const spy = vi.spyOn(strapiConfigUtils, 'checkConfig')
+    const spy = vi.spyOn(got, 'get')
     spy.mockImplementation(() => {
-        const payload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_INVALID_TOKEN }
-        throw new strapiConfigUtils.VerifyException(payload, "Token is not valid")
+        let err = new Error()
+        err.code = appConstants.GOT_ERR_NON_2XX_3XX_RESPONSE
+        err.response = {
+            statusCode: appConstants.HTTP_CODE_UNAUTHORIZED
+        }
+        throw err
     })
 
     const response = await app.inject({
