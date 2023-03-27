@@ -51,6 +51,11 @@ test('DELETE /api/strapi/config should return 404', async () => {
 })
 
 test('POST /api/strapi/config should return 400 if mandatory fields are empty or missing', async () => {
+    const payload = {
+        configUrl: "",
+        tokenWrongFieldName: "thisIsAValidToken"
+    }
+
     const expectedResponse = {
         status: appConstants.HTTP_CODE_BAD_REQUEST,
         errors: [
@@ -61,12 +66,10 @@ test('POST /api/strapi/config should return 400 if mandatory fields are empty or
             {
                 field: appConstants.TOKEN_FIELD_NAME,
                 errorCode: appConstants.ERR_MANDATORY
-            }]
-    }
-
-    const payload = {
+            }
+        ],
         configUrl: "",
-        tokenWrongFieldName: "thisIsAValidToken"
+        token: null
     }
 
     const response = await app.inject({
@@ -80,6 +83,11 @@ test('POST /api/strapi/config should return 400 if mandatory fields are empty or
 })
 
 test('POST /api/strapi/config should return 400 if fields contain invalid values', async () => {
+    const payload = {
+        configUrl: "not a valid url", // not an url, duh
+        token: "not a valid token" //has spaces
+    }
+
     const expectedResponse = {
         status: appConstants.HTTP_CODE_BAD_REQUEST,
         errors: [
@@ -90,12 +98,10 @@ test('POST /api/strapi/config should return 400 if fields contain invalid values
             {
                 field: appConstants.TOKEN_FIELD_NAME,
                 errorCode: appConstants.ERR_MALFORMED_TOKEN
-            }]
-    }
-
-    const payload = {
-        configUrl: "not a valid url", // not an url, duh
-        token: "not a valid token" //has spaces
+            }
+        ],
+        configUrl: "not a valid url",
+        token: "not a valid token"
     }
 
     const response = await app.inject({
@@ -109,16 +115,19 @@ test('POST /api/strapi/config should return 400 if fields contain invalid values
 })
 
 test('POST /api/strapi/config should return 400 if Strapi instance returns unexpected payload', async () => {
+    const payload = {
+        configUrl: validUrl,
+        token: validToken
+    }
+
     const expectedResponse = {
         status: appConstants.HTTP_CODE_BAD_REQUEST,
         errors: [
             {
                 field: appConstants.CONFIGURL_FIELD_NAME,
                 errorCode: appConstants.ERR_INVALID_URL
-            }]
-    }
-
-    const payload = {
+            }
+        ],
         configUrl: validUrl,
         token: validToken
     }
@@ -141,16 +150,19 @@ test('POST /api/strapi/config should return 400 if Strapi instance returns unexp
 })
 
 test('POST /api/strapi/config should return 400 if Strapi instance returns 403 error code', async () => {
+    const payload = {
+        configUrl: validUrl,
+        token: validToken
+    }
+
     const expectedResponse = {
         status: appConstants.HTTP_CODE_BAD_REQUEST,
         errors: [
             {
                 field: appConstants.TOKEN_FIELD_NAME,
                 errorCode: appConstants.ERR_TOKEN_PERMISSIONS
-            }]
-    }
-
-    const payload = {
+            }
+        ],
         configUrl: validUrl,
         token: validToken
     }
@@ -173,16 +185,19 @@ test('POST /api/strapi/config should return 400 if Strapi instance returns 403 e
 })
 
 test('POST /api/strapi/config should return 400 if Strapi instance returns 401 error code', async () => {
+    const payload = {
+        configUrl: validUrl,
+        token: validToken
+    }
+
     const expectedResponse = {
         status: appConstants.HTTP_CODE_BAD_REQUEST,
         errors: [
             {
                 field: appConstants.TOKEN_FIELD_NAME,
                 errorCode: appConstants.ERR_INVALID_TOKEN
-            }]
-    }
-
-    const payload = {
+            }
+        ],
         configUrl: validUrl,
         token: validToken
     }
@@ -205,14 +220,14 @@ test('POST /api/strapi/config should return 400 if Strapi instance returns 401 e
 })
 
 test('POST /api/strapi/config should return 201', async () => {
-    const expectedResponse = {
-        status: appConstants.HTTP_CODE_CREATED,
-        errors: null,
+    const payload = {
         configUrl: validUrl,
         token: validToken
     }
 
-    const payload = {
+    const expectedResponse = {
+        status: appConstants.HTTP_CODE_CREATED,
+        errors: null,
         configUrl: validUrl,
         token: validToken
     }

@@ -66,12 +66,23 @@ const postStrapiConfigHandler = async (request, reply) => {
     }
 
     if (hasErrors(errors)) {
-        return reply.code(appConstants.HTTP_CODE_BAD_REQUEST).send({ status: appConstants.HTTP_CODE_BAD_REQUEST, errors: errors })
+        return reply.code(appConstants.HTTP_CODE_BAD_REQUEST).send({
+            status: appConstants.HTTP_CODE_BAD_REQUEST,
+            // The check for is needed because Fastify doesn't return the field if the value is undefined
+            configUrl: configUrl == undefined ? null : configUrl,
+            token: token == undefined ? null : token,
+            errors: errors
+        })
     }
 
     try {
         const result = await fastify.saveConf(configUrl, token)
-        return reply.code(appConstants.HTTP_CODE_CREATED).send({ status: appConstants.HTTP_CODE_CREATED, configUrl: result.base_url, token: result.token, errors: null })
+        return reply.code(appConstants.HTTP_CODE_CREATED).send({
+            status: appConstants.HTTP_CODE_CREATED,
+            configUrl: result.base_url,
+            token: result.token,
+            errors: null
+        })
     } catch (err) {
         fastify.log.error(err)
         return reply.code(appConstants.HTTP_CODE_INTERNAL_ERROR).send(err)
