@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "NODE_ENV=test vitest test/",
+    "coverage": "NODE_ENV=test vitest --coverage test/",
     "start": "NODE_ENV=production node server.js",
     "dev": "NODE_ENV=development nodemon --delay 3 server.js",
     "prebuild": "npm install",
@@ -30,6 +31,7 @@
     "postgrator": "^7.1.1"
   },
   "devDependencies": {
+    "@vitest/coverage-c8": "^0.29.7",
     "nodemon": "^2.0.20",
     "vitest": "^0.29.7"
   }
