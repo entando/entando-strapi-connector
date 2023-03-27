@@ -7,7 +7,6 @@ import dbInit from './db/dbInit.js'
 import postgres from './plugins/postgres.js'
 import health from './routes/api/health.js'
 import strapiConfig from './routes/api/strapiConfig.js'
-import { appConstants } from './config/appConstants.js'
 
 function buildApp(opts = {}) {
     const app = Fastify(opts)
@@ -28,7 +27,9 @@ function buildApp(opts = {}) {
             }
 
             app.addHook('onReady', dbInit)
-
+            app.addHook('onRoute', (routeOptions) => {
+                app.log.debug(routeOptions.method + " " + routeOptions.url + " registerd")
+            })
             app.register(postgres, app.config)
             app.register(health, healthOpts)
             app.register(strapiConfig, strapiConfigOpts)

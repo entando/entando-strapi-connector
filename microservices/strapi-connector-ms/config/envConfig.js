@@ -8,7 +8,8 @@ const envSchema = {
         'KEYCLOAK_AUTH_URL',
         'KEYCLOAK_CLIENT_SECRET',
         'KEYCLOAK_CLIENT_ID',
-        'JWT_PUB_KEY'
+        'JWT_PUB_KEY',
+        'AUTH_ENABLED'
     ],
     properties: {
         SERVER_SERVLET_CONTEXT_PATH: {
