@@ -1,5 +1,5 @@
 import fastifyPlugin from 'fastify-plugin'
-import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
+import * as authStrategies from '../../plugins/auth.js'
 import { appConstants } from '../../config/appConstants.js'
 import strapiConfigDao from '../../db/dao.js'
 import { hasErrors, isDefined, checkUrl, checkToken, checkConfig } from '../../utils/strapiConfigUtils.js'
@@ -92,17 +92,23 @@ const deleteStrapiConfigHandler = async (request, reply) => {
 }
 
 async function strapiConfigRoutes (fastify, opts, done) {
-    fastify.decorate('asyncVerifyJWT', asyncVerifyJWT)
-    fastify.decorate('pubKeyVerifyJWT', pubKeyVerifyJWT)
     fastify.register(fastifyPlugin(strapiConfigDao))
 
-    let authStrategy = fastify.asyncVerifyJWT
-    if (fastify.config.JWT_PUB_KEY) {
-        authStrategy = fastify.pubKeyVerifyJWT
+    if (fastify.config.AUTH_ENABLED) {
+        let authStrategy = authStrategies.asyncVerifyJWT
+        if (fastify.config.JWT_PUB_KEY) {
+            fastify.log.info('Using public key for JWT verification: ' + fastify.config.JWT_PUB_KEY)
+        } else {
+            authStrategy = authStrategies.pubKeyVerifyJWT
+            fastify.config.USER_ENDPOINT = fastify.config.KEYCLOAK_AUTH_URL + "/realms/" + fastify.config.KEYCLOAK_REALM + appConstants.KEYCLOAK_USERINFO_ENDPOINT
+            fastify.log.info('Using introspection endpoint for JWT verification: ' + fastify.config.USER_ENDPOINT)
+        }
+        fastify.addHook('onRequest', authStrategy)
     }
-    fastify.get(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
-    fastify.post(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
-    fastify.delete(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
+
+    fastify.get(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: getStrapiConfigHandler })
+    fastify.post(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: postStrapiConfigHandler })
+    fastify.delete(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: deleteStrapiConfigHandler })
     done()
 }
 

@@ -2,7 +2,7 @@ import got from 'got'
 import { createVerifier, TOKEN_ERROR_CODES } from 'fast-jwt'
 import { appConstants } from '../config/appConstants.js'
 
-export async function asyncVerifyJWT (request, reply, done) {
+export async function asyncVerifyJWT (request, reply) {
     const fastify = request.server
 
     const authHeader = request.headers.authorization

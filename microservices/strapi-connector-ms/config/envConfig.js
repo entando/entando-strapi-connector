@@ -47,6 +47,10 @@ const envSchema = {
             type: 'string',
             default: 'entando-strapi-connector-ms-client'
         },
+        AUTH_ENABLED: {
+            type: 'boolean',
+            default: 'false'
+        },
         JWT_PUB_KEY :{
             type: 'string',
             default: ''
