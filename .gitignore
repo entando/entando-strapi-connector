@@ -36,3 +36,4 @@
 # Node
 .nyc_output
 .env.local
+.env.test
