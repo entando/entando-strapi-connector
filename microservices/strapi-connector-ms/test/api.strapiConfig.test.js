@@ -9,10 +9,10 @@ const validUrl = "https://mystrapi.com/api"
 let app
 
 beforeAll(async () => {
-    console.log("**************************************************")
-    console.log("* These tests need a running PostgreSQL instance *")
-    console.log("* change the test/.env.test file to configure it *")
-    console.log("**************************************************")
+    console.log("***************************************************")
+    console.log("* These tests need a running PostgreSQL instance  *")
+    console.log("* change the test/.env.test file to configure it. *")
+    console.log("***************************************************")
     app = buildApp()
     await app.ready()
 })
@@ -55,6 +55,32 @@ test('DELETE /api/strapi/config should return 404', async () => {
     expect(response.body).toBeFalsy()
 })
 
+test('POST /api/strapi/config should return 400 if body is empty', async () => {
+    const expectedResponse = {
+        status: appConstants.HTTP_CODE_BAD_REQUEST,
+        errors: [
+            {
+                field: appConstants.CONFIGURL_FIELD_NAME,
+                errorCode: appConstants.ERR_MANDATORY
+            },
+            {
+                field: appConstants.TOKEN_FIELD_NAME,
+                errorCode: appConstants.ERR_MANDATORY
+            }
+        ],
+        configUrl: null,
+        token: null
+    }
+
+    const response = await app.inject({
+        method: 'POST',
+        url: '/api/strapi/config'
+    })
+
+    expect(response.statusCode).toEqual(appConstants.HTTP_CODE_BAD_REQUEST)
+    expect(response.json()).toEqual(expectedResponse)
+})
+
 test('POST /api/strapi/config should return 400 if mandatory fields are empty or missing', async () => {
     const payload = {
         configUrl: "",
@@ -82,7 +108,7 @@ test('POST /api/strapi/config should return 400 if mandatory fields are empty or
         url: '/api/strapi/config',
         body: payload
     })
-
+    
     expect(response.statusCode).toEqual(appConstants.HTTP_CODE_BAD_REQUEST)
     expect(response.json()).toEqual(expectedResponse)
 })

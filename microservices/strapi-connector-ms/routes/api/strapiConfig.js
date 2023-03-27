@@ -21,19 +21,32 @@ const getStrapiConfigHandler = async (request, reply) => {
 const postStrapiConfigHandler = async (request, reply) => {
     const fastify = request.server
     let errors = []
-    let configUrl = request.body.configUrl
-    const token = request.body.token
+    let configUrl
+    let token
 
-    // check if configUrl and token are defined
-    if (!isDefined(configUrl)) {
-        const payload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
-        fastify.log.warn(payload)
-        errors.push(payload)
+    const mandatoryConfigUrlPayload = { field: appConstants.CONFIGURL_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
+    const mandatoryTokenPayload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
+
+    // check if the body is defined
+    if (!isDefined(request.body)) {
+        fastify.log.warn(appConstants.MSG_BODY_NOT_DEFINED)
+        errors.push(mandatoryConfigUrlPayload)
+        errors.push(mandatoryTokenPayload)
+    } else {
+        configUrl = request.body.configUrl
+        token = request.body.token
     }
-    if (!isDefined(token)) {
-        const payload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_MANDATORY }
-        fastify.log.warn(payload)
-        errors.push(payload)
+
+    if (!hasErrors(errors)) {
+        // check if configUrl and token are defined
+        if (!isDefined(configUrl)) {
+            fastify.log.warn(mandatoryConfigUrlPayload)
+            errors.push(mandatoryConfigUrlPayload)
+        }
+        if (!isDefined(token)) {
+            fastify.log.warn(mandatoryTokenPayload)
+            errors.push(mandatoryTokenPayload)
+        }
     }
 
     // check if configUrl and token are syntactically correct
