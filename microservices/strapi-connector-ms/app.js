@@ -26,20 +26,11 @@ function buildApp(opts = {}) {
                 strapiConfigOpts.prefix = app.config.SERVER_SERVLET_CONTEXT_PATH
                 app.log.info('Set prefix to ' + app.config.SERVER_SERVLET_CONTEXT_PATH)
             }
-            if (app.config.JWT_PUB_KEY) {
-                app.log.info('Using public key for JWT verification: ' + app.config.JWT_PUB_KEY)
-            } else {
-                app.config.USER_ENDPOINT = app.config.KEYCLOAK_AUTH_URL + "/realms/" + app.config.KEYCLOAK_REALM + "/protocol/openid-connect/userinfo"
-                app.log.info('Using introspection endpoint for JWT verification: ' + app.config.USER_ENDPOINT)
-            }
 
             app.addHook('onReady', dbInit)
-
-            // TODO: verify if this is safe in production
-            app.register(cors, {
-                origin: [/^http:\/\/localhost:\d*$/, /^http:\/\/127.0.0.1:\d*$/, /^http:\/\/0.0.0.0:\d*$/]
+            app.addHook('onRoute', (routeOptions) => {
+                app.log.debug(routeOptions.method + " " + routeOptions.url + " registerd")
             })
-
             app.register(postgres, app.config)
             app.register(health, healthOpts)
             app.register(strapiConfig, strapiConfigOpts)

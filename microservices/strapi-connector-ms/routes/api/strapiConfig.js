@@ -1,5 +1,5 @@
 import fastifyPlugin from 'fastify-plugin'
-import { asyncVerifyJWT, pubKeyVerifyJWT } from '../../plugins/auth.js'
+import * as authStrategies from '../../plugins/auth.js'
 import { appConstants } from '../../config/appConstants.js'
 import strapiConfigDao from '../../db/dao.js'
 import { hasErrors, isDefined, checkUrl, checkToken, checkConfig } from '../../utils/strapiConfigUtils.js'
@@ -11,10 +11,10 @@ const getStrapiConfigHandler = async (request, reply) => {
     try {
         const result = await fastify.readConf()
         if (!result) return reply.code(404).send({ configUrl: null, token: false })
-        return reply.code(200).send({ configUrl: result.base_url, token: true })
+        return reply.code(appConstants.HTTP_CODE_OK).send({ configUrl: result.base_url, token: true })
     } catch (err) {
         fastify.log.error(err)
-        return reply.code(500).send(err)
+        return reply.code(appConstants.HTTP_CODE_INTERNAL_ERROR).send(err)
     }
 }
 
@@ -66,15 +66,26 @@ const postStrapiConfigHandler = async (request, reply) => {
     }
 
     if (hasErrors(errors)) {
-        return reply.code(400).send({ status: 400, errors: errors })
+        return reply.code(appConstants.HTTP_CODE_BAD_REQUEST).send({
+            status: appConstants.HTTP_CODE_BAD_REQUEST,
+            // The check for is needed because Fastify doesn't return the field if the value is undefined
+            configUrl: configUrl == undefined ? null : configUrl,
+            token: token == undefined ? null : token,
+            errors: errors
+        })
     }
 
     try {
         const result = await fastify.saveConf(configUrl, token)
-        return reply.code(201).send({ status: 201, configUrl: result.base_url, token: result.token, errors: null })
+        return reply.code(appConstants.HTTP_CODE_CREATED).send({
+            status: appConstants.HTTP_CODE_CREATED,
+            configUrl: result.base_url,
+            token: result.token,
+            errors: null
+        })
     } catch (err) {
         fastify.log.error(err)
-        return reply.code(500).send(err)
+        return reply.code(appConstants.HTTP_CODE_INTERNAL_ERROR).send(err)
     }
 }
 
@@ -83,26 +94,32 @@ const deleteStrapiConfigHandler = async (request, reply) => {
 
     try {
         const result = await fastify.resetConf()
-        if (!result) return reply.code(404).send()
-        return reply.code(204).send()
+        if (!result) return reply.code(appConstants.HTTP_CODE_NOT_FOUND).send()
+        return reply.code(appConstants.HTTP_CODE_NO_CONTENT).send()
     } catch (err) {
         fastify.log.error(err)
-        return reply.code(500).send(err)
+        return reply.code(appConstants.HTTP_CODE_INTERNAL_ERROR).send(err)
     }
 }
 
 async function strapiConfigRoutes (fastify, opts, done) {
-    fastify.decorate('asyncVerifyJWT', asyncVerifyJWT)
-    fastify.decorate('pubKeyVerifyJWT', pubKeyVerifyJWT)
     fastify.register(fastifyPlugin(strapiConfigDao))
 
-    let authStrategy = fastify.asyncVerifyJWT
-    if (fastify.config.JWT_PUB_KEY) {
-        authStrategy = fastify.pubKeyVerifyJWT
+    if (fastify.config.AUTH_ENABLED) {
+        let authStrategy = authStrategies.asyncVerifyJWT
+        if (fastify.config.JWT_PUB_KEY) {
+            fastify.log.info('Using public key for JWT verification: ' + fastify.config.JWT_PUB_KEY)
+        } else {
+            authStrategy = authStrategies.pubKeyVerifyJWT
+            fastify.config.USER_ENDPOINT = fastify.config.KEYCLOAK_AUTH_URL + "/realms/" + fastify.config.KEYCLOAK_REALM + appConstants.KEYCLOAK_USERINFO_ENDPOINT
+            fastify.log.info('Using introspection endpoint for JWT verification: ' + fastify.config.USER_ENDPOINT)
+        }
+        fastify.addHook('onRequest', authStrategy)
     }
-    fastify.get(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: getStrapiConfigHandler/* , onRequest: authStrategy */ })
-    fastify.post(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: postStrapiConfigHandler,/*  onRequest: authStrategy */ })
-    fastify.delete(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: deleteStrapiConfigHandler,/*  onRequest: authStrategy */ })
+
+    fastify.get(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: getStrapiConfigHandler })
+    fastify.post(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: postStrapiConfigHandler })
+    fastify.delete(appConstants.STRAPI_CONFIG_ENDPOINT, { handler: deleteStrapiConfigHandler })
     done()
 }
 

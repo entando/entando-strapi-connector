@@ -11,6 +11,7 @@
 **/node_modules
 **/target
 **/build
+**/coverage
 
 ######################
 # IntelliJ IDEA
@@ -36,3 +37,4 @@
 # Node
 .nyc_output
 .env.local
+.env.test

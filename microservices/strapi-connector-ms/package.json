@@ -1,16 +1,17 @@
 {
   "name": "strapi-connector-ms",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Strapi Connector Microservice",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"test/**/*.test.js\"",
-    "start": "node server.js",
-    "dev": "export LOG_LEVEL=debug && export DOT_ENV=.env.local && nodemon server.js",
+    "test": "NODE_ENV=test vitest run ./test/",
+    "coverage": "NODE_ENV=test vitest run --coverage ./test/",
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development nodemon --delay 3 server.js",
     "prebuild": "npm install",
     "build": "echo nothing to build here"
   },
@@ -31,7 +32,8 @@
     "postgrator": "^7.1.1"
   },
   "devDependencies": {
+    "@vitest/coverage-c8": "^0.29.7",
     "nodemon": "^2.0.20",
-    "tap": "^16.1.0"
+    "vitest": "^0.29.7"
   }
 }
