@@ -1,7 +1,7 @@
 import got from 'got'
 import { appConstants } from '../config/appConstants.js'
 
-class VerifyException {
+export class VerifyException {
     constructor(payload, message) {
         this.name = "VerifyException"
         this.payload = payload
@@ -72,7 +72,7 @@ export async function checkConfig(url, token) {
                 payload = { field: appConstants.TOKEN_FIELD_NAME, errorCode: appConstants.ERR_INVALID_TOKEN }
             }
         }
-        // every other error's type (50*/time out/connection problems) return the ERR_INVALID_URL payload
+        // every other error (50*/time out/connection problems) returns the ERR_INVALID_URL payload
         throw new VerifyException(payload, err.message)
     }
 }
