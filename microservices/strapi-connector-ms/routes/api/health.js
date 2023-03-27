@@ -27,9 +27,8 @@ const healthSchema = {
           }
         },
         error: {
-          type: 'array',
-          nullable: true,
-          items: { type: 'string' }
+          type: 'object',
+          nullable: true
         }
       }
     }
