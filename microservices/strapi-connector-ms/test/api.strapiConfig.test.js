@@ -8,6 +8,10 @@ const validUrl = "https://mystrapi.com/api"
 let app
 
 beforeAll(async () => {
+    console.log("**************************************************")
+    console.log("* These tests need a running PostgreSQL instance *")
+    console.log("* change the test/.env.test file to configure it *")
+    console.log("**************************************************")
     app = buildApp()
     await app.ready()
 })
