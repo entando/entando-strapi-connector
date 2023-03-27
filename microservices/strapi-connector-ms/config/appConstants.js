@@ -21,6 +21,7 @@ export const appConstants = {
     MSG_TOKEN_HAS_SPACES: "Token has spaces",
     MSG_TOKEN_VERIFY_SUCCESS: "Strapi config verified succesfully",
     MSG_STRAPI_BAD_PAYLOAD: "Bad endpoint data payload",
+    MSG_BODY_NOT_DEFINED: "Request body is not defined",
     TOKEN_FIELD_NAME: "token",
     CONFIGURL_FIELD_NAME: "configUrl",
     AUTH_HEADER: "Authorization",

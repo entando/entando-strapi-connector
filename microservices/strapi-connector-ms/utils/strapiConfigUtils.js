@@ -14,7 +14,7 @@ export function hasErrors(list) {
 }
 
 export function isDefined(value) {
-    if (value == undefined || value == null || value.trim() == "") {
+    if (!value || value == undefined || value == null ) {
         return false
     }
     return true
