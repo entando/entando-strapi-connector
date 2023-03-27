@@ -1,4 +1,4 @@
-import { appConstants } from "../../config/appConstants"
+import { appConstants } from "../../config/appConstants.js"
 
 const getHealthHandler = async (request, reply, opts) => {
   const fastify = request.server
