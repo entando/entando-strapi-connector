@@ -21,14 +21,8 @@ export const postData = async (url: string, payload: PayloadData) => {
     body: JSON.stringify(payload)
   })
     .then((res) => res.json())
-    .then((data) => {
-      console.log("POST data", data)
-      return data
-    })
-    .catch((error) => {
-      console.log("POST error", error)
-      return error
-    })
+    .then((data) => data)
+    .catch((error) => error)
 
   return response
 }
