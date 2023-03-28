@@ -4,11 +4,11 @@
   "app.connectionTokenLabel": "Connection Token",
   "app.connectionTokenPlaceholder": "Insert Connection Token",
   "app.connectButton": "Connect",
-  "app.enterAValidUrl": "Enter a valid URL",
-  "app.urlIsRequired": "URL field is required",
-  "app.tokenIsRequired": "Token field is required",
-  "app.errorFetchingData": "Error while fetching data",
-  "app.tokenIsPresent": "A token is already present",
-  "app.somethingWentWrong": "Error: something went wrong",
-  "app.connectionSuccessfullyEstablished": "Connection successfully established!"
+  "app.urlIsRequired": "the config URL is mandatory",
+  "app.tokenIsRequired": "the token is mandatory",
+  "app.connectionSuccessfullyEstablished": "the strapi config has been successfully updated",
+  "app.tokenAlreadySet": "a token is already set, if you resubmit this form the current token will be overwritten",
+  "app.invalidConfigUrl": "the given URL does not belong to a valid Strapi API",
+  "app.invalidToken": "the given token is not valid",
+  "app.invalidTokenPermissions": "the given token does not grant permissions to retrieve Contents and/or Collection Types"
 }

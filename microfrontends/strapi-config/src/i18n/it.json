@@ -4,11 +4,11 @@
   "app.connectionTokenLabel": "Token di connessione",
   "app.connectionTokenPlaceholder": "Inserire il token di connessione",
   "app.connectButton": "Collegati",
-  "app.enterAValidUrl": "Inserisci un URL valido",
-  "app.urlIsRequired": "Il campo URL è obbligatorio",
-  "app.tokenIsRequired": "Il campo token è obbligatorio",
-  "app.errorFetchingData": "Errore nel recupero dei dati",
-  "app.tokenIsPresent": "Un token è già presente",
-  "app.somethingWentWrong": "Errore: qualcosa è andato storto",
-  "app.connectionSuccessfullyEstablished": "Connessione stabilita!"
+  "app.urlIsRequired": "il campo config URL è obbligatorio",
+  "app.tokenIsRequired": "il campo token è obbligatorio",
+  "app.connectionSuccessfullyEstablished": "la strapi config è stata aggiornata con successo",
+  "app.tokenAlreadySet": "un token è già stato settato, un nuovo invio di questo form sovrascriverà il token attuale",
+  "app.invalidConfigUrl": "il config URL non punta ad un'istanza valida della Strapi API",
+  "app.invalidToken": "il token fornito non è valido",
+  "app.invalidTokenPermissions": "il token fornito non ha i permessi per leggere Contents e Collection Types"
 }

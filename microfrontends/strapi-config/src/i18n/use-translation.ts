@@ -32,11 +32,6 @@ export const useTranslation = () => {
             id: "app.connectButton",
             defaultMessage: "Connect"
           })
-        case "enterAValidUrl":
-          return intl.formatMessage({
-            id: "app.enterAValidUrl",
-            defaultMessage: "Enter a valid URL"
-          })
         case "urlIsRequired":
           return intl.formatMessage({
             id: "app.urlIsRequired",
@@ -47,25 +42,33 @@ export const useTranslation = () => {
             id: "app.tokenIsRequired",
             defaultMessage: "Token field is required"
           })
-        case "errorFetchingData":
-          return intl.formatMessage({
-            id: "app.errorFetchingData",
-            defaultMessage: "Error while fetching data"
-          })
-        case "tokenIsPresent":
-          return intl.formatMessage({
-            id: "app.tokenIsPresent",
-            defaultMessage: "A token is already present"
-          })
-        case "somethingWentWrong":
-          return intl.formatMessage({
-            id: "app.somethingWentWrong",
-            defaultMessage: "Error: something went wrong"
-          })
         case "connectionSuccessfullyEstablished":
           return intl.formatMessage({
             id: "app.connectionSuccessfullyEstablished",
             defaultMessage: "Connection successfully established!"
+          })
+        case "tokenAlreadySet":
+          return intl.formatMessage({
+            id: "app.tokenAlreadySet",
+            defaultMessage:
+              "a token is already set, if you resubmit this form the current token will be overwritten"
+          })
+        case "invalidConfigUrl":
+          return intl.formatMessage({
+            id: "app.invalidConfigUrl",
+            defaultMessage:
+              "the given URL does not belong to a valid Strapi API"
+          })
+        case "invalidToken":
+          return intl.formatMessage({
+            id: "app.invalidToken",
+            defaultMessage: "the given token is not valid"
+          })
+        case "invalidTokenPermissions":
+          return intl.formatMessage({
+            id: "app.invalidTokenPermissions",
+            defaultMessage:
+              "the given token does not grant permissions to retrieve Contents and/or Collection Types"
           })
       }
     },

@@ -37,16 +37,15 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
   useEffect(() => {
     const getConnectionData = async () => {
       const response = await getData(`${apiUrl}/api/strapi/config`)
-      if (response.hasOwnProperty("message")) {
+      setConnectionData({
+        connectionUrl: response.configUrl,
+        connectionToken: "",
+        isTokenSet: response.token
+      })
+      if (response.token) {
         setToast({
-          message: translate("errorFetchingData"),
-          type: "error"
-        })
-      } else {
-        setConnectionData({
-          connectionUrl: response.configUrl,
-          connectionToken: "",
-          isTokenSet: response.token
+          message: translate("tokenAlreadySet"),
+          type: "success"
         })
       }
     }
@@ -79,9 +78,9 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
 
     const response = await postData(`${apiUrl}/api/strapi/config`, dataToSend)
 
-    if (response.hasOwnProperty("message")) {
+    if (response?.errors?.length > 0) {
       setToast({
-        message: translate("somethingWentWrong"),
+        message: translate(response.errors[0].errorCode),
         type: "error"
       })
     } else {
@@ -123,7 +122,7 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
               handleBlur={props.handleBlur}
               value={props.values.connectionToken}
               error={props.errors.connectionToken}
-              caption={connectionData.isTokenSet ? "tokenIsPresent" : ""}
+              caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
             />
             <button
               className="btn"

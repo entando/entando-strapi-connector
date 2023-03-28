@@ -5,12 +5,7 @@ interface PayloadData {
 
 export const getData = async (url: string) => {
   const response = await fetch(url)
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      throw new Error("Error while fetching data")
-    })
+    .then((res) => res.json())
     .then((data) => data)
     .catch((error) => error)
 
@@ -25,14 +20,15 @@ export const postData = async (url: string, payload: PayloadData) => {
     },
     body: JSON.stringify(payload)
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      throw new Error("Error while posting data")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("POST data", data)
+      return data
     })
-    .then((data) => data)
-    .catch((error) => error)
+    .catch((error) => {
+      console.log("POST error", error)
+      return error
+    })
 
   return response
 }
