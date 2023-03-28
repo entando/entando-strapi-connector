@@ -3,15 +3,15 @@ version: '3.7'
 
 services:
   postgresql:
-    image: entando/entando-postgres-rocky:14.1.0
-    restart: always
+    image: gpent/entando-postgres-rocky:14.1.0
+    restart: unless-stopped
     # If you want to relocate the postgres data (volume) to your local directory, uncomment the lines below
     # volumes:
     #   - ~/volumes/entando-bundle-cli/entando-strapi-connector/postgresql/:/var/lib/postgresql/data/
     environment:
-      - POSTGRESQL_USER=entando-strapi-connector-user
-      - POSTGRESQL_PASSWORD=entando-strapi-connector-password
-      - POSTGRESQL_DATABASE=entando-strapi-connector
+      - POSTGRESQL_USER=entando_strapi_connector_user
+      - POSTGRESQL_PASSWORD=entando_strapi_connector_password
+      - POSTGRESQL_DATABASE=entando_strapi_connector
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:

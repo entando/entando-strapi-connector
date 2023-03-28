@@ -1,7 +1,7 @@
 import buildApp from './app.js'
 const server = buildApp({
     logger: {
-        level: process.env.LOG_LEVEL || 'info'
+        level: process.env.NODE_ENV == "development" ? 'debug' : 'info'
     }
 })
 

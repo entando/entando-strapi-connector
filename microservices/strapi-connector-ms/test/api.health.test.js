@@ -1,14 +1,36 @@
-import test from 'tap'
+import { test, expect, afterEach } from 'vitest'
 import buildApp from '../app.js'
+import { appConstants } from '../config/appConstants.js'
 
-test('requests the "/api/health" route', async t => {
-  const app = buildApp()
+let app
 
+afterEach(async () => {
+  await app.close()
+})
+
+test('/api/health should be successful with a working DB connection', async () => {
+  app = buildApp()
+  await app.ready()
   const response = await app.inject({
     method: 'GET',
     url: '/api/health'
   })
 
-  t.equal(response.statusCode, 200, 'returns a status code of 200')
-  t.same(response.json(), { status: 'UP' }, 'returns a body with { status: \'UP\'}')
+  expect(response.statusCode).toEqual(appConstants.HTTP_CODE_OK)
+  expect(response.json()).toEqual({ status: { server: "UP", db: "UP" }, error: null })
+})
+
+test('/api/health should fail with a bad DB connection', async () => {
+  // Overwrite .env.test SPRING_DATASOURCE_URL
+  process.env.SPRING_DATASOURCE_URL = 'jdbc:postgresql://localhost:5432/this_should_not_work'
+
+  app = buildApp()
+  await app.ready()
+  const response = await app.inject({
+    method: 'GET',
+    url: '/api/health'
+  })
+
+  expect(response.statusCode).toEqual(appConstants.HTTP_CODE_SERVICE_UNAVAILABLE)
+  expect(response.json().status).toEqual({ server: "UP", db: "DOWN" })
 })

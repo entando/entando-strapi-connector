@@ -1,3 +1,5 @@
+import { appConstants } from "../../config/appConstants.js"
+
 const getHealthHandler = async (request, reply, opts) => {
   const fastify = request.server
   const queryString = "SELECT COUNT (*) FROM " + fastify.config.SPRING_DATASOURCE_USERNAME + "." + fastify.config.API_CONFIG_TABLE
@@ -5,10 +7,10 @@ const getHealthHandler = async (request, reply, opts) => {
 
   try {
     await pool.query(queryString)
-    reply.code(200).send({ status: { server: "UP", db: "UP" }, error: null })
+    reply.code(appConstants.HTTP_CODE_OK).send({ status: { server: "UP", db: "UP" }, error: null })
   } catch (err) {
     fastify.log.error(err)
-    reply.code(503).send({ status: { server: "UP", db: "DOWN" }, error: err })
+    reply.code(appConstants.HTTP_CODE_SERVICE_UNAVAILABLE).send({ status: { server: "UP", db: "DOWN" }, error: err })
   }
 }
 
@@ -25,9 +27,8 @@ const healthSchema = {
           }
         },
         error: {
-          type: 'array',
-          nullable: true,
-          items: { type: 'string' }
+          type: 'object',
+          nullable: true
         }
       }
     }
