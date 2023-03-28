@@ -1,7 +1,6 @@
 // Require the framework and instantiate it
 import Fastify from 'fastify'
 import fastifyEnv from '@fastify/env'
-import cors from '@fastify/cors'
 import { envOptions } from './config/envConfig.js'
 
 import dbInit from './db/dbInit.js'
