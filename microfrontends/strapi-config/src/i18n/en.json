@@ -10,5 +10,6 @@
   "app.tokenAlreadySet": "a token is already set, if you resubmit this form the current token will be overwritten",
   "app.invalidConfigUrl": "the given URL does not belong to a valid Strapi API",
   "app.invalidToken": "the given token is not valid",
-  "app.invalidTokenPermissions": "the given token does not grant permissions to retrieve Contents and/or Collection Types"
+  "app.invalidTokenPermissions": "the given token does not grant permissions to retrieve Contents and/or Collection Types",
+  "app.mandatory": "all the fields are mandatory"
 }

@@ -2,7 +2,7 @@ import React from "react"
 
 interface ToastProps {
   toastStyle: string
-  toastMessage?: string
+  toastMessage?: string | string[]
 }
 
 const Toast: React.FC<ToastProps> = ({ toastStyle, toastMessage }) => {
@@ -14,7 +14,11 @@ const Toast: React.FC<ToastProps> = ({ toastStyle, toastMessage }) => {
         }
       >
         <div>
-          <span>{toastMessage}</span>
+          {!Array.isArray(toastMessage) ? (
+            <span>{toastMessage}</span>
+          ) : (
+            toastMessage.map((item) => <p>{item}</p>)
+          )}
         </div>
       </div>
     </div>

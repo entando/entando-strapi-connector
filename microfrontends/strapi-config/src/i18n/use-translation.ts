@@ -70,6 +70,11 @@ export const useTranslation = () => {
             defaultMessage:
               "the given token does not grant permissions to retrieve Contents and/or Collection Types"
           })
+        case "mandatory":
+          return intl.formatMessage({
+            id: "app.mandatory",
+            defaultMessage: "all the fields are mandatory"
+          })
       }
     },
     [intl]

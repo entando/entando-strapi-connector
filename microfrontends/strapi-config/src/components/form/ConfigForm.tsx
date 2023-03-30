@@ -4,7 +4,6 @@ import { useTranslation } from "../../i18n/use-translation"
 import { getData, postData } from "../../integration/integration"
 import Toast from "../Toast"
 import TextField from "./TextField"
-import { configFormValidationSchema } from "./validation/configFormValidationSchema"
 
 export interface FormData {
   connectionUrl: string
@@ -42,12 +41,6 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
         connectionToken: "",
         isTokenSet: response.token
       })
-      if (response.token) {
-        setToast({
-          message: translate("tokenAlreadySet"),
-          type: "success"
-        })
-      }
     }
 
     getConnectionData()
@@ -62,7 +55,7 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
           message: "",
           type: ""
         })
-      }, 5000)
+      }, 50000)
 
       return () => {
         clearTimeout(timeoutID)
@@ -78,9 +71,14 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
 
     const response = await postData(`${apiUrl}/api/strapi/config`, dataToSend)
 
+    // fires toasts
     if (response?.errors?.length > 0) {
+      const toastStrings = response.errors.map((error: { errorCode: string }) =>
+        translate(error.errorCode)
+      )
+      // const uniqueToastStrings = [...new Set(toastStrings)]
       setToast({
-        message: translate(response.errors[0].errorCode),
+        message: toastStrings,
         type: "error"
       })
     } else {
@@ -95,10 +93,10 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
     <div className="config-form">
       <Formik
         initialValues={connectionData}
-        validationSchema={configFormValidationSchema}
+        // validationSchema={configFormValidationSchema}
+        // validateOnBlur={true}
         enableReinitialize={true}
         onSubmit={formSubmitHandler}
-        validateOnBlur={true}
       >
         {(props) => (
           <Form>
@@ -108,7 +106,6 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
               name={"connectionUrl"}
               type={"text"}
               handleChange={props.handleChange}
-              handleBlur={props.handleBlur}
               value={props.values.connectionUrl}
               error={props.errors.connectionUrl}
             />
@@ -119,16 +116,11 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
               name={"connectionToken"}
               type={"password"}
               handleChange={props.handleChange}
-              handleBlur={props.handleBlur}
               value={props.values.connectionToken}
               error={props.errors.connectionToken}
               caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
             />
-            <button
-              className="btn"
-              type="submit"
-              disabled={!(props.isValid && props.dirty)}
-            >
+            <button className="btn" type="submit" disabled={props.isSubmitting}>
               {translate("connectButton")}
             </button>
           </Form>

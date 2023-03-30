@@ -10,5 +10,6 @@
   "app.tokenAlreadySet": "un token è già stato settato, un nuovo invio di questo form sovrascriverà il token attuale",
   "app.invalidConfigUrl": "il config URL non punta ad un'istanza valida della Strapi API",
   "app.invalidToken": "il token fornito non è valido",
-  "app.invalidTokenPermissions": "il token fornito non ha i permessi per leggere Contents e Collection Types"
+  "app.invalidTokenPermissions": "il token fornito non ha i permessi per leggere Contents e Collection Types",
+  "app.mandatory": "tutti i campi sono obbligatori"
 }

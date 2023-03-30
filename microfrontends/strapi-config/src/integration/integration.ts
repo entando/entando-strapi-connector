@@ -6,8 +6,14 @@ interface PayloadData {
 export const getData = async (url: string) => {
   const response = await fetch(url)
     .then((res) => res.json())
-    .then((data) => data)
-    .catch((error) => error)
+    .then((data) => {
+      console.log("GET data", data)
+      return data
+    })
+    .catch((error) => {
+      console.log("GET error", error)
+      return error
+    })
 
   return response
 }
@@ -21,8 +27,14 @@ export const postData = async (url: string, payload: PayloadData) => {
     body: JSON.stringify(payload)
   })
     .then((res) => res.json())
-    .then((data) => data)
-    .catch((error) => error)
+    .then((data) => {
+      console.log("POST data", data)
+      return data
+    })
+    .catch((error) => {
+      console.log("POST error", error)
+      return error
+    })
 
   return response
 }
