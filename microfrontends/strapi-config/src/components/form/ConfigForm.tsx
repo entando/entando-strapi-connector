@@ -22,6 +22,7 @@ interface ConfigFormProps {
 
 const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
   const translate = useTranslation()
+
   const [connectionData, setConnectionData] = useState({
     connectionUrl: "",
     connectionToken: "",
@@ -57,7 +58,7 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
           message: "",
           type: ""
         })
-      }, 50000)
+      }, 5000)
 
       return () => {
         clearTimeout(timeoutID)
@@ -73,7 +74,6 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
 
     const response = await postData(`${apiUrl}/api/strapi/config`, dataToSend)
 
-    // fires toasts
     if (response?.errors?.length > 0) {
       const toastStrings = response.errors.map(
         (error: { field: string; errorCode: string }) =>
@@ -117,9 +117,6 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
     setConfigUrlValidationError("")
     setTokenValidationError("")
   }
-
-  console.log("URL error", configUrlValidationError)
-  console.log("TKN error", tokenValidationError)
 
   return (
     <div className="config-form">
