@@ -102,15 +102,28 @@ statusCode **400** response payload:
   token: string // null if not provided/empty/undefined
 }
 ```
-**errorCodes**:
-* code: mandatory
+#### Error codes:
+* code: `mandatory`
   * reasoning: the field was not filled or is missing
-* code: invalidConfigUrl
+* code: `invalidConfigUrl`
   * reasoning: the rest API call performed against the given configURL does not yield the expected result
-* code: invalidToken
+* code: `invalidToken`
   * reasoning: the rest API call performed against the verification endpoints returns an authentication error
-* code: invalidTokenPermissions
+* code: `invalidTokenPermissions`
   * reasoning: the given token, although being valid, does not have the permission to retrieve contents and collection types
+
+#### Validation logic:
+
+To avoid performing validation of an inconsistent or incorrect configuration the validation flow is done in three different steps. Each step can return a maximum of two errors, one for each field. If a step has errors the flow will stop and return all the errors collected.
+
+Validation flow:
+  1. verify that the fields are present and have values
+     * possible errors: `mandatory` on both field
+  2. verify that the values are syntactically correct
+     * possibile errors: `invalidConfigUrl` or `invalidToken`
+  3. verify that the values can be used to connect to a Strapi instance:
+     * possible errors: `invalidConfigUrl`, `invalidToken` or `invalidTokenPermissions`
+
 
 ### `DELETE api/strapi/config`
 
