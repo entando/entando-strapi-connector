@@ -32,6 +32,8 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
     type: ""
   })
   const [showToast, setShowToast] = useState(false)
+  const [configUrlValidationError, setConfigUrlValidationError] = useState("")
+  const [tokenValidationError, setTokenValidationError] = useState("")
 
   useEffect(() => {
     const getConnectionData = async () => {
@@ -73,21 +75,51 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
 
     // fires toasts
     if (response?.errors?.length > 0) {
-      const toastStrings = response.errors.map((error: { errorCode: string }) =>
-        translate(error.errorCode)
+      const toastStrings = response.errors.map(
+        (error: { field: string; errorCode: string }) =>
+          translate(error.errorCode)
       )
       // const uniqueToastStrings = [...new Set(toastStrings)]
       setToast({
         message: toastStrings,
         type: "error"
       })
+
+      resetErrors()
+
+      response.errors.forEach((error: { field: string; errorCode: string }) => {
+        if (error.field === "configUrl") {
+          if (error.errorCode === "mandatory") {
+            setConfigUrlValidationError("urlIsRequired")
+          } else {
+            setConfigUrlValidationError(error.errorCode)
+          }
+        }
+        if (error.field === "token") {
+          if (error.errorCode === "mandatory") {
+            setTokenValidationError("tokenIsRequired")
+          } else {
+            setTokenValidationError(error.errorCode)
+          }
+        }
+      })
     } else {
       setToast({
         message: translate("connectionSuccessfullyEstablished"),
         type: "success"
       })
+
+      resetErrors()
     }
   }
+
+  const resetErrors = () => {
+    setConfigUrlValidationError("")
+    setTokenValidationError("")
+  }
+
+  console.log("URL error", configUrlValidationError)
+  console.log("TKN error", tokenValidationError)
 
   return (
     <div className="config-form">
@@ -107,7 +139,11 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
               type={"text"}
               handleChange={props.handleChange}
               value={props.values.connectionUrl}
-              error={props.errors.connectionUrl}
+              error={
+                configUrlValidationError.length > 0
+                  ? configUrlValidationError
+                  : ""
+              }
             />
 
             <TextField
@@ -117,7 +153,9 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
               type={"password"}
               handleChange={props.handleChange}
               value={props.values.connectionToken}
-              error={props.errors.connectionToken}
+              error={
+                tokenValidationError.length > 0 ? tokenValidationError : ""
+              }
               caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
             />
             <button className="btn" type="submit" disabled={props.isSubmitting}>
