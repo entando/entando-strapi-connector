@@ -74,7 +74,7 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
       token: values.connectionToken
     }
 
-    if (dataToSend.configUrl.length === 0 && dataToSend.token.length === 0) {
+    if (dataToSend.configUrl?.length === 0 && dataToSend.token?.length === 0) {
       setToast({
         message: translate("mandatory"),
         type: "error"
