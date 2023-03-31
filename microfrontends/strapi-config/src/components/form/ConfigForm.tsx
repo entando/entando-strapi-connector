@@ -12,7 +12,7 @@ export interface FormData {
 }
 
 interface ToastData {
-  message?: string
+  message?: string | string[]
   type: string
 }
 
@@ -67,9 +67,21 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
   }, [toast.message])
 
   const formSubmitHandler = async (values: FormData) => {
+    resetErrors()
+
     const dataToSend = {
       configUrl: values.connectionUrl,
       token: values.connectionToken
+    }
+
+    if (dataToSend.configUrl.length === 0 && dataToSend.token.length === 0) {
+      setToast({
+        message: translate("mandatory"),
+        type: "error"
+      })
+      setConfigUrlValidationError("urlIsRequired")
+      setTokenValidationError("tokenIsRequired")
+      return
     }
 
     const response = await postData(`${apiUrl}/api/strapi/config`, dataToSend)
@@ -78,14 +90,12 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
       const toastStrings = response.errors.map(
         (error: { field: string; errorCode: string }) =>
           translate(error.errorCode)
-      )
-      // const uniqueToastStrings = [...new Set(toastStrings)]
+      ) as string[]
+      const uniqueToastStrings = [...new Set(toastStrings)] as string[]
       setToast({
-        message: toastStrings,
+        message: uniqueToastStrings,
         type: "error"
       })
-
-      resetErrors()
 
       response.errors.forEach((error: { field: string; errorCode: string }) => {
         if (error.field === "configUrl") {
@@ -117,6 +127,9 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
     setConfigUrlValidationError("")
     setTokenValidationError("")
   }
+
+  // console.log("URL", configUrlValidationError)
+  // console.log("TKN", tokenValidationError)
 
   return (
     <div className="config-form">
