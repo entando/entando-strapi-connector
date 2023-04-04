@@ -1,11 +1,12 @@
-import ConfigForm from "./components/form/ConfigForm"
+// import ConfigForm from "./components/form/ConfigForm"
 import { useEPCRouter } from "./hooks/useEntandoRouter"
 import { IntlProvider } from "react-intl"
 import messagesEn from "./i18n/en.json"
 import messagesIt from "./i18n/it.json"
 import { useEffect, useState } from "react"
 import { MfeConfig } from "./types/globals"
-import { getAPIEndpoint } from "./utils/getAPIEndpoints"
+// import { getAPIEndpoint } from "./utils/getAPIEndpoints"
+import FormMocked from "./components/FormMocked"
 
 interface Message {
   [key: string]: {
@@ -21,7 +22,7 @@ const messages: Message = {
 export function App({ config }: { config: MfeConfig }) {
   const { matchPath } = useEPCRouter()
 
-  const apiUrl = getAPIEndpoint("strapi-config-microservice", config)
+  // const apiUrl = getAPIEndpoint("strapi-config-microservice", config)
 
   const [locale, setLocale] = useState<string>("en")
 
@@ -34,10 +35,9 @@ export function App({ config }: { config: MfeConfig }) {
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
+        <FormMocked />
         {matchPath("settings") && (
-          <div>
-            <ConfigForm apiUrl={apiUrl} />
-          </div>
+          <div>{/* <ConfigForm apiUrl={apiUrl} /> */}</div>
         )}
         {matchPath("content-template") && <div>Content template</div>}
       </div>
