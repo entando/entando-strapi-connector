@@ -6,7 +6,7 @@ const Header: React.FC = () => {
 
   return (
     <div className="top-container shadow bg-white mb-10 py-10 px-10 border-b-black">
-      <div className="text-sm breadcrumbs">
+      <div className="text-md breadcrumbs">
         <ul>
           <li>
             <a>epc</a>
@@ -17,8 +17,8 @@ const Header: React.FC = () => {
           <li>{translate("title")}</li>
         </ul>
       </div>
-      <div className="container-title mb-1 mt-4">
-        <p className="text-2xl">
+      <div className="container-title mb-1 mt-8">
+      <p className="text-4xl flex content-center items-center">
           {translate("title")}
           <div
             className="tooltip tooltip-right"
@@ -26,11 +26,11 @@ const Header: React.FC = () => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill="fill-white"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+              stroke="stroke-gray-200"
+              className="w-11 h-11"
             >
               <path
                 strokeLinecap="round"

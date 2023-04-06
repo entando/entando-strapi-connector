@@ -27,18 +27,18 @@ const TextField: React.FC<TextFieldProps> = ({
 
   return (
     <>
-      <div className="form-control w-full ">
+      <div className="form-control w-full my-7 ">
         <div className="flex ">
           <div className="w-1/5 ">
             <label className="label justify-end">
-              <span className="label-text text-xs mr-10">{label}</span>
+              <span className="label-text font-semibold text-xl mr-10">{label}</span>
             </label>
           </div>
           <div className="w-4/5 ">
             <Field
               type={type}
               placeholder={placeholder}
-              className="input input-bordered w-full rounded-none input-sm"
+              className="input input-bordered w-full rounded-none text-xl input-md"
               name={name}
               id={name}
               value={value}
@@ -46,7 +46,7 @@ const TextField: React.FC<TextFieldProps> = ({
             />
             <label className="label">
               {error && (
-                <span className="label-text-alt text-red-600">
+                <span className="label-text-alt text-red-600 text-xl">
                   {translate(error)}
                 </span>
               )}

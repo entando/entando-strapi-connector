@@ -5,7 +5,7 @@ const FormMocked = () => {
     <>
       <div className="main-container bg-gray-100">
         <div className="top-container shadow bg-white mb-10 py-10 px-10 border-b-black">
-          <div className="text-sm breadcrumbs">
+          <div className="text-md breadcrumbs">
             <ul>
               <li>
                 <a>epc</a>
@@ -17,7 +17,7 @@ const FormMocked = () => {
             </ul>
           </div>
           <div className=" container-title mb-1 mt-4">
-            <p className="text-2xl flex content-center items-center">
+            <p className="text-4xl flex content-center items-center">
               Strappy content
               <div
                 className="tooltip tooltip-right px-3"
@@ -28,8 +28,8 @@ const FormMocked = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
+                  stroke="stroke-gray-200"
+                  className="w-11 h-11"
                 >
                   <path
                     strokeLinecap="round"
@@ -55,12 +55,12 @@ const FormMocked = () => {
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="stroke-current flex-shrink-0 h-6 w-6"
+                  className="stroke-current flex-shrink-0 h-11 w-11"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    className="w-6 h-6 stroke-orange-600 fill-white"
+                    className="w-11 h-11 stroke-orange-600 fill-white"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
@@ -77,7 +77,7 @@ const FormMocked = () => {
               <div className="flex ">
                 <div className="w-1/5 ">
                   <label className="label justify-end ">
-                    <span className="label-text text-xs mr-10">
+                    <span className="label-text font-semibold text-xl mr-10">
                       Configuration url
                     </span>
                   </label>
@@ -86,11 +86,11 @@ const FormMocked = () => {
                   <input
                     type="text"
                     placeholder="configuration url"
-                    className="input input-bordered w-full rounded-none input-sm"
+                    className="input input-bordered w-full rounded-none input-md"
                   />
 
                   <label className="label">
-                    <span className="label-text-alt text-red-600">
+                    <span className="label-text-alt text-red-600 text-xl">
                       Error section
                     </span>
                   </label>
@@ -102,7 +102,7 @@ const FormMocked = () => {
               <div className="flex ">
                 <div className="w-1/5 ">
                   <label className="label justify-end ">
-                    <span className="label-text text-xs mr-10">
+                    <span className="label-text font-semibold text-xl mr-10">
                       Strappy token
                     </span>
                   </label>
@@ -111,7 +111,7 @@ const FormMocked = () => {
                   <input
                     type="text"
                     placeholder="Insert a valid strapi token"
-                    className="input input-bordered w-full rounded-none input-sm "
+                    className="input input-bordered w-full rounded-none input-md "
                   />
                   <label className="label">
                     <span className="label-text-alt">Bottom Left label</span>
@@ -120,7 +120,7 @@ const FormMocked = () => {
                 </div>
               </div>
             </div>
-            <button className="btn rounded-none">Save</button>
+            <button className="btn rounded-none bg-blue-900 text-xl text-white">Save</button>
           </div>
         </div>
         <div className="alert alert-danger">
@@ -130,7 +130,7 @@ const FormMocked = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-6 h-6 stroke-red-600 fill-white"
+            className="w-11 h-11 stroke-red-600 fill-white"
           >
             <path
               stroke-linecap="round"
@@ -139,7 +139,7 @@ const FormMocked = () => {
             />
           </svg>
 
-          <p className="text-xs">Hey there is a problem!</p>
+          <p className="text-xl">Hey there is a problem!</p>
         </div>
 
         <div className="alert alert-warning">
@@ -149,7 +149,7 @@ const FormMocked = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-6 h-6 stroke-orange-600 fill-white"
+            className="w-11 h-11 stroke-orange-600 fill-white"
           >
             <path
               stroke-linecap="round"
@@ -158,7 +158,7 @@ const FormMocked = () => {
             />
           </svg>
 
-          <p className="text-xs">Warning: Invalid email token della mamma!</p>
+          <p className="text-xl">Warning: Invalid email token della mamma!</p>
         </div>
         <div role="tooltip" className="fade in popover left arrow-pop">
           <div className="arrow"></div>

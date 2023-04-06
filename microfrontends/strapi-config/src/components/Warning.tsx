@@ -10,12 +10,12 @@ const Warning: React.FC<WarningProps> = ({ message }) => {
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="stroke-current flex-shrink-0 h-6 w-6"
+          className="stroke-current flex-shrink-0 h-11 w-11"
           fill="none"
           viewBox="0 0 24 24"
         >
           <path
-            className="w-6 h-6 stroke-orange-600 fill-white"
+            className="w-11 h-11 stroke-orange-600 fill-white"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"

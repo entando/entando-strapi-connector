@@ -175,7 +175,7 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
                   caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
                 />
                 <button
-                  className="btn"
+                  className="btn rounded-none bg-blue-900 text-xl text-white"
                   type="submit"
                   disabled={props.isSubmitting}
                 >

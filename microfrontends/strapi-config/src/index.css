@@ -82,10 +82,16 @@
 }
 
 .main-container .btn {
-  padding: 2px 12px;
-  border: 0 !important;
+  padding: 2px 24px;
+  border: 0!important;
   background-image: none;
+  position: fixed;
+  top: 8rem;
+  right: 30px;
+  font-size: 14px;
+  text-transform: capitalize;
 }
+
 .main-container .alert-warning {
   color: #363636;
   background-color: #fdf2e5;
@@ -152,4 +158,31 @@
     padding-bottom: 20px;
     border-bottom: solid 2px #dadada;
     background: #fff;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: #363636;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #363636;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+::placeholder {
+  color: #363636;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.breadcrumbs {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-top: .5rem;
+  border-bottom: 1px solid #D5D5D5;
+  line-height: 36px;
+  padding-bottom: 0;
 }
