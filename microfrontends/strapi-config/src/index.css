@@ -25,3 +25,142 @@
 .toast:where(.toast-top) {
   top: 6rem;
 }
+
+.tooltip:before {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  content: var(--tw-content);
+  --tw-content: attr(data-tip);
+  max-width: 33rem;
+  border-radius: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background-color: hsl(0deg 0% 100%);
+  color: hsl(0deg 0% 0%);
+  width: -moz-max-content;
+  width: max-content;
+}
+.alert {
+  border-width: 1px;
+  padding-left: 47px;
+  padding-right: 14px;
+  word-wrap: break-word;
+}
+
+.alert, .caret {
+  position: relative;
+}
+
+.alert-danger {
+  color: #363636;
+  background-color: #ffe6e6;
+  border-color: #c00 !important;
+}
+
+.alert {
+  padding: 11px;
+  border: 1px solid transparent;
+  border-radius: 1px;
+}
+
+.alert, .progress, .thumbnail {
+  margin-bottom: 20px;
+}
+
+.alert>.pficon {
+  font-size: 22px;
+  position: absolute;
+  left: 13px;
+  top: 10px;
+  font-size:12px;
+}
+[class*=" pficon-"], [class^=pficon-] {
+  display: inline-block;
+  font-family: PatternFlyIcons-webfont;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 1;
+  speak: none;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  padding: 2px 12px;
+  border: 0 !important;
+  background-image: none;
+}
+.alert-warning {
+  color: #363636;
+  background-color: #fdf2e5;
+  border-color: #ec7a08;
+}
+
+.arrow-pop {
+  display: block;
+  top: 86px;
+  left: 1656px;
+}
+
+.popover.left>.arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-right-width: 0;
+  border-left-color: #999;
+  border-left-color: #bbb;
+}
+.popover>.arrow, .popover>.arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: rgba(0,0,0,0);
+  border-style: solid;
+}
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  display: none;
+  max-width: 220px;
+  padding: 1px;
+  font-family: "Open Sans",Helvetica,Arial,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.66666667;
+  line-break: auto;
+  text-align: left;
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  white-space: normal;
+  font-size: 12px;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid #bbb;
+  border-radius: 1px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.shadow {
+  margin-bottom: 20px;
+    padding: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 2px #dadada;
+    background: #fff;
+}
