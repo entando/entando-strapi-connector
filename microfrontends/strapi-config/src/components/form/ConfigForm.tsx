@@ -134,53 +134,61 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
 
   return (
     <div className="config-form">
-      {connectionData.isTokenSet && (
-        <Warning message={translate("tokenAlreadySet")} />
-      )}
-      <Formik
-        initialValues={connectionData}
-        // validationSchema={configFormValidationSchema}
-        // validateOnBlur={true}
-        enableReinitialize={true}
-        onSubmit={formSubmitHandler}
-      >
-        {(props) => (
-          <Form>
-            <TextField
-              label={translate("connectionUrlLabel")}
-              placeholder={translate("connectionUrlPlaceholder")}
-              name={"connectionUrl"}
-              type={"text"}
-              handleChange={props.handleChange}
-              value={props.values.connectionUrl}
-              error={
-                configUrlValidationError.length > 0
-                  ? configUrlValidationError
-                  : ""
-              }
-            />
+      <div className="form-container my-1 mx-4">
+        <div className="p-10 border border-gray bg-white">
+          {connectionData.isTokenSet && (
+            <Warning message={translate("tokenAlreadySet")} />
+          )}
+          <Formik
+            initialValues={connectionData}
+            // validationSchema={configFormValidationSchema}
+            // validateOnBlur={true}
+            enableReinitialize={true}
+            onSubmit={formSubmitHandler}
+          >
+            {(props) => (
+              <Form>
+                <TextField
+                  label={translate("connectionUrlLabel")}
+                  placeholder={translate("connectionUrlPlaceholder")}
+                  name={"connectionUrl"}
+                  type={"text"}
+                  handleChange={props.handleChange}
+                  value={props.values.connectionUrl}
+                  error={
+                    configUrlValidationError.length > 0
+                      ? configUrlValidationError
+                      : ""
+                  }
+                />
 
-            <TextField
-              label={translate("connectionTokenLabel")}
-              placeholder={translate("connectionTokenPlaceholder")}
-              name={"connectionToken"}
-              type={"password"}
-              handleChange={props.handleChange}
-              value={props.values.connectionToken}
-              error={
-                tokenValidationError.length > 0 ? tokenValidationError : ""
-              }
-              caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
-            />
-            <button className="btn" type="submit" disabled={props.isSubmitting}>
-              {translate("connectButton")}
-            </button>
-          </Form>
-        )}
-      </Formik>
-      {showToast && (
-        <Toast toastMessage={toast.message} toastStyle={toast.type} />
-      )}
+                <TextField
+                  label={translate("connectionTokenLabel")}
+                  placeholder={translate("connectionTokenPlaceholder")}
+                  name={"connectionToken"}
+                  type={"password"}
+                  handleChange={props.handleChange}
+                  value={props.values.connectionToken}
+                  error={
+                    tokenValidationError.length > 0 ? tokenValidationError : ""
+                  }
+                  caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
+                />
+                <button
+                  className="btn"
+                  type="submit"
+                  disabled={props.isSubmitting}
+                >
+                  {translate("connectButton")}
+                </button>
+              </Form>
+            )}
+          </Formik>
+          {showToast && (
+            <Toast toastMessage={toast.message} toastStyle={toast.type} />
+          )}
+        </div>
+      </div>
     </div>
   )
 }
