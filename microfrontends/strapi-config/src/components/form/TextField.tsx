@@ -27,24 +27,36 @@ const TextField: React.FC<TextFieldProps> = ({
 
   return (
     <>
-      <label className="label">
-        <span className="label-text">{label}</span>
-      </label>
-      <Field
-        type={type}
-        placeholder={placeholder}
-        className="input input-bordered w-full max-w-xs"
-        name={name}
-        id={name}
-        value={value}
-        onChange={handleChange}
-      />
-      <label className="label">
-        {error && <span className="label-text-alt">{translate(error)}</span>}
-        {caption && (
-          <span className="label-text-alt">{translate(caption)}</span>
-        )}
-      </label>
+      <div className="form-control w-full ">
+        <div className="flex ">
+          <div className="w-1/5 ">
+            <label className="label justify-end">
+              <span className="label-text text-xs mr-10">{label}</span>
+            </label>
+          </div>
+          <div className="w-4/5 ">
+            <Field
+              type={type}
+              placeholder={placeholder}
+              className="input input-bordered w-full rounded-none input-sm"
+              name={name}
+              id={name}
+              value={value}
+              onChange={handleChange}
+            />
+            <label className="label">
+              {error && (
+                <span className="label-text-alt text-red-600">
+                  {translate(error)}
+                </span>
+              )}
+              {caption && (
+                <span className="label-text-alt">{translate(caption)}</span>
+              )}
+            </label>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

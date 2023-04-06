@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { MfeConfig } from "./types/globals"
 // import { getAPIEndpoint } from "./utils/getAPIEndpoints"
 import FormMocked from "./components/FormMocked"
+import Header from "./components/Header"
 
 interface Message {
   [key: string]: {
@@ -35,11 +36,14 @@ export function App({ config }: { config: MfeConfig }) {
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       <div data-theme="light">
-        <FormMocked />
-        {matchPath("settings") && (
-          <div>{/* <ConfigForm apiUrl={apiUrl} /> */}</div>
-        )}
-        {matchPath("content-template") && <div>Content template</div>}
+        <div className="main-container bg-gray-100">
+          <Header />
+          <FormMocked />
+          {matchPath("settings") && (
+            <div>{/* <ConfigForm apiUrl={apiUrl} /> */}</div>
+          )}
+          {matchPath("content-template") && <div>Content template</div>}
+        </div>
       </div>
     </IntlProvider>
   )

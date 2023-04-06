@@ -4,6 +4,7 @@ import { useTranslation } from "../../i18n/use-translation"
 import { getData, postData } from "../../integration/integration"
 import Toast from "../Toast"
 import TextField from "./TextField"
+import Warning from "../Warning"
 
 export interface FormData {
   connectionUrl: string
@@ -133,6 +134,9 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
 
   return (
     <div className="config-form">
+      {connectionData.isTokenSet && (
+        <Warning message={translate("tokenAlreadySet")} />
+      )}
       <Formik
         initialValues={connectionData}
         // validationSchema={configFormValidationSchema}

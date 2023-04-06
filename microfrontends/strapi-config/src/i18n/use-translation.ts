@@ -75,6 +75,17 @@ export const useTranslation = () => {
             id: "app.mandatory",
             defaultMessage: "all the fields are mandatory"
           })
+        case "title":
+          return intl.formatMessage({
+            id: "app.title",
+            defaultMessage: "Strapi Config"
+          })
+        case "tooltip":
+          return intl.formatMessage({
+            id: "app.tooltip",
+            defaultMessage:
+              "to configure strapi you MUST insert a URL pointing to the your Strapi API. The token MUST be generated inside Strapi and MUST have the permissions to read Collection Types and Contents."
+          })
       }
     },
     [intl]
