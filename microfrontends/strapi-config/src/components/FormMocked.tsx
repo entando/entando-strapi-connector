@@ -16,11 +16,11 @@ const FormMocked = () => {
               <li>Strappy config</li>
             </ul>
           </div>
-          <div className="container-title mb-1 mt-4">
-            <p className="text-2xl">
+          <div className=" container-title mb-1 mt-4">
+            <p className="text-2xl flex content-center items-center">
               Strappy content
               <div
-                className="tooltip tooltip-right"
+                className="tooltip tooltip-right px-3"
                 data-tip="testo da inserire"
               >
                 <svg
@@ -124,7 +124,6 @@ const FormMocked = () => {
           </div>
         </div>
         <div className="alert alert-danger">
-          <span className="pficon pficon-error-circle-o"></span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill=""

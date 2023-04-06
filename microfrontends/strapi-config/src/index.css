@@ -45,71 +45,60 @@
   width: -moz-max-content;
   width: max-content;
 }
-.alert {
+.main-container .alert {
   border-width: 1px;
   padding-left: 47px;
   padding-right: 14px;
   word-wrap: break-word;
+  justify-content: flex-start;
 }
 
-.alert, .caret {
+.main-container .alert, .caret {
   position: relative;
 }
 
-.alert-danger {
+.main-container .alert-danger {
   color: #363636;
   background-color: #ffe6e6;
   border-color: #c00 !important;
 }
 
-.alert {
+.main-container .alert {
   padding: 11px;
   border: 1px solid transparent;
   border-radius: 1px;
 }
 
-.alert, .progress, .thumbnail {
+.main-container .alert, .progress, .thumbnail {
   margin-bottom: 20px;
 }
 
-.alert>.pficon {
+.main-container .alert>.pficon {
   font-size: 22px;
   position: absolute;
   left: 13px;
   top: 10px;
   font-size:12px;
 }
-[class*=" pficon-"], [class^=pficon-] {
-  display: inline-block;
-  font-family: PatternFlyIcons-webfont;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
-  line-height: 1;
-  speak: none;
-  text-transform: none;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
 
-.btn {
+.main-container .btn {
   padding: 2px 12px;
   border: 0 !important;
   background-image: none;
 }
-.alert-warning {
+.main-container .alert-warning {
   color: #363636;
   background-color: #fdf2e5;
   border-color: #ec7a08;
 }
 
-.arrow-pop {
+.main-container .arrow-pop {
   display: block;
   top: 86px;
   left: 1656px;
 }
 
-.popover.left>.arrow {
+.main-container .popover.left>.arrow {
   top: 50%;
   right: -11px;
   margin-top: -11px;
@@ -117,7 +106,7 @@
   border-left-color: #999;
   border-left-color: #bbb;
 }
-.popover>.arrow, .popover>.arrow:after {
+.main-container .popover>.arrow, .popover>.arrow:after {
   position: absolute;
   display: block;
   width: 0;
@@ -125,7 +114,7 @@
   border-color: rgba(0,0,0,0);
   border-style: solid;
 }
-.popover {
+.main-container .popover {
   position: absolute;
   top: 0;
   left: 0;
@@ -157,7 +146,7 @@
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
   box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
-.shadow {
+.main-container .shadow {
   margin-bottom: 20px;
     padding: 20px;
     padding-bottom: 20px;
