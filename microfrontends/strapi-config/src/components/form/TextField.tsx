@@ -25,6 +25,8 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const translate = useTranslation()
 
+  const inputClasses = error ? "input input-bordered w-full rounded-none text-xl input-md border-red-600" : "input input-bordered w-full rounded-none text-xl input-md"
+
   return (
     <>
       <div className="form-control w-full my-7 ">
@@ -38,7 +40,7 @@ const TextField: React.FC<TextFieldProps> = ({
             <Field
               type={type}
               placeholder={placeholder}
-              className="input input-bordered w-full rounded-none text-xl input-md"
+              className={inputClasses}
               name={name}
               id={name}
               value={value}
