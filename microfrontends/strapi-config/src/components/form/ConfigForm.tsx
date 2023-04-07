@@ -172,7 +172,6 @@ const ConfigForm: React.FC<ConfigFormProps> = ({ apiUrl }) => {
                   error={
                     tokenValidationError.length > 0 ? tokenValidationError : ""
                   }
-                  caption={connectionData.isTokenSet ? "tokenAlreadySet" : ""}
                 />
                 <button
                   className="btn rounded-none bg-blue-900 text-xl text-white"

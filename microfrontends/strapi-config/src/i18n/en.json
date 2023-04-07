@@ -1,7 +1,7 @@
 {
-  "app.connectionUrlLabel": "config URL",
-  "app.connectionUrlPlaceholder": "Insert Strapi URL",
-  "app.connectionTokenLabel": "Strapi Token",
+  "app.connectionUrlLabel": "config URL *",
+  "app.connectionUrlPlaceholder": "Insert Strapi URL *",
+  "app.connectionTokenLabel": "Strapi Token *",
   "app.connectionTokenPlaceholder": "Insert Connection Token",
   "app.connectButton": "Save",
   "app.urlIsRequired": "the config URL is mandatory",

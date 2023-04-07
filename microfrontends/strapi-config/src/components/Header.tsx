@@ -15,11 +15,11 @@ const Header: React.FC = () => {
           <li>
             <a>Strapi</a>
           </li>
-          <li>{translate("title")}</li>
+          <li><strong>{translate("title")}</strong></li>
         </ul>
       </div>
       <div className="container-title mb-1 mt-8 mr-8">
-        <div className="text-4xl flex content-center items-center">
+        <div className="text-4xl flex content-center items-center font-bold">
           {translate("title")}
           <Tooltip text={translate("tooltip")}>
             <svg

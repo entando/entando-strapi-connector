@@ -57,7 +57,7 @@ const TextField: React.FC<TextFieldProps> = ({
                 </span>
               )}
               {caption && (
-                <span className="label-text-alt">{translate(caption)}</span>
+                <span className="label-text-alt text-lg">{translate(caption)}</span>
               )}
             </label>
           </div>

@@ -149,8 +149,8 @@ const FormMocked = () => {
                     className="input input-bordered w-full rounded-none input-md "
                   />
                   <label className="label">
-                    <span className="label-text-alt">Bottom Left label</span>
-                    <span className="label-text-alt">Bottom Right label</span>
+                    <span className="label-text-alt text-lg">Bottom Left label</span>
+                    <span className="label-text-alt text-lg">Bottom Right label</span>
                   </label>
                 </div>
               </div>
