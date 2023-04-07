@@ -1,34 +1,36 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react"
 
 interface Props {
-  text?: string;
-  children: JSX.Element;
+  text?: string
+  children: JSX.Element
 }
 
 const Tooltip = ({ text, children }: Props) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const tooltipRef = useRef<HTMLDivElement>(null)
 
   const toggleTooltip = () => {
-    setIsVisible(!isVisible);
-  };
+    setIsVisible(!isVisible)
+  }
 
-  const handleBlur = () =>{
+  const handleBlur = () => {
     console.log("handleBlur")
-    setIsVisible(false);
+    setIsVisible(false)
   }
 
   return (
-    <div className='tooltip'>
-      <span onClick={toggleTooltip} onBlur={handleBlur}>{children}</span>
+    <div className="tooltip">
+      <span onClick={toggleTooltip} onBlur={handleBlur}>
+        {children}
+      </span>
       {isVisible && (
-        <div className='tooltip-container' ref={tooltipRef} >
-          <div className='arrow'></div>
-          <div className='tooltip-text'>{text}</div>
+        <div className="tooltip-container" ref={tooltipRef}>
+          <div className="arrow"></div>
+          <div className="tooltip-text">{text}</div>
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Tooltip;
+export default Tooltip

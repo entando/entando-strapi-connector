@@ -25,7 +25,9 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const translate = useTranslation()
 
-  const inputClasses = error ? "input input-bordered w-full rounded-none text-xl input-md border-red-600" : "input input-bordered w-full rounded-none text-xl input-md"
+  const inputClasses = error
+    ? "input input-bordered w-full rounded-none text-xl input-md border-red-600"
+    : "input input-bordered w-full rounded-none text-xl input-md"
 
   return (
     <>
@@ -33,7 +35,9 @@ const TextField: React.FC<TextFieldProps> = ({
         <div className="flex ">
           <div className="w-1/5 ">
             <label className="label justify-end">
-              <span className="label-text font-semibold text-xl mr-10">{label}</span>
+              <span className="label-text font-semibold text-xl mr-10">
+                {label}
+              </span>
             </label>
           </div>
           <div className="w-4/5 ">
