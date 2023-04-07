@@ -46,6 +46,10 @@
   width: max-content;
 }
 .main-container .alert {
+  height: 100vh;
+}
+
+.main-container .alert {
   border-width: 1px;
   padding-left: 47px;
   padding-right: 14px;
