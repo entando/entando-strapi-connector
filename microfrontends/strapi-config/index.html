@@ -4,10 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>Strapi Config MFE</title>
   </head>
   <body>
     <strapi-config></strapi-config>
+    <!-- local testin  -->
+    <script>
+      function injectConfigIntoMfe() {
+        fetch("./mfe-config.json").then(async (response) => {
+          const config = await response.text()
+          const mfeEl = document.getElementsByTagName("strapi-config")[0]
+          mfeEl.setAttribute("config", config)
+        })
+      }
+
+      injectConfigIntoMfe()
+    </script>
     <script type="module" src="/dev-shell.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

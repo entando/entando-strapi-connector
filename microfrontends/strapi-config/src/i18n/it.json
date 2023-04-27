@@ -1,0 +1,17 @@
+{
+  "app.connectionUrlLabel": "Config URL *",
+  "app.connectionUrlPlaceholder": "Inserire l'URL di Strapi",
+  "app.connectionTokenLabel": "Strapi Token *",
+  "app.connectionTokenPlaceholder": "Inserire il token di connessione",
+  "app.connectButton": "Salva",
+  "app.urlIsRequired": "Il campo config URL è obbligatorio",
+  "app.tokenIsRequired": "Il campo token è obbligatorio",
+  "app.connectionSuccessfullyEstablished": "La Strapi config è stata aggiornata con successo",
+  "app.tokenAlreadySet": "Un token è già stato settato, un nuovo invio di questo form sovrascriverà il token attuale",
+  "app.invalidConfigUrl": "Il config URL non punta ad un'istanza valida della Strapi API",
+  "app.invalidToken": "Il token fornito non è valido",
+  "app.invalidTokenPermissions": "Il token fornito non ha i permessi per leggere Contents e Collection Types",
+  "app.mandatory": "Tutti i campi sono obbligatori",
+  "app.title": "Configurazione Strapi",
+  "app.tooltip": "Per configurare strapi DOVRAI inserire un URL che punta alla tua API di Strapi. Il token DOVRA' essere generato dentro Strapi e DOVRA' avere i permessi di lettura su Collection Types e Contents."
+}

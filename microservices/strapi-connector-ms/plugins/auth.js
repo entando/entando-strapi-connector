@@ -1,7 +1,8 @@
 import got from 'got'
 import { createVerifier, TOKEN_ERROR_CODES } from 'fast-jwt'
+import { appConstants } from '../config/appConstants.js'
 
-export async function asyncVerifyJWT (request, reply, done) {
+export async function asyncVerifyJWT (request, reply) {
     const fastify = request.server
 
     const authHeader = request.headers.authorization
@@ -12,27 +13,24 @@ export async function asyncVerifyJWT (request, reply, done) {
                 fastify.config.USER_ENDPOINT,
                 { headers: { "Authorization": authHeader }}
             )
-            // done()
         } catch (err) {
             request.log.warn(err.response.body)
             return reply.code(err.response.statusCode).send(err.response.body)
         }
     } else {
         request.log.warn("asyncVerifyJWT: missing_header")
-        return reply.code(400).send({ "error": "missing_header", "error_description": "Authorization header not set" })
+        return reply.code(appConstants.HTTP_CODE_BAD_REQUEST).send({ "error": "missing_header", "error_description": "Authorization header not set" })
     }
 }
 
 export function pubKeyVerifyJWT(request, reply, done) {
     const fastify = request.server
 
-    const pemHeader = "-----BEGIN CERTIFICATE-----\n"
-    const pemFooter = "\n-----END CERTIFICATE-----"
     const pubKeyString = fastify.config.JWT_PUB_KEY
 
-    const pubKey = pemHeader.concat(pubKeyString, pemFooter)
+    const pubKey = appConstants.PEM_HEADER.concat(pubKeyString, appConstants.PEM_FOOTER)
     const authHeader = request.headers.authorization
-    if (authHeader && authHeader.split(' ')[0].toLowerCase() == 'bearer') {
+    if (authHeader && authHeader.split(' ')[0].trim().toLowerCase() == appConstants.BEARER.trim().toLowerCase()) {
         const token = authHeader.split(' ')[1]
         request.log.debug({ token: token }, { pubKey: pubKey }, "pubKeyVerifyJWT")
         try {
@@ -40,14 +38,14 @@ export function pubKeyVerifyJWT(request, reply, done) {
             verifySync(token)
             done()
         } catch (err) {
-            let statusCode = 400
+            let statusCode = appConstants.HTTP_CODE_BAD_REQUEST
             fastify.log.warn({code: err.code}, err.message)
             if (err.code == 'FAST_JWT_EXPIRED') {
-                statusCode = 401
+                statusCode = appConstants.HTTP_CODE_UNAUTHORIZED
             }
             return reply.code(statusCode).send({ "error": err.code, "error_description": err.message })
         }
     } else {
-        return reply.code(400).send({ "error": "missing_header", "error_description": "Authorization header not set" })
+        return reply.code(appConstants.HTTP_CODE_BAD_REQUEST).send({ "error": "missing_header", "error_description": "Authorization header not set" })
     }
 }

@@ -6,10 +6,13 @@
       "healthCheckPath": "/api/health",
       "dbms": "postgresql",
       "commands": {
-        "run": "npm run start",
-        "dev": "npm run dev"
+        "run": "npm run dev"
       },
       "env": [
+        {
+          "name": "APP_ORIGIN",
+          "value": "http://my-portal.entando.org"
+        },
         {
           "name": "LOG_LEVEL",
           "value": "info"
@@ -88,13 +91,6 @@
       "commands": {
         "run": "npm run dev"
       },
-      "apiClaims": [
-        {
-          "name": "strapi-config-microservice",
-          "type": "internal",
-          "serviceName": "strapi-connector-ms"
-        }
-      ],
       "nav": [
         {
           "label": {
@@ -117,7 +113,7 @@
   ],
   "svc": ["postgresql", "keycloak"],
   "name": "entando-strapi-connector",
-  "version": "0.0.68",
+  "version": "0.0.3",
   "description": "entando-strapi-connector description",
   "type": "bundle"
 }

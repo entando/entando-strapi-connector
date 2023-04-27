@@ -2,7 +2,7 @@ import Postgrator from 'postgrator'
 
 async function dbInit() {
     const fastify = this
-    
+
     const client = fastify.pg
     const opts = fastify.config
     const db = opts.SPRING_DATASOURCE_URL.split("/").at(-1)

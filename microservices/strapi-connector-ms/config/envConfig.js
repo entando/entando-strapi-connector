@@ -4,12 +4,12 @@ const envSchema = {
         'SPRING_DATASOURCE_USERNAME',
         'SPRING_DATASOURCE_PASSWORD',
         'SPRING_DATASOURCE_URL',
-        'APP_ORIGIN',
         'KEYCLOAK_REALM',
         'KEYCLOAK_AUTH_URL',
         'KEYCLOAK_CLIENT_SECRET',
         'KEYCLOAK_CLIENT_ID',
-        'JWT_PUB_KEY'
+        'JWT_PUB_KEY',
+        'AUTH_ENABLED'
     ],
     properties: {
         SERVER_SERVLET_CONTEXT_PATH: {
@@ -32,10 +32,6 @@ const envSchema = {
             type: 'string',
             default: 'api_config'
         },
-        APP_ORIGIN: {
-            type: 'string',
-            default: 'http://localhost:3000'
-        },
         KEYCLOAK_REALM: {
             type: 'string',
             default: 'entando-dev'
@@ -52,6 +48,10 @@ const envSchema = {
             type: 'string',
             default: 'entando-strapi-connector-ms-client'
         },
+        AUTH_ENABLED: {
+            type: 'boolean',
+            default: 'false'
+        },
         JWT_PUB_KEY :{
             type: 'string',
             default: ''
@@ -59,7 +59,25 @@ const envSchema = {
     }
 }
 
+function selectEnvFile(nodeEnv) {
+    let envFile
+    switch (nodeEnv) {
+        case "development":
+            envFile = "./.env.local"
+            break
+        case "test":
+            envFile = "./test/.env.test"
+            break
+        default:
+            envFile = "./.env"
+    }
+    return envFile
+}
+
 export const envOptions = {
     confKey: 'config', // optional, default: 'config'
     schema: envSchema,
+    dotenv: {
+        path: selectEnvFile(process.env.NODE_ENV)
+    }
 }

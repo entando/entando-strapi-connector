@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="giovanni (generated)" id="1678798098643-1">
+        <createTable tableName="api_config">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="api_config_pkey" />
+            </column>
+            <column name="application_name" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="base_url" type="VARCHAR">
+                <constraints nullable="false" />
+            </column>
+            <column name="token" type="VARCHAR">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="giovanni (generated)" id="1678799188102-2">
+        <addUniqueConstraint columnNames="application_name" constraintName="api_config_appname"
+            tableName="api_config" />
+    </changeSet>
+</databaseChangeLog>

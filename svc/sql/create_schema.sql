@@ -1,0 +1,2 @@
+ \connect entando_strapi_connector;
+CREATE SCHEMA entando_strapi_connector_user AUTHORIZATION entando_strapi_connector_user;
